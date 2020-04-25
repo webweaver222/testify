@@ -81,7 +81,13 @@ module.exports = (env = {}) => {
                     test: /\.s[ca]ss$/,
                     use: [
                         ...getStyleLoaders(), 
-                        'sass-loader' 
+                        'sass-loader',
+                        {
+                            loader: 'sass-resources-loader',
+                            options: {
+                              resources: ['./src/resources/vars.sass']
+                            },
+                          } 
                     ]
                 }
 
