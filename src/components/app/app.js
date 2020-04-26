@@ -1,11 +1,15 @@
 import React from 'react'
 
+
 import './app.sass'
+//import Preloader from '../preloader'
+
 
 const App = () => {
+ 
     return (
         <div className="app">
-        hello world1
+        
         </div>
     )
 }
