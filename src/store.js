@@ -7,6 +7,8 @@ const stringMdw = (store) => (dispatch) => (action) => {
     return dispatch({
         type: action
     })
+
+    return dispatch(action)
 }
 
 
