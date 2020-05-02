@@ -2,7 +2,8 @@ import {createStore, applyMiddleware} from 'redux'
 
 import reducer from './reducers'
 
-const stringMdw = (store) => (dispatch) => (action) => {
+const stringMdw = () => (dispatch) => (action) => {
+    console.log(action.type)
     if (typeof action === 'string')
     return dispatch({
         type: action
