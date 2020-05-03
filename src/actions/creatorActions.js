@@ -16,7 +16,7 @@ const testDescriptionChange = (description) => {
 const questionBodyChange = (id, body) => {
     return {
         type: 'CHANGE_QUESTION_BODY',
-        id: id,
+        id,
         payload: body
     }
 }
@@ -29,9 +29,16 @@ const handleDnD = (newItems) => {
 }
 
 const clickQuestion = (id) => {
-   
+ 
     return {
         type: 'CLICK_ACTIVE_QUESTION',
+        payload: id
+    }
+}
+
+const deleteQuestion = (id) => {
+    return {
+        type: 'CLICK_DELETE_QUESTION',
         payload: id
     }
 }
@@ -42,4 +49,5 @@ export {testNameChange,
     testDescriptionChange,
     questionBodyChange,
     handleDnD,
-    clickQuestion}
+    clickQuestion,
+    deleteQuestion}

@@ -22,7 +22,7 @@ class TestCreator extends React.Component {
             <div className="test-creator">
                <div className="left">
                     <TestCreatorMain/>
-                    <Question question={questions[active]} />
+                    <Question question={questions.find(q => q.id === active)} />
                </div>
                <div className="right">
                     <QuestionPool questions = {questions}/>
@@ -46,4 +46,4 @@ const mapStateToProps = ({testCreator: {questions, active}}) => {
     }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(TestCreator)
+export default connect(mapStateToProps, null)(TestCreator)

@@ -2,11 +2,13 @@ import React from 'react'
 
 import { connect } from 'react-redux';
 import {questionBodyChange} from '../../actions/creatorActions'
+import { bindActionCreators } from 'redux'
 
 import './question.sass'
 
 
-const Question = ({question, onNext, onChangeBody}) => {
+const Question = ({question, onNext, onPrev, onChangeBody}) => {
+    
     return (
         <div className="question">
                 <div className="row">
@@ -24,9 +26,10 @@ const Question = ({question, onNext, onChangeBody}) => {
                     <label htmlFor="answer-body">Answer #2</label>
                     <input name ='answer-body' type="text"  />
                 </div>
-
-                <button>prev</button>
-                <button onClick={onNext}>next</button>
+                <div className="control-buttons">
+                    <button onClick={onPrev} className="btn btn-primary">Previous</button>
+                    <button onClick={onNext} className="btn btn-primary">Next</button>
+                </div>
         </div>
     )
 }
@@ -43,6 +46,7 @@ const mapStateToProps = ({}) => {
     
      return {
         onNext: () => dispatch('SELECT_QUESTION_NEXT'),
+        onPrev: () => dispatch('SELECT_QUESTION_PREV'),
         onChangeBody:  (questionId, body) => dispatch(questionBodyChange(questionId, body))
      }
     }

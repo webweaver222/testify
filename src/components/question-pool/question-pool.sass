@@ -11,9 +11,24 @@
         //justify-content: center
         //align-items: center
     .question
-        background-color: grey
+        background-color: #4582EC
         border-radius: 5px
         color: $accent
-        padding: 20px 0 
+        height: 56px 
         margin: 0
-       
+        padding: 0
+        cursor: pointer
+        .question-header
+            position: relative
+            width: 100%
+            i
+                float: right
+                color: $accent
+                margin: 1px 1px 0 0
+                &:hover
+                    color: lighten($accent, 10%)
+        p
+            overflow: hidden
+            word-break: break-all
+        &:drop
+            background-color: red
