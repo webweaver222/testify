@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import TestCreatorMain from '../test-creator-main'
 import Question from '../question'
 import QuestionPool from '../question-pool'
-
+import RenderQuestionCreator from '../question/renderQuestionCreator'
 
 class TestCreator extends React.Component {
 
@@ -17,12 +17,21 @@ class TestCreator extends React.Component {
 
     render () {
         const {questions, active} = this.props
+
+        const question = questions.find(q => q.id === active)
+        
         
         return (
             <div className="test-creator">
                <div className="left">
                     <TestCreatorMain/>
-                    <Question question={questions.find(q => q.id === active)} />
+                    <Question question={question}>
+                        {
+                            (...args) => RenderQuestionCreator(...args)
+                        }
+                    </Question>
+                        
+                        
                </div>
                <div className="right">
                     <QuestionPool questions = {questions}/>
