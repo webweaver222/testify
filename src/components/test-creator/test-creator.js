@@ -25,11 +25,8 @@ class TestCreator extends React.Component {
             <div className="test-creator">
                <div className="left">
                     <TestCreatorMain/>
-                    <Question question={question}>
-                        {
-                            (...args) => RenderQuestionCreator(...args)
-                        }
-                    </Question>
+                    <Question question={question}/>
+                       
                         
                         
                </div>

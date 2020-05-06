@@ -21,7 +21,7 @@ const TestCreatorMain = ({testName, testDerscription,
              onChange={(e) => onDescriptionChange(e.target.value)}/>
             </div>
 
-            <button>Publish test</button>
+            <button className="btn btn-primary">Publish test</button>
         </div>
     )
 }

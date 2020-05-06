@@ -1,4 +1,4 @@
-import { updateQuestions , addQuestion } from './funcs'
+import { updateArray , addQuestion} from './funcs'
 
 const initialTest = {
     testName: '',
@@ -7,7 +7,17 @@ const initialTest = {
     questions: [
         {
             id: 0,
-            body: 'Question #1'
+            body: '0',
+            answers: [
+                {
+                    id: 0,
+                    body: 'ans1'
+                },
+                {
+                    id: 1,
+                    body: 'ans2'
+                },
+            ]
         }
     ]
 }
@@ -28,13 +38,14 @@ const upadateTestCreator = (state, action) => {
     if (state === undefined) {
         return {
             ...initialTest,
-            questions: test()
+            //questions: test()
         }
     }
 
 
     const { testCreator, testCreator: { active, questions } } = state
 
+    const idx = questions.findIndex(q => q.id === active)
 
     switch (action.type) {
         case 'CHANGE_TEST_NAME': {
@@ -73,12 +84,12 @@ const upadateTestCreator = (state, action) => {
             return {
                 ...testCreator,
                 active: questions[action.payload - 1].id,
-                questions: updateQuestions(questions, null, action.payload)
+                questions: updateArray(questions, null, action.payload)
             }
         }
 
         case 'SELECT_QUESTION_NEXT': {
-            const idx = questions.findIndex(q => q.id === active)
+            //const idx = questions.findIndex(q => q.id === active)
 
             if (!questions[idx + 1]) {
                 const newId = Math.max(...questions.map(q => q.id), 0) + 1
@@ -96,7 +107,7 @@ const upadateTestCreator = (state, action) => {
         }
 
         case 'SELECT_QUESTION_PREV': {
-            const idx = questions.findIndex(q => q.id === active)
+            //const idx = questions.findIndex(q => q.id === active)
             if (!questions[idx-1]) {
                 return testCreator
             }
@@ -107,7 +118,7 @@ const upadateTestCreator = (state, action) => {
         }
 
         case 'CHANGE_QUESTION_BODY': {
-            const idx = questions.findIndex(q => q.id === action.id)
+            //const idx = questions.findIndex(q => q.id === active)
 
             const updatedQuestion = {
                 ...questions[idx],
@@ -115,9 +126,33 @@ const upadateTestCreator = (state, action) => {
             }
             return {
                 ...testCreator,
-                questions: updateQuestions(questions, updatedQuestion, idx)
+                questions: updateArray(questions, updatedQuestion, idx)
             }
         }
+
+        case 'CHANGE_ANSWER_BODY': {
+            //const idx = questions.findIndex(q => q.id === active)
+            const ansIdx = questions[idx].answers.findIndex(a => a.id === action.id)
+
+
+            const updatedAnswer = {
+                ...questions[idx].answers[ansIdx],
+                body: action.payload
+            }
+
+            const updatedQuestion = {
+                ...questions[idx],
+                answers: updateArray(questions[idx].answers, updatedAnswer, ansIdx)
+            }
+
+            return {
+                ...testCreator,
+                questions: updateArray(questions, updatedQuestion, idx)
+            }
+        }
+
+
+       
 
         default:
             return testCreator;

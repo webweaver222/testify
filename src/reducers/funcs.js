@@ -1,18 +1,17 @@
-export const updateQuestions = (questions, item, idx) => {
-    
+export const updateArray = (items, newItem ,idx) => {
 
-    if (item === null) {
+
+    if (newItem === null) {
         return [
-            ...questions.slice(0, idx),
-            ...questions.slice(idx+1)
+            ...items.slice(0, idx),
+            ...items.slice(idx+1)
         ]
     }
 
-
     return [
-        ...questions.slice(0, idx),
-        item,
-        ...questions.slice(idx+1)
+        ...items.slice(0, idx),
+        newItem,
+        ...items.slice(idx+1)
     ]
 }
 
@@ -24,7 +23,17 @@ export const addQuestion = (questions, newId) => {
         ...questions,
         {
             id: newId,
-            body: `${newId}`
+            body: `${newId}`,
+            answers: [
+                {
+                    id: 0,
+                    body: 'ans1'
+                },
+                {
+                    id: 1,
+                    body: 'ans2'
+                },
+            ]
         }
     ]
 }

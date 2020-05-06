@@ -13,10 +13,9 @@ const testDescriptionChange = (description) => {
     }
 }
 
-const questionBodyChange = (id, body) => {
+const questionBodyChange = (body) => {
     return {
         type: 'CHANGE_QUESTION_BODY',
-        id,
         payload: body
     }
 }
@@ -43,6 +42,14 @@ const deleteQuestion = (id) => {
     }
 }
 
+const answerBodyChange = (id, body) => {
+    return {
+        type: 'CHANGE_ANSWER_BODY',
+        id,
+        payload: body
+    }
+}
+
 
 
 export {testNameChange, 
@@ -50,4 +57,5 @@ export {testNameChange,
     questionBodyChange,
     handleDnD,
     clickQuestion,
-    deleteQuestion}
+    deleteQuestion,
+    answerBodyChange}

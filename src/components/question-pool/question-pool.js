@@ -13,7 +13,7 @@ class QuestionPool extends React.Component {
 
     render() {
         const { questions, onDnd, onActive, onDelete } = this.props
-       console.log(questions)
+       
         return (
             <div className="question-pool">
                 <RLDD
