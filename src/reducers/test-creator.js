@@ -8,6 +8,7 @@ const initialTest = {
         {
             id: 0,
             body: '0',
+            rightAnswer: 0,
             answers: [
                 {
                     id: 0,
@@ -84,7 +85,7 @@ const upadateTestCreator = (state, action) => {
             return {
                 ...testCreator,
                 active: questions[action.payload - 1].id,
-                questions: updateArray(questions, null, action.payload)
+                questions: updateArray(questions, 'remove', action.payload)
             }
         }
 
@@ -151,8 +152,39 @@ const upadateTestCreator = (state, action) => {
             }
         }
 
+        case 'CLICK_ADD_ANSWER' : {
+            const ansIdx = questions[idx].answers.length
+            const newAnswerId = Math.max(...questions[idx].answers.map(a => a.id), 0) + 1
 
-       
+            const updatedQuestion = {
+                ...questions[idx],
+                answers: updateArray(questions[idx].answers, {
+                    id: newAnswerId,
+                    body: ''
+                }, ansIdx)
+            }
+
+            return {
+                ...testCreator,
+                questions: updateArray(questions, updatedQuestion, idx)
+            }
+        }
+
+        case 'CLICK_DELETE_ANSWER' : {
+            const ansIdx = questions[idx].answers.findIndex(a=>a.id === action.payload)
+           
+
+            const updatedQuestion = {
+                ...questions[idx],
+                answers: updateArray(questions[idx].answers, 'remove', ansIdx)
+            }
+
+            return {
+                ...testCreator,
+                questions: updateArray(questions, updatedQuestion, idx)
+            }
+        }
+
 
         default:
             return testCreator;

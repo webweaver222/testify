@@ -1,22 +1,39 @@
 import React from 'react'
 
 import { connect } from 'react-redux';
-import {questionBodyChange, answerBodyChange} from '../../actions/creatorActions'
+import {questionBodyChange, answerBodyChange, deleteAnswer} from '../../actions/creatorActions'
 
 
 
 import './question.sass'
 
 
-const Question = ({question, onNext, onPrev, onChangeQuestionBody, onChangeAnswerBody}) => {
-
+const Question = ({question, onNext, onPrev, onChangeQuestionBody, 
+    onChangeAnswerBody, onAddAnswer, onDeleteAnswer}) => {
+        console.log(question.answers)
     const renderAnswers = () => {
-        return question.answers.map((answer, i) => {
+        return question.answers.map((answer, i,arr) => {
+
+            const addBtn = i === arr.length - 1 && arr.length - 1 < 4 ? 
+            <i className="fa fa-plus-square"
+            onClick={onAddAnswer}></i>
+             : null
+
+             const deleteBtn = i > 1 ? 
+             <i className="fa fa-trash"
+             onClick={() => onDeleteAnswer(answer.id)}></i>: null
+
+            const active = question.rightAnswer === answer.id? 
+            'active' : null
+
             return (
                 <div className="answer" key={answer.id}>
-                    <label htmlFor="answer-body">Answer {i+1}</label>
+                    <label htmlFor="answer-body">{i+1}</label>
                     <input name ='answer-body' type="text"  value={answer.body}
+                    className = {active}
                     onChange={(e) => onChangeAnswerBody(answer.id, e.target.value)}/>
+                    {deleteBtn}
+                    {addBtn}
                 </div>
             )
         })
@@ -59,7 +76,9 @@ const mapStateToProps = ({}) => {
         onNext: () => dispatch('SELECT_QUESTION_NEXT'),
         onPrev: () => dispatch('SELECT_QUESTION_PREV'),
         onChangeQuestionBody:  (body) => dispatch(questionBodyChange(body)),
-        onChangeAnswerBody: (answerId, body) => dispatch(answerBodyChange(answerId, body))
+        onChangeAnswerBody: (answerId, body) => dispatch(answerBodyChange(answerId, body)),
+        onAddAnswer: () => dispatch('CLICK_ADD_ANSWER'),
+        onDeleteAnswer: (id) => dispatch(deleteAnswer(id))
      }
     }
 

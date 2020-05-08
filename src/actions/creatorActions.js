@@ -50,6 +50,13 @@ const answerBodyChange = (id, body) => {
     }
 }
 
+const deleteAnswer = (id) => {
+    return {
+        type: 'CLICK_DELETE_ANSWER',
+        payload: id
+    }
+}
+
 
 
 export {testNameChange, 
@@ -58,4 +65,5 @@ export {testNameChange,
     handleDnD,
     clickQuestion,
     deleteQuestion,
-    answerBodyChange}
+    answerBodyChange,
+    deleteAnswer}

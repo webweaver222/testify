@@ -1,7 +1,7 @@
 export const updateArray = (items, newItem ,idx) => {
 
 
-    if (newItem === null) {
+    if (newItem === 'remove') {
         return [
             ...items.slice(0, idx),
             ...items.slice(idx+1)
@@ -24,6 +24,7 @@ export const addQuestion = (questions, newId) => {
         {
             id: newId,
             body: `${newId}`,
+            rightAnswer: 0,
             answers: [
                 {
                     id: 0,
