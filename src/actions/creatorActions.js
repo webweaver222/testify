@@ -57,6 +57,13 @@ const deleteAnswer = (id) => {
     }
 }
 
+const selectAnswer = (id) => {
+    return {
+        type: 'CLICK_SELECT_ANSWER',
+        payload: id
+    }
+}
+
 
 
 export {testNameChange, 
@@ -66,4 +73,5 @@ export {testNameChange,
     clickQuestion,
     deleteQuestion,
     answerBodyChange,
-    deleteAnswer}
+    deleteAnswer,
+    selectAnswer}

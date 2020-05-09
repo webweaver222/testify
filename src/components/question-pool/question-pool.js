@@ -12,7 +12,7 @@ class QuestionPool extends React.Component {
   
 
     render() {
-        const { questions, onDnd, onActive, onDelete } = this.props
+        const { questions, onDnd, onActive, onDelete, onAdd } = this.props
        
         return (
             <div className="question-pool">
@@ -20,25 +20,35 @@ class QuestionPool extends React.Component {
                     items={questions}
                     itemRenderer={(question, index) => {
 
+                        const addQuestionBtn = (index === questions.length -1) ? 
+                        <div className="add-button"> 
+                            <i className="fa fa-plus-circle"
+                            onClick={onAdd}></i>
+                        </div>: null
+
                         const delete_visility = index === 0? 
                          { visibility: 'hidden'} : null
                         
                         return (
+                            <React.Fragment>
                             <div className="question"
                             
                             onClick={() => onActive(index)}>
                             <div className="question-header">
+                            <div className='question-header-title'>Question {index+1}</div>
                             <i className="fa fa-times"  style={delete_visility} onClick={(event) => {
                             event.stopPropagation()
                             onDelete(index)
                             }}></i>
                             </div>
                             <p>{question.body}</p></div>
+                            {addQuestionBtn}</React.Fragment>
                         );
                     }}
                     onChange={onDnd}
                 />
             </div>
+           
         )
     }
 }
@@ -54,7 +64,8 @@ const mapDispatchToProps = (dispatch)=> {
     return bindActionCreators({
             onDnd: (newItems) => handleDnD(newItems),
             onActive: (id) => clickQuestion(id),
-            onDelete: (id) => deleteQuestion(id)
+            onDelete: (id) => deleteQuestion(id),
+            onAdd: () => 'CLICK_ADD_QUESTION'
         
     }, dispatch)
    }

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { connect } from 'react-redux';
-import {questionBodyChange, answerBodyChange, deleteAnswer} from '../../actions/creatorActions'
+import {questionBodyChange, answerBodyChange, deleteAnswer, selectAnswer} from '../../actions/creatorActions'
 
 
 
@@ -9,8 +9,8 @@ import './question.sass'
 
 
 const Question = ({question, onNext, onPrev, onChangeQuestionBody, 
-    onChangeAnswerBody, onAddAnswer, onDeleteAnswer}) => {
-        console.log(question.answers)
+    onChangeAnswerBody, onAddAnswer, onDeleteAnswer, onSelectAnswer}) => {
+        console.log(question)
     const renderAnswers = () => {
         return question.answers.map((answer, i,arr) => {
 
@@ -31,7 +31,8 @@ const Question = ({question, onNext, onPrev, onChangeQuestionBody,
                     <label htmlFor="answer-body">{i+1}</label>
                     <input name ='answer-body' type="text"  value={answer.body}
                     className = {active}
-                    onChange={(e) => onChangeAnswerBody(answer.id, e.target.value)}/>
+                    onChange={(e) => onChangeAnswerBody(answer.id, e.target.value)}
+                    onClick = {() => onSelectAnswer(answer.id)}/>
                     {deleteBtn}
                     {addBtn}
                 </div>
@@ -78,7 +79,8 @@ const mapStateToProps = ({}) => {
         onChangeQuestionBody:  (body) => dispatch(questionBodyChange(body)),
         onChangeAnswerBody: (answerId, body) => dispatch(answerBodyChange(answerId, body)),
         onAddAnswer: () => dispatch('CLICK_ADD_ANSWER'),
-        onDeleteAnswer: (id) => dispatch(deleteAnswer(id))
+        onDeleteAnswer: (id) => dispatch(deleteAnswer(id)),
+        onSelectAnswer : (id) => dispatch(selectAnswer(id))
      }
     }
 

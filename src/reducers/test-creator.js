@@ -12,11 +12,11 @@ const initialTest = {
             answers: [
                 {
                     id: 0,
-                    body: 'ans1'
+                    body: 'Answer #1'
                 },
                 {
                     id: 1,
-                    body: 'ans2'
+                    body: 'Answer #2'
                 },
             ]
         }
@@ -39,7 +39,6 @@ const upadateTestCreator = (state, action) => {
     if (state === undefined) {
         return {
             ...initialTest,
-            //questions: test()
         }
     }
 
@@ -90,7 +89,6 @@ const upadateTestCreator = (state, action) => {
         }
 
         case 'SELECT_QUESTION_NEXT': {
-            //const idx = questions.findIndex(q => q.id === active)
 
             if (!questions[idx + 1]) {
                 const newId = Math.max(...questions.map(q => q.id), 0) + 1
@@ -108,7 +106,7 @@ const upadateTestCreator = (state, action) => {
         }
 
         case 'SELECT_QUESTION_PREV': {
-            //const idx = questions.findIndex(q => q.id === active)
+           
             if (!questions[idx-1]) {
                 return testCreator
             }
@@ -119,7 +117,6 @@ const upadateTestCreator = (state, action) => {
         }
 
         case 'CHANGE_QUESTION_BODY': {
-            //const idx = questions.findIndex(q => q.id === active)
 
             const updatedQuestion = {
                 ...questions[idx],
@@ -132,7 +129,7 @@ const upadateTestCreator = (state, action) => {
         }
 
         case 'CHANGE_ANSWER_BODY': {
-            //const idx = questions.findIndex(q => q.id === active)
+            
             const ansIdx = questions[idx].answers.findIndex(a => a.id === action.id)
 
 
@@ -173,9 +170,11 @@ const upadateTestCreator = (state, action) => {
         case 'CLICK_DELETE_ANSWER' : {
             const ansIdx = questions[idx].answers.findIndex(a=>a.id === action.payload)
            
+            const selectedAns = action.payload === questions[idx].rightAnswer ? 0 : questions[idx].rightAnswer
 
             const updatedQuestion = {
                 ...questions[idx],
+                rightAnswer : selectedAns,
                 answers: updateArray(questions[idx].answers, 'remove', ansIdx)
             }
 
@@ -183,6 +182,28 @@ const upadateTestCreator = (state, action) => {
                 ...testCreator,
                 questions: updateArray(questions, updatedQuestion, idx)
             }
+        }
+
+        case 'CLICK_SELECT_ANSWER' : {
+
+            const updatedQuestion = {
+                ...questions[idx],
+                rightAnswer: action.payload
+            }
+
+            return {
+                ...testCreator,
+                questions: updateArray(questions, updatedQuestion, idx)
+            }
+        }
+
+        case 'CLICK_ADD_QUESTION' : {
+            const newId = Math.max(...questions.map(q => q.id), 0) + 1
+                return {
+                    ...testCreator,
+                    questions: addQuestion(questions, newId),
+                    active: newId
+                }
         }
 
 
