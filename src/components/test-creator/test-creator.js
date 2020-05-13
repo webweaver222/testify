@@ -1,55 +1,70 @@
 import React from 'react'
+import { Route, Switch } from 'react-router-dom';
 
 import './test-creator.sass'
 import { connect } from 'react-redux';
-
-
-//import Row from '../helpers/row'
+import {compose} from '../../utils'
+import {withRouter} from 'react-router-dom';
 
 import TestCreatorMain from '../test-creator-main'
 import Question from '../question'
 import QuestionPool from '../question-pool'
-import RenderQuestionCreator from '../question/renderQuestionCreator'
+import Publisher from '../publisher'
+import { publishTest } from '../../actions/creatorActions'
 
 class TestCreator extends React.Component {
 
 
+    onPublishTest = () => {
+        this.props.publishTest()
+    }
 
-    render () {
-        const {questions, active} = this.props
+    render() {
+        const { questions, active, history } = this.props
 
         const question = questions.find(q => q.id === active)
-        
-        
+
+
         return (
             <div className="test-creator">
-               <div className="left">
-                    <TestCreatorMain/>
-                    <Question question={question}/>
-                       
+                
+                <Switch>
+                    <Route path="/" exact>
+                        <div className="left">
+                            <TestCreatorMain onPublishTest={this.onPublishTest} />
+                            <Question question={question} />
+                        </div>
+                        <div className="right">
+                            <QuestionPool questions={questions} />
+                        </div>
+                    </Route>
+
+                    <Route path="/test" exact>
+                        <Publisher questions={questions} onBack={() => history.goBack()}/>
+                    </Route>
                         
-                        
-               </div>
-               <div className="right">
-                    <QuestionPool questions = {questions}/>
-               </div>
+        
+                </Switch>
             </div>
         )
     }
 }
 
-const mapStateToProps = ({testCreator: {questions, active}}) => {
+const mapStateToProps = ({ testCreator: { questions, active } }) => {
     return {
-       questions: questions,
-        active
+        questions: questions,
+        active 
     };
-  };
+};
 
-  const mapDispatchToProps = (dispatch)=> {
-     return {
-       
-     }
+const mapDispatchToProps = (dispatch, {history}) => {
+    return {
+        publishTest: publishTest(dispatch, history)
     }
+}
 
 
-export default connect(mapStateToProps, null)(TestCreator)
+export default compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(TestCreator)

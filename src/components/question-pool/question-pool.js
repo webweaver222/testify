@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
+
 
 import './question-pool.sass'
 import {handleDnD, clickQuestion, deleteQuestion} from '../../actions/creatorActions'
+
 
 import RLDD from 'react-list-drag-and-drop/lib/RLDD';
 
@@ -12,7 +13,7 @@ class QuestionPool extends React.Component {
   
 
     render() {
-        const { questions, onDnd, onActive, onDelete, onAdd } = this.props
+        const { questions, onDnd, onActive, onDelete, onAdd, onHover} = this.props
        
         return (
             <div className="question-pool">
@@ -31,8 +32,9 @@ class QuestionPool extends React.Component {
                         
                         return (
                             <React.Fragment>
-                            <div className="question"
                             
+                            <div className="question"
+                            onMouseEnter = {onHover}
                             onClick={() => onActive(index)}>
                             <div className="question-header">
                             <div className='question-header-title'>Question {index+1}</div>
@@ -42,7 +44,9 @@ class QuestionPool extends React.Component {
                             }}></i>
                             </div>
                             <p>{question.body}</p></div>
-                            {addQuestionBtn}</React.Fragment>
+                            {addQuestionBtn}
+                            
+                            </React.Fragment>
                         );
                     }}
                     onChange={onDnd}
@@ -60,14 +64,17 @@ class QuestionPool extends React.Component {
     };
   };
 */
-const mapDispatchToProps = (dispatch)=> {
-    return bindActionCreators({
-            onDnd: (newItems) => handleDnD(newItems),
-            onActive: (id) => clickQuestion(id),
-            onDelete: (id) => deleteQuestion(id),
-            onAdd: () => 'CLICK_ADD_QUESTION'
-        
-    }, dispatch)
+const mapDispatchToProps = (dispatch, {onActive})=> {
+    
+    return {
+            onDnd: (newItems) => dispatch(handleDnD(newItems)),
+            onActive: (onActive) || ((id) => dispatch(clickQuestion(id))),
+            onDelete: (id) => dispatch(deleteQuestion(id)),
+            onAdd: () => dispatch('CLICK_ADD_QUESTION')
+    }
    }
+
+
+  
 
 export default connect(null ,mapDispatchToProps)(QuestionPool)

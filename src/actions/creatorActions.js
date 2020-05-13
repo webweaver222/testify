@@ -64,6 +64,14 @@ const selectAnswer = (id) => {
     }
 }
 
+const publishTest = (dispatch, history) => () => {
+    dispatch('CLICK_PUBLISH_TEST')
+    dispatch('FETCH_PREP')
+    history.push('/test')
+
+   
+}
+
 
 
 export {testNameChange, 
@@ -74,4 +82,5 @@ export {testNameChange,
     deleteQuestion,
     answerBodyChange,
     deleteAnswer,
-    selectAnswer}
+    selectAnswer,
+    publishTest}

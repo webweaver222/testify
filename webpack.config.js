@@ -31,7 +31,8 @@ module.exports = (env = {}) => {
         mode: isProd? 'production': isDev && 'development',
 
         output: {
-            filename: isProd? 'main-[hash:8].js' : undefined
+            filename: isProd? 'main-[hash:8].js' : undefined,
+            publicPath: '/'
         },
 
         module: {
@@ -99,7 +100,10 @@ module.exports = (env = {}) => {
 
         devServer: {
             open: true,
-            port: 8000
+            port: 8000,
+            historyApiFallback: true,
+            contentBase: './',
+            hot: true
         }
     }
 }

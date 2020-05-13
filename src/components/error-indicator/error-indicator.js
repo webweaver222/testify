@@ -1,13 +1,18 @@
 import React from 'react'
 
-const ErrorIndicator = ({error = null}) => {
 
-    
+import './error-indicator.sass'
+
+const ErrorIndicator = ({message = null, type}) => {
+
+    const errorType = type === 'error'? 
+    'alert alert-danger' : 'alert alert-warning'
 
     return (
         <div className="error-indicator">
-            Somthing went wrong
-            {error}
+            <div className={errorType} >
+                <p>{message}</p>
+            </div>
         </div>
     )
 }

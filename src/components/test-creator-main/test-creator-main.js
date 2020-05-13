@@ -2,35 +2,51 @@ import React from 'react'
 import { connect } from 'react-redux';
 import './test-creator-main.sass'
 
+import ErrorIndicator from '../error-indicator'
+
 import {testNameChange, testDescriptionChange} from '../../actions/creatorActions'
 
-const TestCreatorMain = ({testName, testDerscription,
+const TestCreatorMain = ({onPublishTest, testName, testDerscription, testNameError,
                     onNameChange, onDescriptionChange}) => {
+
+    const errorNotif = testNameError? 
+    <ErrorIndicator message={testNameError}
+    type='error' /> : null
+
+    const inputClass =  testNameError? 'withError': ''
+
     
     return (
         <div className="test-creator-main">
             <div className="row">
             <label htmlFor="test-name">Test Name</label>
             <input name ='test-name' type="text" 
+            className={inputClass}
+            value={testName}
             onChange={(e) => onNameChange(e.target.value)}/>
+            <div className="notification">
+            {errorNotif}
+            </div>
             </div>
 
             <div className="row">
             <label htmlFor="test-descr">Description</label>
             <textarea name ='test-descr' rows="4" cols="30"
+            value={testDerscription}
              onChange={(e) => onDescriptionChange(e.target.value)}/>
             </div>
 
-            <button className="btn btn-primary">Publish test</button>
+            <button className="btn btn-primary" onClick={onPublishTest}>Publish test</button>
         </div>
     )
 }
 
-const mapStateToProps = ({testCreator: {testName, testDerscription}}) => {
+const mapStateToProps = ({testPublisher: {testNameError},testCreator: {testName, testDerscription}}) => {
 
     return {
         testName,
-        testDerscription
+        testDerscription,
+        testNameError
     };
   };
 
