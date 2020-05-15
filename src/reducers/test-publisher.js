@@ -1,5 +1,6 @@
 const initialPublisher = {
-    testNameError: null
+    testNameError: null,
+    hoveredQuestion: null
 }
 
 const upadateTestPublisher = (state, action) => {
@@ -11,9 +12,18 @@ const upadateTestPublisher = (state, action) => {
         }
     }
 
-    const {testPublisher, testPublisher: {testNameError}, testCreator} = state
+    const {testPublisher, testPublisher: {testNameError, hoveredQuestion}, testCreator} = state
    
     switch (action.type) {
+
+        case 'PUBLISH_HOVER_QUESTION' : {
+           const id = action.payload === hoveredQuestion ? null : action.payload
+                
+            return {
+                ...testPublisher,
+                hoveredQuestion: id
+            }
+        }
 
         case 'CLICK_PUBLISH_TEST' : {
             return {

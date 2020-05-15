@@ -5,48 +5,78 @@
     border-radius: 20px
     margin: 20px auto
     .dl-item
-       display: inline-flex
        width: 18%
        margin: 10px 0 10px 10px
-    .add-button
+       display: inline-flex
+    .question-wrapper
+        width: 100%
         position: relative
-        display: flex
-        align-items: center
-        animation: fadein .5s
-        i
-            font-size: 22px
-            position: absolute
-            left: 5px
-            color: $lightBlue
-            &:hover
-                color: darken($lightBlue, 15%)
-    .question
-        background-color: LightGreen
-        border-radius: 5px
-        color: $accent
-        height: 56px 
-        margin: 0 0 0 0
-        padding: 0
-        cursor: pointer
-        border: 1px solid black
-        animation: fadein .5s
-        .question-header
+        display: inline-flex
+        .add-button
             position: relative
-            width: 100%
-            margin: 0 0 2px 0
-            border-bottom: 1px dotted black
-            &-title
-                float: left
-                font-size: 13px
-                padding: 4px 0 0 4px
+            display: flex
+            align-items: center
+            animation: fadein .5s
             i
-                float: right
-                color: $accent
-                margin: 1px 1px 0 0
+                font-size: 22px
+                position: absolute
+                left: 5px
+                color: $lightBlue
                 &:hover
-                    color: $lightBlue
-        p
-            overflow: hidden
-            word-break: break-all
-        &:drop
-            background-color: red
+                    color: darken($lightBlue, 15%)
+        .question
+            background-color: LightGreen
+            border-radius: 5px
+            color: $accent
+            height: 30px
+            margin: 0 0 0 0
+            padding: 0
+            cursor: pointer
+            border: 1px solid black
+            animation: fadein .5s
+            .question-header
+                position: relative
+                width: 100%
+                margin: 0 0 2px 0
+                border-bottom: 1px dotted black
+                &-title
+                    float: left
+                    font-size: 13px
+                    padding: 4px 0 0 4px
+                i
+                    float: right
+                    color: $accent
+                    margin: 1px 1px 0 0
+                    &:hover
+                        color: $lightBlue
+            p
+                overflow: hidden
+                word-break: break-all
+            /*&:drop
+                background-color: red*/
+        .dropdown-question
+            visibility: hidden
+            position: absolute
+            z-index: 2
+            top: 30px
+            right: 0
+            background-color: lighten($lightBlue, 30%)
+            border: 1px solid $lightBlue
+            border-radius: 10px
+            padding: 15px
+            width: 200%
+            .question-body 
+                overflow: hidden
+                word-break: break-all
+                border-bottom: 1px solid $lightBlue
+                max-height: 80px
+            .question-answers
+                list-style: none
+                li
+                    margin: 4px 0
+                    overflow: hidden
+                    word-break: break-all
+                    max-height: 16px
+        .question-hovered
+            visibility: visible
+            animation: fadein .5s

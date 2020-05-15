@@ -64,6 +64,13 @@ const selectAnswer = (id) => {
     }
 }
 
+const questionHover = (id) => {
+    return {
+        type: 'PUBLISH_HOVER_QUESTION',
+        payload: id
+    }
+}
+
 const publishTest = (dispatch, history) => () => {
     dispatch('CLICK_PUBLISH_TEST')
     dispatch('FETCH_PREP')
@@ -83,4 +90,5 @@ export {testNameChange,
     answerBodyChange,
     deleteAnswer,
     selectAnswer,
-    publishTest}
+    publishTest,
+    questionHover}

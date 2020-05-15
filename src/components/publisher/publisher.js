@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux';
 
+
 import QuestionPool from '../question-pool'
 import './publisher.sass'
 
-const Publisher = ({questions, onBack, onHoverQuestion}) => {
+const Publisher = ({questions, onBack}) => {
     return (
         <div className="publisher">
         <h2>Publish page</h2>
@@ -16,7 +17,7 @@ const Publisher = ({questions, onBack, onHoverQuestion}) => {
             <label htmlFor="">Estimated time (min)</label>
             <input className="time-input" type="number"/>
         </div>
-        <QuestionPool questions={questions} onHover={onHoverQuestion} onActive={() => console.log('clicked')}/>
+        <QuestionPool questions={questions} />
         <div className="row control-buttons">
         <button className="btn btn-info" onClick={onBack}>Back</button>
         <button className="btn btn-info publish-final">Publish Test</button>
@@ -26,9 +27,8 @@ const Publisher = ({questions, onBack, onHoverQuestion}) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        onHoverQuestion: () => console.log('hover')
-    }
+    return {}
+       
 }
 
 export default connect(null, mapDispatchToProps)(Publisher)
