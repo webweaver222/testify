@@ -1,6 +1,6 @@
 const initialPublisher = {
     testNameError: null,
-    hoveredQuestion: null
+    emptyQuestions: []
 }
 
 const upadateTestPublisher = (state, action) => {
@@ -16,14 +16,6 @@ const upadateTestPublisher = (state, action) => {
    
     switch (action.type) {
 
-        case 'PUBLISH_HOVER_QUESTION' : {
-           const id = action.payload === hoveredQuestion ? null : action.payload
-                
-            return {
-                ...testPublisher,
-                hoveredQuestion: id
-            }
-        }
 
         case 'CLICK_PUBLISH_TEST' : {
             return {
@@ -33,11 +25,20 @@ const upadateTestPublisher = (state, action) => {
         }
 
         case 'FETCH_PREP': {
-            if (testNameError === null) {
+            //if (testNameError === null) {
+                const empty = []
+                testCreator.questions.forEach((question) => {
+                    if (question.body === '' || (question.answers.filter(a=>a.body !== '').length < 2))  {
+                        empty.push(question.id)
+                    }
+                })
+
+
                 return {
-                    ...testPublisher
+                    ...testPublisher,
+                    emptyQuestions: empty
                 }
-            }
+            //}
         }
 
         default: 

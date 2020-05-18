@@ -10,7 +10,7 @@ import './question.sass'
 
 const Question = ({question, onNext, onPrev, onChangeQuestionBody, 
     onChangeAnswerBody, onAddAnswer, onDeleteAnswer, onSelectAnswer}) => {
-        console.log(question)
+        
     const renderAnswers = () => {
         return question.answers.map((answer, i,arr) => {
 
@@ -40,6 +40,7 @@ const Question = ({question, onNext, onPrev, onChangeQuestionBody,
         })
     }
     
+
     return (
         
         <div className="question">

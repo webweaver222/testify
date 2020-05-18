@@ -4,6 +4,7 @@ const initialTest = {
     testName: '',
     testDerscription: '',
     active: 0,
+    hoveredQuestion: null,
     questions: [
         {
             id: 0,
@@ -27,10 +28,21 @@ const upadateTestCreator = (state, action) => {
 
     const test = () => {
             const arr = []
-            for (let i = 0; i< 20; i++) {
+            for (let i = 0; i< 49; i++) {
                 arr.push({
                     id: i,
-                    body: `${i}`
+                    body: `${i}`,
+                    rightAnswer: 0,
+            answers: [
+                {
+                    id: 0,
+                    body: 'Answer #1'
+                },
+                {
+                    id: 1,
+                    body: 'Answer #2'
+                },
+            ]
                 })
             }
             return arr
@@ -39,11 +51,12 @@ const upadateTestCreator = (state, action) => {
     if (state === undefined) {
         return {
             ...initialTest,
+            //questions: test()
         }
     }
 
 
-    const { testCreator, testCreator: { active, questions } } = state
+    const { testCreator, testCreator: { active, questions, hoveredQuestion } } = state
 
     const idx = questions.findIndex(q => q.id === active)
 
@@ -62,6 +75,15 @@ const upadateTestCreator = (state, action) => {
 
             }
         }
+
+        case 'HOVER_QUESTION' : {
+            const id = action.payload === hoveredQuestion ? null : action.payload
+                 
+             return {
+                 ...testCreator,
+                 hoveredQuestion: id
+             }
+         }
 
         case 'CHANGE_DRAG_DROP': {
             return {
@@ -91,6 +113,8 @@ const upadateTestCreator = (state, action) => {
         case 'SELECT_QUESTION_NEXT': {
 
             if (!questions[idx + 1]) {
+                if (questions.length +1  > 50) return testCreator
+
                 const newId = Math.max(...questions.map(q => q.id), 0) + 1
                 return {
                     ...testCreator,

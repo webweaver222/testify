@@ -17,6 +17,7 @@ class QuestionPool extends React.Component {
 
         return (
             <div className="question-pool">
+                <h2>- Question Pool -</h2>
                 <RLDD
                     items={questions}
                     itemRenderer={(question, index) => {
@@ -24,7 +25,7 @@ class QuestionPool extends React.Component {
                         const questionClass = hoveredQuestion === question.id ? 
                         'dropdown-question question-hovered': 'dropdown-question'
 
-                        const addQuestionBtn = (index === questions.length - 1) ?
+                        const addQuestionBtn = (index === questions.length - 1 && questions.length < 50) ?
                             <div className="add-button">
                                 <i className="fa fa-plus-circle"
                                     onClick={onAdd}></i>
@@ -80,7 +81,7 @@ class QuestionPool extends React.Component {
     }
 }
 
-const mapStateToProps = ({testPublisher: {hoveredQuestion}}) => {
+const mapStateToProps = ({testCreator: {hoveredQuestion}}) => {
     return {
         hoveredQuestion
     };

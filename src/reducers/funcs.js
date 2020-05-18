@@ -18,6 +18,7 @@ export const updateArray = (items, newItem ,idx) => {
 
 
 export const addQuestion = (questions, newId) => {
+
    
     return [
         ...questions,

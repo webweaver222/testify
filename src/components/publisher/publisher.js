@@ -5,25 +5,50 @@ import { connect } from 'react-redux';
 import QuestionPool from '../question-pool'
 import './publisher.sass'
 
-const Publisher = ({questions, onBack}) => {
+const Publisher = ({questions, onBack, emptyQuestions, onPublish}) => {
+
+    const warning = emptyQuestions.length > 0 ? 
+
+    <div className="warning">
+           Question
+           {
+               questions.map((question,i) => {
+                    if (emptyQuestions.includes(question.id)) {
+                        return <span key={i}> {i+1} </span>
+                    }
+               })
+           } has empty body and/or less than two full answers. Thus will be deleted.
+    </div> :null
+
+
     return (
         <div className="publisher">
-        <h2>Publish page</h2>
-        <div className="row">
-            <label htmlFor="">Creator Email</label>
-            <input type="text"/>
-        </div>
-        <div className="row">
-            <label htmlFor="">Estimated time (min)</label>
-            <input className="time-input" type="number"/>
-        </div>
-        <QuestionPool questions={questions} />
-        <div className="row control-buttons">
-        <button className="btn btn-info" onClick={onBack}>Back</button>
-        <button className="btn btn-info publish-final">Publish Test</button>
-        </div>
+            <h2>Publish page</h2>
+            <div className="row">
+                <label htmlFor="">Creator Email</label>
+                <input type="text" />
+            </div>
+            <div className="row">
+                <label htmlFor="">Estimated time (min)</label>
+                <input className="time-input" type="number" />
+            </div>
+
+            {warning}
+
+            <QuestionPool questions={questions} />
+
+            <div className="row control-buttons">
+                <button className="btn btn-info" onClick={onBack}>Back</button>
+                <button className="btn btn-info publish-final" onClick={onPublish}>Publish Test</button>
+            </div>
         </div>
     )
+}
+
+const mapStateToProps = ({testPublisher: {emptyQuestions}}) => {
+    return {
+        emptyQuestions
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -31,4 +56,4 @@ const mapDispatchToProps = (dispatch) => {
        
 }
 
-export default connect(null, mapDispatchToProps)(Publisher)
+export default connect(mapStateToProps, null)(Publisher)

@@ -66,15 +66,40 @@ const selectAnswer = (id) => {
 
 const questionHover = (id) => {
     return {
-        type: 'PUBLISH_HOVER_QUESTION',
+        type: 'HOVER_QUESTION',
         payload: id
     }
 }
 
-const publishTest = (dispatch, history) => () => {
+const publishTest = (history) => () => (dispatch) => {
     dispatch('CLICK_PUBLISH_TEST')
     dispatch('FETCH_PREP')
     history.push('/test')
+}
+
+const finalPublish = (service) => () => async (dispatch, getState) => {
+   const { 
+    testCreator: {
+        active, 
+        hoveredQuestion, 
+        ...testCreator 
+    }
+    , testPublisher} = getState()
+
+   const notEmptyQuestions = testCreator.questions.filter((question) => 
+   !testPublisher.emptyQuestions.includes(question.id))
+
+   const test = {
+       ...testCreator,
+       questions: notEmptyQuestions,
+   }
+   try {
+   const res = await service.post(test)
+   } catch (e) {
+    
+   }
+
+   
 
    
 }
@@ -91,4 +116,5 @@ export {testNameChange,
     deleteAnswer,
     selectAnswer,
     publishTest,
-    questionHover}
+    questionHover,
+    finalPublish}
