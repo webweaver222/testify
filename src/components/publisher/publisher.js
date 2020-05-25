@@ -1,59 +1,25 @@
 import React from 'react'
-import { connect } from 'react-redux';
+
+import ErrorIndicator from '../error-indicator'
+import Preloader from '../preloader'
 
 
-import QuestionPool from '../question-pool'
-import './publisher.sass'
 
-const Publisher = ({questions, onBack, emptyQuestions, onPublish}) => {
+ const Publisher = ({content, preloader, error}) => {
 
-    const warning = emptyQuestions.length > 0 ? 
+    if (preloader) {
+        content = <Preloader/>
+    }
 
-    <div className="warning">
-           Question
-           {
-               questions.map((question,i) => {
-                    if (emptyQuestions.includes(question.id)) {
-                        return <span key={i}> {i+1} </span>
-                    }
-               })
-           } has empty body and/or less than two full answers. Thus will be deleted.
-    </div> :null
-
+    if (error) {
+        content = <ErrorIndicator message={error} type='error'/>
+    }
 
     return (
         <div className="publisher">
-            <h2>Publish page</h2>
-            <div className="row">
-                <label htmlFor="">Creator Email</label>
-                <input type="text" />
-            </div>
-            <div className="row">
-                <label htmlFor="">Estimated time (min)</label>
-                <input className="time-input" type="number" />
-            </div>
-
-            {warning}
-
-            <QuestionPool questions={questions} />
-
-            <div className="row control-buttons">
-                <button className="btn btn-info" onClick={onBack}>Back</button>
-                <button className="btn btn-info publish-final" onClick={onPublish}>Publish Test</button>
-            </div>
+            {content}
         </div>
     )
 }
 
-const mapStateToProps = ({testPublisher: {emptyQuestions}}) => {
-    return {
-        emptyQuestions
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {}
-       
-}
-
-export default connect(mapStateToProps, null)(Publisher)
+export default Publisher

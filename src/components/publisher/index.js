@@ -1,3 +1,4 @@
-import Publisher from './publisher'
 
-export default Publisher
+import publisherContainer from './publisher-container';
+
+export default publisherContainer

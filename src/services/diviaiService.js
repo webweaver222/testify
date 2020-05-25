@@ -1,13 +1,16 @@
 export default class DiviaiService {
 
-    _base = '...'
+    _base = 'http://localhost:3000'
 
-    post = (test) => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => reject({
-                ...test,
-                resault: 'Test saved'
-            }), 2000)
+    post = async (body, url) => {
+         return fetch(this._base + url, {
+            method: 'post',
+            credentials: 'include',
+            headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
         })
     }
 }

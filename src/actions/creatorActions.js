@@ -74,10 +74,13 @@ const questionHover = (id) => {
 const publishTest = (history) => () => (dispatch) => {
     dispatch('CLICK_PUBLISH_TEST')
     dispatch('FETCH_PREP')
-    history.push('/test')
+    history.push('/test/create/publish')
 }
 
 const finalPublish = (service) => () => async (dispatch, getState) => {
+
+    dispatch('SAVE_TEST_START')
+
    const { 
     testCreator: {
         active, 
@@ -93,15 +96,33 @@ const finalPublish = (service) => () => async (dispatch, getState) => {
        ...testCreator,
        questions: notEmptyQuestions,
    }
+   
+  
    try {
-   const res = await service.post(test)
-   } catch (e) {
+    const res = await service.post(test, '/test')
+    const body = await res.json()
     
+    if (!res.ok) {
+        return dispatch({
+            type: 'SAVE_TEST_FAIL',
+            payload: `Response status code ${res.status}. ${res.statusText}`
+        })
+     } 
+
+     dispatch({
+        type: 'SAVE_TEST_SUCCESS',
+        payload: body.testUrl
+     })
+
+    }
+   catch (e) {
+    dispatch({
+        type: 'SAVE_TEST_FAIL',
+        payload: `Can't reach server`
+    })
    }
-
    
 
-   
 }
 
 

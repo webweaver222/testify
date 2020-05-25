@@ -103,7 +103,8 @@ module.exports = (env = {}) => {
             port: 8000,
             historyApiFallback: true,
             contentBase: './',
-            hot: true
+            hot: true,
+            openPage: 'test/create'
         }
     }
 }

@@ -2,7 +2,7 @@ import { updateArray , addQuestion} from './funcs'
 
 const initialTest = {
     testName: '',
-    testDerscription: '',
+    testDescription: '',
     active: 0,
     hoveredQuestion: null,
     questions: [
@@ -71,7 +71,7 @@ const upadateTestCreator = (state, action) => {
         case 'CHANGE_TEST_DESCRIPTION': {
             return {
                 ...testCreator,
-                testDerscription: action.payload,
+                testDescription: action.payload,
 
             }
         }

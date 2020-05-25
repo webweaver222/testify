@@ -1,6 +1,9 @@
 const initialPublisher = {
     testNameError: null,
-    emptyQuestions: []
+    emptyQuestions: [],
+    savedTestUrl: null,
+    fetching: false,
+    error: null
 }
 
 const upadateTestPublisher = (state, action) => {
@@ -39,6 +42,32 @@ const upadateTestPublisher = (state, action) => {
                     emptyQuestions: empty
                 }
             //}
+        }
+
+        case 'SAVE_TEST_SUCCESS' : {
+
+
+            return {
+                ...testPublisher,
+                savedTestUrl: action.payload,
+                fetching: false
+            }
+        }
+
+        case 'SAVE_TEST_START' : {
+            return {
+                ...testPublisher,
+                savedTestUrl: action.payload,
+                fetching: true
+            }
+        }
+
+        case 'SAVE_TEST_FAIL' : {
+            return {
+                ...testPublisher,
+                fetching: false,
+                error: action.payload
+            }
         }
 
         default: 
