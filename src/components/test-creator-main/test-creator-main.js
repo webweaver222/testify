@@ -17,8 +17,8 @@ const TestCreatorMain = ({onPublishTest, testName, testDerscription, testNameErr
 
     
     return (
-        <div className="test-creator-main">
-            <div className="row">
+        <div className="test-creator-main white-block">
+            <div className="myrow">
             <label htmlFor="test-name">Test Name</label>
             <input name ='test-name' type="text" 
             className={inputClass}
@@ -29,7 +29,7 @@ const TestCreatorMain = ({onPublishTest, testName, testDerscription, testNameErr
             </div>
             </div>
 
-            <div className="row">
+            <div className="myrow">
             <label htmlFor="test-descr">Description</label>
             <textarea name ='test-descr' rows="4" cols="30"
             value={testDerscription}

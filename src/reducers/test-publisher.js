@@ -19,6 +19,8 @@ const upadateTestPublisher = (state, action) => {
    
     switch (action.type) {
 
+    
+
 
         case 'CLICK_PUBLISH_TEST' : {
             return {

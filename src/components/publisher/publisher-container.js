@@ -6,7 +6,8 @@ import QuestionPool from '../question-pool'
 import Publisher from './publisher'
 import './publisher.sass'
 
-const PublisherContainer = ({questions, onBack, emptyQuestions, onPublish, fetching, error}) => {
+const PublisherContainer = ({questions, onBack, emptyQuestions, 
+    onPublish, fetching, error, savedTestUrl, onNewTest}) => {
 
     const warning = emptyQuestions.length > 0 ? 
 
@@ -22,15 +23,15 @@ const PublisherContainer = ({questions, onBack, emptyQuestions, onPublish, fetch
     </div> :null
 
 
-    let content = 
+    let content = !savedTestUrl? 
         <React.Fragment>
             <h2>Publish page</h2>
-            <div className="row">
+            <div className="myrow">
                 <label htmlFor="">Creator Email</label>
                 <input type="text" />
             </div>
-            <div className="row">
-                <label htmlFor="">Estimated time (min)</label>
+            <div className="myrow">
+                <label htmlFor="">Time limit (min)</label>
                 <input className="time-input" type="number" />
             </div>
 
@@ -38,11 +39,19 @@ const PublisherContainer = ({questions, onBack, emptyQuestions, onPublish, fetch
 
             <QuestionPool questions={questions} />
 
-            <div className="row control-buttons">
+            <div className="myrow control-buttons">
                 <button className="btn btn-info" onClick={onBack}>Back</button>
                 <button className="btn btn-info publish-final" onClick={onPublish}>Publish Test</button>
             </div>
         </React.Fragment>
+        :
+        <div className="test-url">
+            <h2>Test has been saved</h2>
+            <span>Test link:</span>
+            <textarea defaultValue={savedTestUrl}></textarea>
+            <button className="btn btn-info"
+            onClick={onNewTest}>Create New Test</button>
+        </div>
 
 
     const preloader = fetching? true: null
@@ -51,17 +60,14 @@ const PublisherContainer = ({questions, onBack, emptyQuestions, onPublish, fetch
     return <Publisher content={content} preloader={preloader} error={error}/>
 }
 
-const mapStateToProps = ({testPublisher: {emptyQuestions, fetching, error}}) => {
+const mapStateToProps = ({testPublisher: {emptyQuestions, fetching, error, savedTestUrl}}) => {
     return {
         emptyQuestions, 
         fetching,
-        error
+        error,
+        savedTestUrl
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {}
-       
-}
 
 export default connect(mapStateToProps, null)(PublisherContainer)

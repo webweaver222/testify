@@ -71,6 +71,12 @@ const questionHover = (id) => {
     }
 }
 
+
+const createNewTest = (history) => () => (dispatch) => {
+   dispatch('RESET_STORE')
+   history.push('/test/create')
+}
+
 const publishTest = (history) => () => (dispatch) => {
     dispatch('CLICK_PUBLISH_TEST')
     dispatch('FETCH_PREP')
@@ -138,4 +144,5 @@ export {testNameChange,
     selectAnswer,
     publishTest,
     questionHover,
-    finalPublish}
+    finalPublish,
+    createNewTest}

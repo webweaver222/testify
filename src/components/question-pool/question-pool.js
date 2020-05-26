@@ -16,7 +16,7 @@ class QuestionPool extends React.Component {
         const { questions, onDnd, onActive, onDelete, onAdd, hoveredQuestion, onHover} = this.props
 
         return (
-            <div className="question-pool">
+            <div className="question-pool white-block">
                 <h2>- Question Pool -</h2>
                 <RLDD
                     items={questions}

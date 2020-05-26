@@ -11,7 +11,7 @@ import TestCreatorMain from '../test-creator-main'
 import Question from '../question'
 import QuestionPool from '../question-pool'
 import PublisherContainer from '../publisher'
-import { publishTest, finalPublish } from '../../actions/creatorActions'
+import { publishTest, finalPublish, createNewTest} from '../../actions/creatorActions'
 import withService from '../hoc/withService'
 
 class TestCreator extends React.Component {
@@ -39,7 +39,8 @@ class TestCreator extends React.Component {
 
                     <Route path={`${url}/publish`}>
                         <PublisherContainer questions={questions} onBack={() => history.goBack()}
-                        onPublish={() => this.props.onFinalPublish()}/>
+                        onPublish={() => this.props.onFinalPublish()}
+                        onNewTest={this.props.onNewTest}/>
                     </Route>
                 </Switch>   
         
@@ -60,6 +61,7 @@ const mapDispatchToProps = (dispatch, {history, service}) => {
     return bindActionCreators({
         publishTest: publishTest(history),
         onFinalPublish: finalPublish(service),
+        onNewTest: createNewTest(history)
     }, dispatch)
 }
 

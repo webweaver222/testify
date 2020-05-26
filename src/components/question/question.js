@@ -43,8 +43,8 @@ const Question = ({question, onNext, onPrev, onChangeQuestionBody,
 
     return (
         
-        <div className="question">
-                <div className="row">
+        <div className="question white-block">
+                <div className="myrow">
                     <label htmlFor="question-body">Question</label>
                     <textarea  value={question.body} name ='question-body' 
                     onChange={(e) => onChangeQuestionBody(e.target.value)}
