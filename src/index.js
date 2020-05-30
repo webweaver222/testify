@@ -12,12 +12,12 @@ import { ServiceProvider } from './components/service-provider'
 import App from './components/app'
 
 
-import diviaiService from './services/diviaiService'
+import TestifyApi from './services/testifyApi'
 import store from './store'
 
 
 
-const service = new diviaiService()
+const service = new TestifyApi()
 
 ReactDom.render(
     <Provider store={store}>

@@ -1,5 +1,6 @@
 import upadateTestCreator from './test-creator'
 import upadateTestPublisher from './test-publisher'
+import upadateTestProcess from './test-process'
 
 
 
@@ -15,7 +16,8 @@ const reducer = (state, action) => {
         default:
             return {
                 testCreator: upadateTestCreator(state, action),
-                testPublisher: upadateTestPublisher(state, action)
+                testPublisher: upadateTestPublisher(state, action),
+                testProcess: upadateTestProcess(state, action)
             }
     }
 

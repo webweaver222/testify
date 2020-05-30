@@ -106,14 +106,15 @@ const finalPublish = (service) => () => async (dispatch, getState) => {
   
    try {
     const res = await service.post(test, '/test')
-    const body = await res.json()
-    
+
     if (!res.ok) {
         return dispatch({
             type: 'SAVE_TEST_FAIL',
             payload: `Response status code ${res.status}. ${res.statusText}`
         })
-     } 
+     }
+
+    const body = await res.json()
 
      dispatch({
         type: 'SAVE_TEST_SUCCESS',
@@ -132,6 +133,36 @@ const finalPublish = (service) => () => async (dispatch, getState) => {
 }
 
 
+const getTest = (service) => (testId) => async (dispatch) => {
+
+     dispatch('FETCH_TEST_START')
+
+     try {
+        const res = await service.get(`/test/${testId}`)
+
+        if (!res.ok) {
+            return dispatch({
+                type: 'FETCH_TEST_FAIL',
+                payload: `Response status code ${res.status}. ${res.statusText}`
+            })
+        }
+
+        const body = await res.json()
+
+        dispatch({
+            type: 'FETCH_TEST_SUCCESS',
+            payload: body
+        })
+        
+     } catch (e) {
+        dispatch({
+            type: 'FETCH_TEST_FAIL',
+            payload: 'Can\'t reach server'
+        })
+     }
+}
+
+
 
 export {testNameChange, 
     testDescriptionChange,
@@ -145,4 +176,5 @@ export {testNameChange,
     publishTest,
     questionHover,
     finalPublish,
-    createNewTest}
+    createNewTest,
+    getTest}

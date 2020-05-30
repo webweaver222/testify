@@ -1,6 +1,18 @@
-export default class DiviaiService {
+export default class TestifyApi {
 
     _base = 'http://localhost:3000'
+
+    get = async(url) => {
+
+      return fetch(this._base + url, {
+          method: 'get',
+          credentials: 'include',
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          }
+      })
+  }
 
     post = async (body, url) => {
          return fetch(this._base + url, {

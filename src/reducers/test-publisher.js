@@ -59,7 +59,6 @@ const upadateTestPublisher = (state, action) => {
         case 'SAVE_TEST_START' : {
             return {
                 ...testPublisher,
-                savedTestUrl: action.payload,
                 fetching: true
             }
         }
