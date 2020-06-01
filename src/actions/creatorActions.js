@@ -162,6 +162,20 @@ const getTest = (service) => (testId) => async (dispatch) => {
      }
 }
 
+const studentNameChange = (name) => {
+    return {
+        type: 'CHANGE_STUDENT_NAME',
+        payload: name
+    }
+}
+
+const startTest = (service) => () => async (dispatch, getState) => {
+    const {testProcess: {studentName}} = getState()
+    if (studentName === '') return dispatch('START_TEST_FAIL')
+        
+        dispatch('START_TEST_PROCESS')
+}
+
 
 
 export {testNameChange, 
@@ -177,4 +191,6 @@ export {testNameChange,
     questionHover,
     finalPublish,
     createNewTest,
-    getTest}
+    getTest,
+    studentNameChange,
+    startTest}

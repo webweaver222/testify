@@ -1,7 +1,10 @@
 const initialProcess = {
     test: {},
+    studentName: '',
+    started: false,
     fetching: false,
-    error: null
+    error: null,
+    nameError: false
 }
 
 
@@ -37,6 +40,29 @@ const upadateTestProcess = (state, action) => {
                 fetching: false
             }
         }
+
+        case 'CHANGE_STUDENT_NAME': {
+            return {
+                ...testProcess,
+                studentName: action.payload
+            }
+        }
+
+        case 'START_TEST_PROCESS' : {
+            return {
+                ...testProcess,
+                started: true,
+                nameError: false
+            }
+        }
+
+        case 'START_TEST_FAIL' : {
+            return {
+                ...testProcess,
+               nameError: true
+            }
+        }
+
 
         default:
             return testProcess;

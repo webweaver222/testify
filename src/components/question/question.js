@@ -8,8 +8,8 @@ import {questionBodyChange, answerBodyChange, deleteAnswer, selectAnswer} from '
 import './question.sass'
 
 
-const Question = ({question, onNext, onPrev, onChangeQuestionBody, 
-    onChangeAnswerBody, onAddAnswer, onDeleteAnswer, onSelectAnswer}) => {
+const Question = ({question, onNext, onPrev, onSelectAnswer, onChangeQuestionBody, 
+    onChangeAnswerBody, onAddAnswer, onDeleteAnswer}) => {
         
     const renderAnswers = () => {
         return question.answers.map((answer, i,arr) => {

@@ -10,7 +10,8 @@ import { bindActionCreators } from 'redux'
 import './test-process.sass'
 
 import TestIntro from '../test-intro'
-import { getTest } from '../../actions/creatorActions'
+import TestRoom from '../test-room'
+import { getTest, startTest } from '../../actions/creatorActions'
 
 
 class TestProcess extends React.Component {
@@ -20,10 +21,6 @@ class TestProcess extends React.Component {
         this.props.onMount(id)
     }
 
-    componentDidUpdate() {
-
-    }
-
 
     render() {
         const {test, onStart} = this.props
@@ -31,28 +28,22 @@ class TestProcess extends React.Component {
         return (
             <div className="test-process">
                 <TestIntro onStartTest={onStart}/>
+                <TestRoom/>
             </div>
         )
     }
 }
 
 
-const mapStateToProps = ({ testProcess: {test} }) => {
-    return {
-        test
-    }
-}
-
-
-const mapDispatchToProps = (dispatch, { match, service }) => {
+const mapDispatchToProps = (dispatch, {service}) => {
     return bindActionCreators({
         onMount: (testId) => getTest(service)(testId),
-        onStart: () => {}
+        onStart: startTest(service)
     }, dispatch)
 }
 
 export default compose(
     withService,
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(null, mapDispatchToProps)
 )(TestProcess)
