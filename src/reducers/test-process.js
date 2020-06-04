@@ -1,5 +1,7 @@
 const initialProcess = {
     test: {},
+    current: 0,
+    answers: [],
     studentName: '',
     started: false,
     fetching: false,
@@ -7,15 +9,13 @@ const initialProcess = {
     nameError: false
 }
 
-
-
 const upadateTestProcess = (state, action) => {
 
     if (state === undefined) {
         return initialProcess;
     }
 
-    const {testProcess} = state
+    const {testProcess, testProcess: {current, answers}} = state
 
     switch (action.type) {
        case 'FETCH_TEST_START': {
@@ -29,6 +29,7 @@ const upadateTestProcess = (state, action) => {
             return {
                 ...testProcess,
                 test: action.payload,
+                answers: new Array(action.payload.questions.length),
                 fetching: false
             }
         }
@@ -63,6 +64,31 @@ const upadateTestProcess = (state, action) => {
             }
         }
 
+        case 'PROCESS_NEXT_QUESTION' : {
+            return {
+                ...testProcess,
+                current: current + 1
+            }
+        }
+
+        case 'PROCESS_PREV_QUESTION' : {
+            return {
+                ...testProcess,
+                current: current === 0 ? current : current - 1
+            }
+        }
+
+        case 'PROCESS_SELECT_QUESTION': {
+        
+            return {
+                ...testProcess,
+                answers: [
+                    ...answers.slice(0, action.q_idx),
+                    action.payload,
+                    ...answers.slice(action.q_idx + 1),
+                ]
+            }
+        }
 
         default:
             return testProcess;

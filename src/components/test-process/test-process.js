@@ -23,12 +23,13 @@ class TestProcess extends React.Component {
 
 
     render() {
-        const {test, onStart} = this.props
+        const {onStart , started} = this.props
+
+        const content = started? <TestRoom/> : <TestIntro onStartTest={onStart}/>
         
         return (
             <div className="test-process">
-                <TestIntro onStartTest={onStart}/>
-                <TestRoom/>
+                {content}
             </div>
         )
     }
@@ -45,5 +46,10 @@ const mapDispatchToProps = (dispatch, {service}) => {
 export default compose(
     withService,
     withRouter,
-    connect(null, mapDispatchToProps)
+    connect(
+        ({ testProcess: {started}}) => {
+            return {
+                started
+            }
+    }, mapDispatchToProps)
 )(TestProcess)

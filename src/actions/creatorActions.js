@@ -171,9 +171,20 @@ const studentNameChange = (name) => {
 
 const startTest = (service) => () => async (dispatch, getState) => {
     const {testProcess: {studentName}} = getState()
-    if (studentName === '') return dispatch('START_TEST_FAIL')
-        
-        dispatch('START_TEST_PROCESS')
+    if (studentName === '') 
+        return dispatch('START_TEST_FAIL')
+
+    dispatch('START_TEST_PROCESS')
+}
+
+
+const processAnswer = (idx, current) => {
+    
+    return {
+        type: 'PROCESS_SELECT_QUESTION',
+        payload: idx,
+        q_idx: current
+    }
 }
 
 
@@ -193,4 +204,5 @@ export {testNameChange,
     createNewTest,
     getTest,
     studentNameChange,
-    startTest}
+    startTest,
+    processAnswer}
