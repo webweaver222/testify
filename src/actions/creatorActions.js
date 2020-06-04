@@ -179,11 +179,18 @@ const startTest = (service) => () => async (dispatch, getState) => {
 
 
 const processAnswer = (idx, current) => {
-    
     return {
         type: 'PROCESS_SELECT_QUESTION',
         payload: idx,
         q_idx: current
+    }
+}
+
+
+const selectInField = (idx) => {
+    return {
+        type: 'PROCESS_SELECT_FIELD',
+        payload: idx
     }
 }
 
@@ -205,4 +212,5 @@ export {testNameChange,
     getTest,
     studentNameChange,
     startTest,
-    processAnswer}
+    processAnswer,
+    selectInField}

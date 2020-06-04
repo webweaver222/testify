@@ -90,6 +90,14 @@ const upadateTestProcess = (state, action) => {
             }
         }
 
+        case 'PROCESS_SELECT_FIELD': {
+            
+            return {
+                ...testProcess,
+                current: action.payload
+            }
+        }
+
         default:
             return testProcess;
     }

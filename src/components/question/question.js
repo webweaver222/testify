@@ -8,43 +8,45 @@ import { questionBodyChange, answerBodyChange, deleteAnswer, selectAnswer } from
 import './question.sass'
 
 
-const Question = ({ question, onNext, onPrev, 
-    selected = null,
+const Question = ({ question, onNext, onPrev,
+    current = null,
+    selectedAnswer = null,
     finalQuestion = null,
     mapDispatch = null,
     onFinishProcess = null,
-    onSelectAnswer, 
+    onSelectAnswer,
     onChangeQuestionBody,
-    onChangeAnswerBody, 
-    onAddAnswer, 
-    onDeleteAnswer}) => {
-        
+    onChangeAnswerBody,
+    onAddAnswer,
+    onDeleteAnswer }) => {
+
     const renderAnswers = () => {
         return question.answers.map((answer, i, arr) => {
 
             let activeAnswer = question.rightAnswer === answer.id ?
-            'active' : null 
+                'active' : null
+
 
             if (mapDispatch) {
-                activeAnswer =  i === selected?
-               'active' : null 
-           } 
+                activeAnswer = i === selectedAnswer ?
+                    'active' : null
+            }
 
             const addBtn = (i === arr.length - 1 && arr.length - 1 < 4) && (!mapDispatch) ?
                 <i className="fa fa-plus-square"
                     onClick={onAddAnswer}></i>
                 : null
 
-            const deleteBtn = i > 1 && !mapDispatch?
+            const deleteBtn = i > 1 && !mapDispatch ?
                 <i className="fa fa-trash"
                     onClick={() => onDeleteAnswer(answer.id)}></i> : null
 
-            const answerValue = !mapDispatch? answer.body : answer
+            const answerValue = !mapDispatch ? answer.body : answer
 
-            const selectAnswer = !mapDispatch? 
-            () => onSelectAnswer(answer.id) : () => onSelectAnswer(i)
+            const selectAnswer = !mapDispatch ?
+                () => onSelectAnswer(answer.id) : () => onSelectAnswer(i)
 
-           
+
 
 
             return (
@@ -61,9 +63,13 @@ const Question = ({ question, onNext, onPrev,
         })
     }
 
-    const rightButton = selected < finalQuestion ? 
-    <button onClick={onNext} className="btn btn-primary">Next</button>:
-    <button onClick={onFinishProcess} className="btn btn-primary">Finish</button>
+    let rightButton = <button onClick={onNext} className="btn btn-primary">Next</button>
+
+    if (mapDispatch) {
+        rightButton = current < finalQuestion - 1 ?
+            <button onClick={onNext} className="btn btn-primary">Next</button> :
+            <button onClick={onFinishProcess} className="btn btn-primary">Finish</button>
+    }
 
     return (
         <div className="question white-block">
@@ -88,7 +94,7 @@ const Question = ({ question, onNext, onPrev,
 
 
 
-const mapDispatchToProps = (dispatch , {mapDispatch}) => {
+const mapDispatchToProps = (dispatch, { mapDispatch }) => {
 
     if (mapDispatch) return mapDispatch(dispatch)
 

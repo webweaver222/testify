@@ -3,22 +3,23 @@ import { connect } from 'react-redux';
 
 import './test-room.sass'
 
-import {processAnswer} from '../../actions/creatorActions'
+import {processAnswer, selectInField} from '../../actions/creatorActions'
 import Question from '../question'
+import QuestionsField from '../questions-field'
 
 
 
+const TestRoom = ({test, current, answers, onFinishProcess, onSelectField}) => {
 
-const TestRoom = ({test, current, answers, onFinishProcess}) => {
-
-    /**<QuestionsField /> */
-   
+    
     return (
         <div className="test-room white-block">
             
+            <QuestionsField onSelectQuestion = {onSelectField}/>
             <Question question={test.questions[current]} 
-            finalQuestion = {test.questions.length - 1 }
-            selected={answers[current]} 
+            finalQuestion = {test.questions.length}
+            selectedAnswer={answers[current]}
+            current={current} 
             onFinishProcess = {onFinishProcess}
             mapDispatch={(dispatch) => {
                 return {
@@ -47,6 +48,7 @@ const mapStateToProps = ({ testProcess: {test, current, answers}}) => {
 
 const mapDispatchToProps = (dispatch, {service}) => {
     return {
+        onSelectField: (idx) => dispatch(selectInField(idx)),
         onFinishProcess: () => console.log('finish')//dispatch(() => finishProcess(service))
     }
 }
