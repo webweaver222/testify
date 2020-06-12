@@ -100,6 +100,8 @@ const finalPublish = (service) => () => async (dispatch, getState) => {
 
    const test = {
        ...testCreator,
+       publisherEmail: testPublisher.publisherEmail,
+       timeLimit: testPublisher. timeLimit,
        questions: notEmptyQuestions,
    }
    
@@ -149,11 +151,17 @@ const getTest = (service) => (testId) => async (dispatch) => {
 
         const body = await res.json()
 
+       
+        dispatch({
+            type: 'SET_TIMER',
+            payload: body.timeLimit
+        })
+        
         dispatch({
             type: 'FETCH_TEST_SUCCESS',
             payload: body
         })
-        
+   
      } catch (e) {
         dispatch({
             type: 'FETCH_TEST_FAIL',
@@ -170,11 +178,55 @@ const studentNameChange = (name) => {
 }
 
 const startTest = (service) => () => async (dispatch, getState) => {
-    const {testProcess: {studentName}} = getState()
-    if (studentName === '') 
+   
+    const {testProcess: {studentName , test : {id}}} = getState()
+    
+    if (!/\S+/.test(studentName)) 
         return dispatch('START_TEST_FAIL')
 
-    dispatch('START_TEST_PROCESS')
+
+    try {
+        const startExam = await service.get(`/test/${id}/start`)
+        const exam = await startExam.json()
+        
+        dispatch({
+            type:'START_TEST_PROCESS',
+            payload: exam.examId
+        })
+
+        
+        const startTimer = await service.get(`/test/${id}/startTimer/${exam.examId}`)
+        console.log(startTimer);
+        if (startTimer.statusText === 'Time Out1') {
+           return dispatch(sendTest(service)())
+        }
+    } catch (e) {
+        dispatch({
+            type: 'FETCH_TEST_FAIL',
+            payload: 'Can\'t reach server'
+        })
+    } 
+}
+
+const sendTest = (service) => () => async (dispatch, getState) => {
+    const {testProcess: {answers, examId, studentName}} = getState()
+   
+    try {
+        const res = await service.post({
+            studentName,
+            answers
+        }, `/test/${examId}/finish`)
+       
+        if (res.ok) {
+            return dispatch('TEST_FINISHED')
+        }
+
+    } catch (e) {
+        dispatch({
+            type: 'FETCH_TEST_FAIL',
+            payload: 'Can\'t reach server'
+        })
+    }
 }
 
 
@@ -195,7 +247,6 @@ const selectInField = (idx) => {
 }
 
 
-
 export {testNameChange, 
     testDescriptionChange,
     questionBodyChange,
@@ -212,5 +263,6 @@ export {testNameChange,
     getTest,
     studentNameChange,
     startTest,
+    sendTest,
     processAnswer,
     selectInField}

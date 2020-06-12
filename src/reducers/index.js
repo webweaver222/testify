@@ -1,6 +1,7 @@
 import upadateTestCreator from './test-creator'
 import upadateTestPublisher from './test-publisher'
 import upadateTestProcess from './test-process'
+import updateTimer from './timer'
 
 
 
@@ -17,7 +18,8 @@ const reducer = (state, action) => {
             return {
                 testCreator: upadateTestCreator(state, action),
                 testPublisher: upadateTestPublisher(state, action),
-                testProcess: upadateTestProcess(state, action)
+                testProcess: upadateTestProcess(state, action),
+                timer: updateTimer(state, action)
             }
     }
 

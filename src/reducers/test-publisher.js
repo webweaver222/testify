@@ -1,4 +1,6 @@
 const initialPublisher = {
+    publisherEmail: '',
+    timeLimit: 0,
     testNameError: null,
     emptyQuestions: [],
     savedTestUrl: null,
@@ -68,6 +70,20 @@ const upadateTestPublisher = (state, action) => {
                 ...testPublisher,
                 fetching: false,
                 error: action.payload
+            }
+        }
+
+        case 'CHANGE_PUBLISHER_EMAIL' : {
+            return {
+                ...testPublisher,
+                publisherEmail: action.payload
+            }
+        }
+
+        case 'CHANGE_TIME_LIMIT' : {
+            return {
+                ...testPublisher,
+                timeLimit: action.payload
             }
         }
 

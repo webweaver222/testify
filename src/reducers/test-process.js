@@ -1,9 +1,11 @@
 const initialProcess = {
     test: {},
+    examId: null,
     current: 0,
     answers: [],
     studentName: '',
     started: false,
+    finished: false,
     fetching: false,
     error: null,
     nameError: false
@@ -52,6 +54,7 @@ const upadateTestProcess = (state, action) => {
         case 'START_TEST_PROCESS' : {
             return {
                 ...testProcess,
+                examId: action.payload,
                 started: true,
                 nameError: false
             }
@@ -97,6 +100,15 @@ const upadateTestProcess = (state, action) => {
                 current: action.payload
             }
         }
+
+        case 'TEST_FINISHED' : {
+            return {
+                ...testProcess,
+                finished: true
+            }
+        }
+
+
 
         default:
             return testProcess;

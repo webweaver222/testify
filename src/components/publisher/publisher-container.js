@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import QuestionPool from '../question-pool'
 import Publisher from './publisher'
+import TestInfo from './test-info'
 import './publisher.sass'
 
 const PublisherContainer = ({questions, onBack, emptyQuestions, 
@@ -25,15 +26,7 @@ const PublisherContainer = ({questions, onBack, emptyQuestions,
 
     let content = !savedTestUrl? 
         <React.Fragment>
-            <h2>Publish page</h2>
-            <div className="myrow">
-                <label htmlFor="">Creator Email</label>
-                <input type="text" />
-            </div>
-            <div className="myrow">
-                <label htmlFor="">Time limit (min)</label>
-                <input className="time-input" type="number" />
-            </div>
+            <TestInfo/>
 
             {warning}
 
