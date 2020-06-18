@@ -7,6 +7,7 @@ import './resources/vars.sass'
 import './resources/reset.sass'
 import './resources/main.sass'
 
+
 import ErrorBoundry from './components/error-boundry'
 import { ServiceProvider } from './components/service-provider'
 import App from './components/app'
@@ -32,3 +33,4 @@ ReactDom.render(
     , document.getElementById('root'))
 
 
+    import './resources/media.sass'

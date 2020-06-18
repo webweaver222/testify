@@ -86,7 +86,7 @@ module.exports = (env = {}) => {
                         {
                             loader: 'sass-resources-loader',
                             options: {
-                              resources: ['./src/resources/vars.sass']
+                              resources: ['./src/resources/vars.sass' ]
                             },
                           } 
                     ]
@@ -99,6 +99,8 @@ module.exports = (env = {}) => {
         plugins: getPlugins(),
 
         devServer: {
+            host: '0.0.0.0',
+            disableHostCheck: true,
             open: true,
             port: 8000,
             historyApiFallback: true,

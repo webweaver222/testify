@@ -16,7 +16,9 @@ const TestRoom = ({test, current, answers, onFinishProcess, onSelectField}) => {
     
     return (
         <div className="test-room white-block">
+            <div className="timer-wrapper">
             <Timer/>
+            </div>
             <QuestionsField onSelectQuestion = {onSelectField}/>
             <Question question={test.questions[current]} 
             finalQuestion = {test.questions.length}

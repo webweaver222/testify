@@ -14,7 +14,17 @@ import PublisherContainer from '../publisher'
 import { publishTest, finalPublish, createNewTest} from '../../actions/creatorActions'
 import withService from '../hoc/withService'
 
+
 class TestCreator extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {height: props.height, width: props.width};
+      }
+    
+      componentWillMount(){
+        this.setState({height: window.innerHeight, width: window.innerWidth});
+      }
 
 
     render() {
@@ -22,17 +32,22 @@ class TestCreator extends React.Component {
 
         const question = questions.find(q => q.id === active)
 
+        const style = this.state.width < 480? {
+            height: this.state.height + 'px'
+        } : null
+
+      
 
         return (
             <div className="test-creator">
                 
                 <Switch>
                     <Route path={`${url}`} exact>
-                        <div className="left">
+                        <div className="left" style={style}>
                             <TestCreatorMain onPublishTest={() => this.props.publishTest()} />
                             <Question question={question} />
                         </div>
-                        <div className="right">
+                        <div className="right" style={style}>
                             <QuestionPool questions={questions} />
                         </div>
                     </Route>

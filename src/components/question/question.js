@@ -52,7 +52,7 @@ const Question = ({ question, onNext, onPrev,
             return (
                 <div className="answer" key={i}>
                     <label htmlFor="answer-body">{i + 1}</label>
-                    <input name='answer-body' type="text" value={answerValue}//
+                    <input name='answer-body' autoComplete="off" type="text" value={answerValue}//
                         className={activeAnswer}
                         onChange={(e) => onChangeAnswerBody(answer.id, e.target.value)}
                         onClick={selectAnswer} />
@@ -65,6 +65,8 @@ const Question = ({ question, onNext, onPrev,
 
     let rightButton = <button onClick={onNext} className="btn btn-primary">Next</button>
 
+    const questionLabel = !mapDispatch ? 'Question' : ''
+
     if (mapDispatch) {
         rightButton = current < finalQuestion - 1 ?
             <button onClick={onNext} className="btn btn-primary">Next</button> :
@@ -74,7 +76,7 @@ const Question = ({ question, onNext, onPrev,
     return (
         <div className="question white-block">
             <div className="myrow">
-                <label htmlFor="question-body">Question</label>
+                <label htmlFor="question-body">{questionLabel}</label>
                 <textarea value={question.body} name='question-body'
                     onChange={(e) => onChangeQuestionBody(e.target.value)}
                     type="text" rows="4" cols="40" />

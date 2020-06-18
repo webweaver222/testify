@@ -19,6 +19,15 @@ import { getTest, startTest, sendTest } from '../../actions/creatorActions'
 
 class TestProcess extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {height: props.height, width: props.width};
+      }
+    
+      componentWillMount(){
+        this.setState({height: window.innerHeight, width: window.innerWidth});
+      }
+
     calculateTimeFraction() {
         const {limit, timeLeft} = this.props
         const rawTimeFraction = timeLeft / limit;
@@ -82,8 +91,12 @@ class TestProcess extends React.Component {
                 <button className="btn-info">Show summury</button>
             </div> : null
 
+        const style = this.state.width < 480? {
+            height: this.state.height + 'px'
+        } : null
+
         return (
-            <div className="test-process">
+            <div className="test-process" style={style}>
             <Switch>
                 <Route path={`${url}`} exact>
                         {intro}
