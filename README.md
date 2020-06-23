@@ -4,7 +4,7 @@ SPA for creating and passing tests
 # Couple words
 This is my third project where i continue to learn web technologies. The idea of creating testing service was given by visitors of 2ch/pr internet forum.
 Functional requirements for app i defined by myself from the user point of view. Design of the project is rather rudimentary because never was a goal to achieve.
-This project should be used together with [testify_api] (https://github.com/webweaver222/testify_api). 
+This project should be used together with [testify_api](https://github.com/webweaver222/testify_api). 
 
 # App description
 
