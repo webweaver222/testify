@@ -1,6 +1,94 @@
+
 html, body
     height: 100%
+    font-family: Sora-Regular
+    font-size: 12px
+    overflow: hidden
     #root
         height: 100%
+        button
+            background-color: transparent
+            border: 2px solid $red
+            border-radius: 5px
+            padding: 10px 20px
+            cursor: pointer
+            font-family: Sora-Regular
+            text-transform: uppercase
+            color: $red
+            transition: all .4s ease
+            &:hover
+                background-color: rgba(0, 0, 0, 0.4)
+                color: darken($red, 20%)
+        .section-block
+            background-color: rgba(0, 0, 0, 0.6)
+            border-radius: 10px
+        .section-row
+            margin: 15px 0
+            display: flex
+            align-items: center
+            justify-content: center
+            label
+                color: $red
+                font-family: 'DrukBold'
+                font-size: 12px
+                text-transform: uppercase
+                letter-spacing: 1.5px
+                -webkit-text-stroke: 1.2px black
+            input, textarea
+                border: 2px solid rgb(142, 32, 32)
+                resize: none
+                border-radius: 5px
+                margin-left: 15px
+                padding: 5px
+                &:focus
+                    outline: none
+            .input-wrapper
+                position: relative
+                .input-error
+                    position: absolute
+                    cursor: pointer
+                    right: -200px
+                    top: -8px
+                    background-color: darken($red, 20%)
+                    padding: 20px 10px
+                    border-radius: 8px
+                    animation: fadein .5s
+                    &:before
+                        content: ""
+                        width: 0px
+                        height: 0px
+                        position: absolute
+                        border-left: 10px solid transparent
+                        border-right: 10px solid darken($red, 20%)
+                        border-top: 10px solid darken($red, 20%)
+                        border-bottom: 10px solid transparent
+                        left: -10px
+                        top: 16px
+
+        
+
+@font-face 
+    font-family: 'DrukBold'
+    src: url('./fonts/DrukWideBold.ttf')
+@font-face 
+    font-family: 'Sora-Regular'
+    src: url('./fonts/Sora-Regular.ttf')
+
+    
+@keyframes fadein 
+    from 
+        opacity: 0
+    to   
+        opacity: 1
+@keyframes pulse
+    0% 
+        background: transparent
+
+    50% 
+        background: yellow
+
+    100% 
+        background: transparent
+  
         
         

@@ -1,59 +1,80 @@
-import React from 'react'
-import { connect } from 'react-redux';
-import './test-creator-main.sass'
+import React from "react";
+import { connect } from "react-redux";
+import "./test-creator-main.sass";
 
-import ErrorIndicator from '../error-indicator'
+import {
+  testNameChange,
+  testDescriptionChange
+} from "../../actions/creatorActions";
 
-import {testNameChange, testDescriptionChange} from '../../actions/creatorActions'
+const TestCreatorMain = ({
+  onPublishTest,
+  testName,
+  testDerscription,
+  testNameError,
+  onNameChange,
+  onDescriptionChange,
+  onCloseNotif
+}) => {
+  const error = testNameError ? (
+    <div className="input-error" onClick={onCloseNotif}>
+      You hame to name your test
+    </div>
+  ) : null;
 
-const TestCreatorMain = ({onPublishTest, testName, testDerscription, testNameError,
-                    onNameChange, onDescriptionChange}) => {
+  const inputClass = testNameError ? "withError" : "";
 
-    const errorNotif = testNameError? 
-    <ErrorIndicator message={testNameError}
-    type='error' /> : null
-
-    const inputClass =  testNameError? 'withError': ''
-
-    
-    return (
-        <div className="test-creator-main white-block">
-            <div className="myrow">
-            <label htmlFor="test-name">Test Name</label>
-            <input name ='test-name' type="text" 
+  return (
+    <div className="test-creator-main section-block">
+      <div className="section-row">
+        <label htmlFor="test-name">Test Name</label>
+        <div className="input-wrapper">
+          <input
+            id="test-name"
+            type="text"
             className={inputClass}
+            style={testNameError ? { border: `2px solid red` } : null}
             value={testName}
-            onChange={(e) => onNameChange(e.target.value)}/>
-            <div className="notification">
-            {errorNotif}
-            </div>
-            </div>
-
-            <div className="myrow">
-            <label htmlFor="test-descr">Description</label>
-            <textarea name ='test-descr' rows="4" cols="30"
-            value={testDerscription}
-             onChange={(e) => onDescriptionChange(e.target.value)}/>
-            </div>
-
-            <button className="btn btn-primary" onClick={onPublishTest}>Publish test</button>
+            onChange={e => onNameChange(e.target.value)}
+          />
+          {error}
         </div>
-    )
-}
+      </div>
 
-const mapStateToProps = ({testPublisher: {testNameError},testCreator: {testName, testDerscription}}) => {
+      <div className="section-row">
+        <label htmlFor="test-descr">Description</label>
+        <textarea
+          id="test-descr"
+          rows="5"
+          value={testDerscription}
+          onChange={e => onDescriptionChange(e.target.value)}
+        />
+      </div>
 
-    return {
-        testName,
-        testDerscription,
-        testNameError
-    };
+      <div className="section-row">
+        <button className="btn btn-primary" onClick={onPublishTest}>
+          Publish test
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const mapStateToProps = ({
+  testPublisher: { testNameError },
+  testCreator: { testName, testDerscription }
+}) => {
+  return {
+    testName,
+    testDerscription,
+    testNameError
   };
+};
 
+const mapDispatchToProps = dispatch => ({
+  onCloseNotif: () => dispatch("CLOSE_INPUT_ERROR"),
+  onNameChange: t => dispatch(testNameChange(t)),
+  onDescriptionChange: t => dispatch(testDescriptionChange(t))
+});
 
-const mapDispatchToProps = {
-    onNameChange: testNameChange,
-    onDescriptionChange: testDescriptionChange
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TestCreatorMain)
+export default connect(mapStateToProps, mapDispatchToProps)(TestCreatorMain);

@@ -1,57 +1,57 @@
 .question
-    height: 50%
-    width: 90%
-    display: flex
-    flex-direction: column
-    justify-content: flex-start
-    align-items: center
-    padding: 30px 0 0 0
-    .answers-section
-        display: flex
+    height: 55vh
+    position: relative
+    textarea
+        width: 30%
+    .section-row.answers
         flex-direction: column
-        width: 55%
         .answer
+            width: 43%
             display: flex
-            justify-content: flex-end
+            justify-content: flex-start
             align-items: center
-            margin: 3% 0 0 0 
-            position: relative
-            animation: fadein .3s
-            .active
-                background-color: LightGreen
-                border-color: green
-            input
-                width: 90%
-                background-color: LightPink
+            margin-bottom: 12px
+            .checkbox
+                width: 17px
+                height: 17px
+                border: 2px solid $red
+                margin-right: 5px
                 cursor: pointer
-                border: 2px solid red
-                border-radius: 10px
-                padding: 0 0 0 5px
-                &:hover
-                    border-color: green
-                &:focus
-                    outline: 0
+                line-height: 17px
+                text-align: center
+                i
+                    color: $red
+                    font-size: 12px
+                    animation: fadein .5s
+            .active
+                  
             label
-                margin: 0 8px 0 0 
-            .fa-trash, .fa-plus-square
-                position: absolute
-                right: 0
-                bottom: -20px
-                color: $lightBlue
+                width: 14px
+                margin: 0 -5px 0 5px
+            input
+                width: 70%
+                margin-right: 5px
+            i
+                color: $red
+                font-size: 20px
+                cursor: pointer
+                transition: all .4s ease
                 &:hover
-                    color: darken($lightBlue, 15%)
-            .fa-trash
-                right: -20px
-                bottom: 5px
-                font-size: 17px
-                color: lighten(red, 15%)
-                &:hover
-                    color: red
-    .control-buttons
-        display: flex
-        width: 40%
-        margin: auto auto 5% auto
-        justify-content: space-between
-        
-        
-        
+                    color: darken($red, 20%)
+            .fa-plus-square
+                margin-left: 5px
+    .arrow
+        position: absolute
+        top: 50%
+        right: 25px
+        transform: translate(0, -50%)
+        i
+            font-size: 50px
+            color: $red
+            transition: all .4s ease
+            cursor: pointer
+            &:hover
+                color: darken($red, 20%)
+    .left-arrow
+        left: 25px
+        right: initial

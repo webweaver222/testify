@@ -31,12 +31,15 @@ module.exports = (env = {}) => {
     mode: isProd ? "production" : isDev && "development",
 
     output: {
+      path: require("path").resolve(__dirname, "build"),
       filename: isProd ? "main-[hash:8].js" : undefined,
       publicPath: "/"
     },
 
     module: {
       rules: [
+        { test: /(resources).*\.html$/i, loader: "html-loader" },
+
         {
           test: /\.js$/,
           exclude: /node_modules/,
@@ -61,7 +64,7 @@ module.exports = (env = {}) => {
         },
         // loading fonts
         {
-          test: /\.(ttf|otf|eof|woff|woff2)$/,
+          test: /\.(ttf|otf|eof|woff|woff2|eot)$/,
           use: [
             {
               loader: "file-loader",
@@ -102,7 +105,7 @@ module.exports = (env = {}) => {
       open: true,
       port: 8000,
       historyApiFallback: true,
-      contentBase: "./",
+      contentBase: isProd ? "./build" : "./",
       hot: true,
       openPage: "test/create"
     }

@@ -1,82 +1,29 @@
 .question-pool
-    height: 95%
-    width: 90%
+    height: 100%
     h2
+        color: $red
+        font-family: 'DrukBold'
+        font-size: 17px
+        text-transform: uppercase
+        letter-spacing: 1.5px
+        -webkit-text-stroke: 1.2px black
         text-align: center
-        font-size: 23px
-        padding: 15px 0
-    .dl-item
-       width: 18%
-       margin: 10px 0 10px 10px
-       display: inline-flex
-    .question-wrapper
-        width: 100%
-        position: relative
-        display: inline-flex
-        .add-button
-            position: relative
-            display: flex
-            align-items: center
-            animation: fadein .5s
-            i
-                font-size: 22px
-                position: absolute
-                left: 5px
-                color: $lightBlue
-                &:hover
-                    color: darken($lightBlue, 15%)
-        .question
-            background-color: LightGreen
-            border-radius: 5px
-            color: $accent
-            height: 30px
-            margin: 0 0 0 0
-            padding: 0
-            cursor: pointer
-            border: 1px solid black
-            animation: fadein .5s
-            .question-header
-                position: relative
+        margin: 5px 0
+    .dl-list
+        height: 100%
+        .dl-item
+            margin: 10px 5px
+            .question
                 width: 100%
-                margin: 0 0 2px 0
-                border-bottom: 1px dotted black
-                &-title
-                    float: left
-                    font-size: 13px
-                    padding: 4px 0 0 4px
-                i
-                    float: right
-                    color: $accent
-                    margin: 1px 1px 0 0
-                    &:hover
-                        color: $lightBlue
-            p
-                overflow: hidden
-            /*&:drop
-                background-color: red*/
-        .dropdown-question
-            visibility: hidden
-            position: absolute
-            z-index: 2
-            top: 30px
-            right: 0
-            background-color: lighten($lightBlue, 30%)
-            border: 1px solid $lightBlue
-            border-radius: 10px
-            padding: 15px
-            width: 200%
-            .question-body 
-                overflow: hidden
-                word-break: break-all
-                border-bottom: 1px solid $lightBlue
-                max-height: 80px
-            .question-answers
-                list-style: none
-                li
-                    margin: 4px 0
-                    overflow: hidden
-                    word-break: break-all
-                    max-height: 16px
-        .question-hovered
-            visibility: visible
-            animation: fadein .5s
+                height: 30px
+                background-color: rgba(255, 102, 102, .4)
+                border-radius: 10px
+                //overflow-x: hidden
+                display: flex
+                span
+                    font-size: 15px
+                    font-family: Sora-Regular
+                    font-weight: normal
+                    margin: auto 0
+                    padding-left: 10px
+                
