@@ -10,7 +10,6 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack --env.mode=production",
-    "postinstall": "webpack -p --config ./webpack.prod.config.js --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "alexZubaira",
