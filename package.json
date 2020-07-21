@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack --mode production --config ./webpack.prod.config.js",
+    "build": "webpack --env.mode=production",
+    "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "alexZubaira",
