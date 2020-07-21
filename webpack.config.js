@@ -102,7 +102,7 @@ module.exports = (env = {}) => {
       //host: '0.0.0.0',
       //disableHostCheck: true,
       open: true,
-      port: 8000,
+      port: process.env.PORT || 8000,
       historyApiFallback: true,
       contentBase: isProd ? "./build" : "./",
       hot: true,
