@@ -29,7 +29,6 @@ module.exports = (env = {}) => {
 
   return {
     mode: isProd ? "production" : isDev && "development",
-    entry: "./src/index.js",
     output: {
       path: require("path").resolve(__dirname, "build"),
       filename: isProd ? "main-[hash:8].js" : undefined,
@@ -103,11 +102,11 @@ module.exports = (env = {}) => {
       //host: '0.0.0.0',
       //disableHostCheck: true,
       open: true,
-      port: process.env.PORT || 8000,
+      port: 8000,
       historyApiFallback: true,
-      contentBase: "./build",
+      contentBase: isProd ? "./build" : "./",
       hot: true,
-      openPage: "test/create"
+      openPage: ""
     }
   };
 };
