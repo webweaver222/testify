@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { connect } from "react-redux";
 
 import "./question-pool.sass";
@@ -11,21 +11,26 @@ import {
 
 import RLDD from "react-list-drag-and-drop/lib/RLDD";
 
-class QuestionPool extends React.Component {
-  render() {
-    const {
-      questions,
-      onDnd,
-      onActive,
-      onDelete,
-      onAdd,
-      hoveredQuestion,
-      onHover
-    } = this.props;
+const QuestionPool = ({
+  questions,
+  onDnd,
+  onActive,
+  onDelete,
+  onAdd,
+  hoveredQuestion,
+  onHover,
+  onScrollPoll
+}) => {
+  const pool = useRef(null);
 
-    return (
-      <div className="question-pool">
-        <h2>- Question List -</h2>
+  const onScroll = e => {
+    pool.current.scrollTop += e.deltaY * 0.3;
+  };
+
+  return (
+    <div className="question-pool">
+      <h2>- Question List -</h2>
+      <div className="list-wrapper" onWheel={onScroll} ref={pool}>
         <RLDD
           items={questions}
           itemRenderer={(question, index) => {
@@ -74,9 +79,9 @@ class QuestionPool extends React.Component {
           onChange={onDnd}
         />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = ({ testCreator: { hoveredQuestion } }) => {
   return {
@@ -90,7 +95,8 @@ const mapDispatchToProps = (dispatch, { onActive }) => {
     onActive: onActive || (id => dispatch(clickQuestion(id))),
     onDelete: id => dispatch(deleteQuestion(id)),
     onAdd: () => dispatch("CLICK_ADD_QUESTION"),
-    onHover: id => dispatch(questionHover(id))
+    onHover: id => dispatch(questionHover(id)),
+    onScrollPoll: delta => dispatch({ type: "SCROLL_POOL", payload: delta })
   };
 };
 

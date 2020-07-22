@@ -3,6 +3,7 @@ import { updateArray, addQuestion } from "./funcs";
 const initialTest = {
   testName: "",
   testDescription: "",
+  scrollDelta: 0,
   active: 0,
   hoveredQuestion: null,
   questions: [
@@ -62,6 +63,13 @@ const upadateTestCreator = (state, action) => {
   const idx = questions.findIndex(q => q.id === active);
 
   switch (action.type) {
+    case "SCROLL_POOL": {
+      return {
+        ...testCreator,
+        scrollDelta: action.payload
+      };
+    }
+
     case "CHANGE_TEST_NAME": {
       return {
         ...testCreator,

@@ -106,7 +106,7 @@ module.exports = (env = {}) => {
       historyApiFallback: true,
       contentBase: isProd ? "./build" : "./",
       hot: true,
-      openPage: ""
+      openPage: "test/create"
     }
   };
 };
