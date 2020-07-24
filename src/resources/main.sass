@@ -1,4 +1,16 @@
-
+button
+        background-color: transparent
+        border: 2px solid $red
+        border-radius: 5px
+        padding: 10px 20px
+        cursor: pointer
+        font-family: Sora-Regular
+        text-transform: uppercase
+        color: $red
+        transition: all .4s ease
+        &:hover
+            background-color: rgba(0, 0, 0, 0.4)
+            color: darken($red, 20%)
 html, body
     height: 100%
     font-family: Sora-Regular
@@ -6,19 +18,6 @@ html, body
     overflow: hidden
     #root
         height: 100%
-        button
-            background-color: transparent
-            border: 2px solid $red
-            border-radius: 5px
-            padding: 10px 20px
-            cursor: pointer
-            font-family: Sora-Regular
-            text-transform: uppercase
-            color: $red
-            transition: all .4s ease
-            &:hover
-                background-color: rgba(0, 0, 0, 0.4)
-                color: darken($red, 20%)
         .section-block
             background-color: rgba(0, 0, 0, 0.6)
             border-radius: 10px

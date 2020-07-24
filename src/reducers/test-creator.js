@@ -3,9 +3,9 @@ import { updateArray, addQuestion } from "./funcs";
 const initialTest = {
   testName: "",
   testDescription: "",
-  scrollDelta: 0,
   active: 0,
-  hoveredQuestion: null,
+  detailsOn: null,
+  deleteConfirm: false,
   questions: [
     {
       id: 0,
@@ -57,16 +57,33 @@ const upadateTestCreator = (state, action) => {
 
   const {
     testCreator,
-    testCreator: { active, questions, hoveredQuestion }
+    testCreator: { active, questions, detailsOn }
   } = state;
 
   const idx = questions.findIndex(q => q.id === active);
 
   switch (action.type) {
-    case "SCROLL_POOL": {
+    case "DELETE_QUESTIONS_CONFIRM": {
+      return initialTest;
+    }
+
+    case "DELETE_QUESTIONS_REJECT": {
       return {
         ...testCreator,
-        scrollDelta: action.payload
+        deleteConfirm: false
+      };
+    }
+    case "CLICK_DELETE_ALL": {
+      return {
+        ...testCreator,
+        deleteConfirm: true
+      };
+    }
+
+    case "OPEN_DETAILS": {
+      return {
+        ...testCreator,
+        detailsOn: action.payload !== detailsOn ? action.payload : null
       };
     }
 
@@ -108,10 +125,11 @@ const upadateTestCreator = (state, action) => {
     }
 
     case "CLICK_DELETE_QUESTION": {
+      const idxToRemove = questions.findIndex(q => q.id === action.payload);
       return {
         ...testCreator,
-        active: questions[action.payload - 1].id,
-        questions: updateArray(questions, "remove", action.payload)
+        active: questions[idxToRemove - 1].id,
+        questions: updateArray(questions, "remove", idxToRemove)
       };
     }
 
