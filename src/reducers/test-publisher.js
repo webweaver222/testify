@@ -3,6 +3,7 @@ const initialPublisher = {
   publisherEmail: "",
   timeLimit: 0,
   testNameError: false,
+  emailError: false,
   emptyQuestions: [],
   savedTestUrl: null,
   fetching: false,
@@ -23,6 +24,20 @@ const upadateTestPublisher = (state, action) => {
   } = state;
 
   switch (action.type) {
+    case "EMPTY_EMAIL_SHOW": {
+      return {
+        ...testPublisher,
+        emailError: true
+      };
+    }
+
+    case "EMPTY_EMAIL_CLOSE": {
+      return {
+        ...testPublisher,
+        emailError: false
+      };
+    }
+
     case "CLOSE_INPUT_ERROR": {
       return {
         ...testPublisher,
@@ -33,19 +48,26 @@ const upadateTestPublisher = (state, action) => {
     case "SHOW_PUBLISHER": {
       return {
         ...testPublisher,
-        show: true
+        show: true,
+        testNameError: false
       };
     }
 
-    case "CLICK_PUBLISH_TEST": {
+    case "BACK_TO_CONSTRUCTOR": {
       return {
         ...testPublisher,
-        testNameError: testName === "" ? true : false
+        show: false
+      };
+    }
+
+    case "SHOW_TESTNAME_ERROR": {
+      return {
+        ...testPublisher,
+        testNameError: true
       };
     }
 
     case "FETCH_PREP": {
-      //if (testNameError === null) {
       const empty = [];
       testCreator.questions.forEach(question => {
         if (
@@ -74,7 +96,8 @@ const upadateTestPublisher = (state, action) => {
     case "SAVE_TEST_START": {
       return {
         ...testPublisher,
-        fetching: true
+        fetching: true,
+        error: null
       };
     }
 

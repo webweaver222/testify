@@ -5,6 +5,7 @@ const initialTest = {
   testDescription: "",
   active: 0,
   detailsOn: null,
+  hoveredQuestion: null,
   deleteConfirm: false,
   questions: [
     {
@@ -102,11 +103,11 @@ const upadateTestCreator = (state, action) => {
     }
 
     case "HOVER_QUESTION": {
-      const id = action.payload === hoveredQuestion ? null : action.payload;
+      //const id = action.payload === hoveredQuestion ? null : action.payload;
 
       return {
         ...testCreator,
-        hoveredQuestion: id
+        hoveredQuestion: action.payload
       };
     }
 

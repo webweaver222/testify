@@ -74,12 +74,6 @@ const Question = ({
     });
   };
 
-  let rightButton = (
-    <button onClick={onNext} className="btn btn-primary">
-      Next
-    </button>
-  );
-
   const questionLabel = !mapDispatch ? "Question" : "";
 
   if (mapDispatch) {

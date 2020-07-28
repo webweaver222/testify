@@ -1,12 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
+import { compose } from "../../utils";
 import { bindActionCreators } from "redux";
 
 import TestCreatorMain from "../test-creator-main";
 import Question from "../question";
 import QuestionPool from "../question-pool";
+import withService from "../hoc/withService";
 
 import "./testConstructor.sass";
+import { toPrePublish } from "../../actions/creatorActions";
 
 const TestConstructor = ({
   questions,
@@ -55,10 +58,10 @@ const mapStateToProps = ({
   };
 };
 
-const mapDispatchToProps = (dispatch, {}) => {
+const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      publishTest: () => dispatch("CLICK_PUBLISH_TEST"),
+      publishTest: () => dispatch(toPrePublish),
       onDeleteCondirm: () => dispatch("DELETE_QUESTIONS_CONFIRM"),
       onDeleteReject: () => dispatch("DELETE_QUESTIONS_REJECT")
     },
@@ -66,4 +69,7 @@ const mapDispatchToProps = (dispatch, {}) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TestConstructor);
+export default compose(
+  withService,
+  connect(mapStateToProps, mapDispatchToProps)
+)(TestConstructor);

@@ -1,69 +1,82 @@
 import React from "react";
 import { connect } from "react-redux";
+import { compose } from "../../utils";
 
-import QuestionPool from "../question-pool";
+import QuestionList from "../QuestionList";
 import Publisher from "./publisher";
 import TestInfo from "./test-info";
 import "./publisher.sass";
+import { finalPublish } from "../../actions/creatorActions";
+import withService from "../hoc/withService";
 
 const PublisherContainer = ({
   questions,
   onBack,
-  emptyQuestions,
   onPublish,
-  fetching,
-  error,
   savedTestUrl,
-  onNewTest
+  onNewTest,
+  hoveredQuestion
 }) => {
-  const warning =
-    emptyQuestions.length > 0 ? (
-      <div className="warning">
-        Question
-        {questions.map((question, i) => {
-          if (emptyQuestions.includes(question.id)) {
-            return <span key={i}> {i + 1} </span>;
-          }
-        })}{" "}
-        has empty body and/or less than two full answers. Thus will be deleted.
-      </div>
+  const render = (preloader, error) => {
+    let detailsBlock = null;
+
+    if (hoveredQuestion !== null) {
+      const hoveredIdx = questions.findIndex(q => q.id === hoveredQuestion);
+
+      detailsBlock = (
+        <div className="questionDetails section-block">
+          <p>{questions[hoveredIdx].body}</p>
+          <ul>
+            {questions[hoveredIdx].answers.map((answer, i) => {
+              if (answer.body !== "")
+                return (
+                  <li key={answer.id}>
+                    <span className="num">{`${i + 1}. `}</span>
+                    <span>{answer.body}</span>
+                  </li>
+                );
+            })}
+          </ul>
+        </div>
+      );
+    }
+
+    const bttonContent = preloader ? preloader : "Publish Test";
+
+    const publishButton = savedTestUrl ? (
+      <div className="test-url">{savedTestUrl}</div>
+    ) : (
+      <button onClick={onPublish}>{bttonContent}</button>
+    );
+
+    const newTestButton = savedTestUrl ? (
+      <button onClick={onNewTest} className="new-test-btn">
+        New Test
+      </button>
     ) : null;
 
-  let content = !savedTestUrl ? (
-    <React.Fragment>
-      <TestInfo />
+    return (
+      <React.Fragment>
+        <TestInfo />
 
-      {warning}
+        <QuestionList questions={questions} />
 
-      <QuestionPool questions={questions} />
+        <div className="section-row control">
+          <button onClick={onBack}>Back</button>
+          {publishButton}
+          {newTestButton}
+        </div>
 
-      <div className="myrow control-buttons">
-        <button className="btn btn-info" onClick={onBack}>
-          Back
-        </button>
-        <button className="btn btn-info publish-final" onClick={onPublish}>
-          Publish Test
-        </button>
-      </div>
-    </React.Fragment>
-  ) : (
-    <div className="test-url">
-      <h2>Test has been saved</h2>
-      <span>Test link:</span>
-      <textarea defaultValue={savedTestUrl}></textarea>
-      <button className="btn btn-info" onClick={onNewTest}>
-        Create New Test
-      </button>
-    </div>
-  );
+        {detailsBlock}
+      </React.Fragment>
+    );
+  };
 
-  const preloader = fetching ? true : null;
-
-  return <Publisher content={content} preloader={preloader} error={error} />;
+  return <Publisher render={render} />;
 };
 
 const mapStateToProps = ({
-  testCreator: { questions },
+  testCreator: { questions, hoveredQuestion },
   testPublisher: { emptyQuestions, fetching, error, savedTestUrl }
 }) => {
   return {
@@ -71,8 +84,18 @@ const mapStateToProps = ({
     fetching,
     error,
     savedTestUrl,
-    questions
+    questions,
+    hoveredQuestion
   };
 };
 
-export default connect(mapStateToProps, null)(PublisherContainer);
+export default compose(
+  withService,
+  connect(mapStateToProps, (dispatch, { service }) => {
+    return {
+      onBack: () => dispatch("BACK_TO_CONSTRUCTOR"),
+      onPublish: () => dispatch(finalPublish(service)()),
+      onNewTest: () => dispatch("RESET_STORE")
+    };
+  })
+)(PublisherContainer);

@@ -1,68 +1,63 @@
 .publisher
-    width: 50%
-    height: 70%
-    display: flex
-    flex-direction: column
-    //align-items: center
-    //justify-content: center
-    background-color: #fff
-    border-radius: 20px
     margin: auto
-    padding: 10px
-    .test-info
-        h2
-            font-size: 22px
-            margin-bottom: 20px
-            text-align: center
-        .myrow
-            align-self: flex-start
-            justify-content: space-between
-            margin-left: 20px
-            width: 40%
-            label
-                margin: 0
-            input
-                margin-left: 20px
-            .time-input
-                width: 15%
-    .warning
-        color: coral
-        font-style: italic
-        margin: 5px 0
-    .question-pool
-        margin-top: 5px
-        h2
-            display: none
-        .dl-item
-            width: 13%
-            margin: 5px 0 5px 5px
-        .question
-            height: 20px
-            position: relative
-        .add-button
-            visibility: hidden
-    .control-buttons
-        margin: auto auto 10px 10px
-        width: 50%
-        justify-content: space-between
-    .preloader, .error-indicator
-        margin: auto
-    .error-indicator
-        h2
-            margin-bottom: 8px
-    .test-url
+    width: 40% 
+    padding-top: 10px
+    .section-row
+        position: relative
+        button:first-child
+            position: absolute
+            left: 20px
+        .new-test-btn
+            position: absolute
+            right: 20px
+        .test-url
+            margin: 0 auto
+            text-transform: none
+            cursor: text
+            background-color: #fff
+    .questionDetails
+        position: absolute
+        width: 25%
+        min-height: 20%
+        top: 50%
+        right: 15px
+        z-index: 6
+        color: $red
+        transform: translate(0, -50%)
+        padding-bottom: 6px
+        p
+            word-wrap: break-word
+            margin: 20px 0
+            padding: 0 10px
+            font-weight: bold
+        ul
+           padding-left: 30px
+           word-wrap: break-word
+           li
+               margin: 5px 0
+        &:before
+            z-index: -2
+            content: ""
+            width: 0px
+            height: 0px
+            position: absolute
+            border-left: 30px solid transparent
+            border-right: 30px solid lighten(black, 5%)
+            border-top: 30px solid lighten(black, 5%)
+            border-bottom: 30px solid transparent
+            left: -30px
+            top: 50%
+            transform: translate(0, -50%)
+    .error-block
+        background-color: $red  
+        border-radius: 8px
+        font-size: 14px
         display: flex
-        flex-direction: column
-        align-items: center
-        justify-content: center
-        width: 80%
-        height: 80%
-        h2
-            font-size: 20px
-        textarea
-            width: 70%
-            margin: 10px 0 0 0
-        button
-            margin: 20px 0 0 0 
-    
+        justify-content: space-between
+        margin: 0 5px 10px 5px
+        padding: 10px 5px
+        animation: fadein .5s
+        i
+            font-size: 16px
+
 
