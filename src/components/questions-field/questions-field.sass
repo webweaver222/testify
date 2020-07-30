@@ -1,0 +1,22 @@
+.questions-field
+    display: flex
+    flex-wrap: wrap
+    padding: 6px
+    .question-block
+        background-color: $dim_red
+        width: 20px
+        height: 20px
+        border-radius: 5px
+        margin: 4px
+        color: black
+        display: flex
+        justify-content: center
+        align-items: center
+        cursor: pointer
+        font-weight: bold
+    .current
+        animation: pulse 1s ease-in-out infinite alternate
+    .empty
+        background-color: $dim_red
+    .full
+        background-color: LightGreen

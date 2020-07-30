@@ -1,63 +1,85 @@
-import React from 'react'
-import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux'
+import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import './test-room.sass'
+import "./test-room.sass";
 
-import {processAnswer, selectInField} from '../../actions/creatorActions'
-import Question from '../question'
-import QuestionsField from '../questions-field'
-import Timer from '../timer'
+import { processAnswer, selectInField } from "../../actions/creatorActions";
+import Question from "../question";
+import QuestionsField from "../questions-field";
+import Timer from "../timer";
+import Preloader from "../preloader";
+import ErrorIndicator from "../error-indicator";
 
+const TestRoom = ({
+  test,
+  current,
+  answers,
+  onSelectField,
+  onPreSend,
+  fetching,
+  error
+}) => {
+  const question = test.questions[current];
 
+  const content = fetching ? (
+    <Preloader width={200} height={200} color={"#FF4656"} />
+  ) : error ? (
+    <ErrorIndicator message={error} type="error" />
+  ) : (
+    <React.Fragment>
+      <QuestionsField onSelectQuestion={onSelectField} />
+      <Question
+        question={question}
+        selectedAnswer={answers[current]}
+        processActions={dispatch => {
+          return {
+            onNext: () => dispatch("PROCESS_NEXT_QUESTION"),
+            onPrev: () => dispatch("PROCESS_PREV_QUESTION"),
+            onSelectAnswer: idx => dispatch(processAnswer(idx, current)),
+            onChangeQuestionBody: () => {},
+            onChangeAnswerBody: () => {},
+            onAddAnswer: () => {},
+            onDeleteAnswer: () => {}
+          };
+        }}
+      />
+      <div className="controls">
+        <button onClick={onPreSend}>Send Test</button>
+      </div>
+    </React.Fragment>
+  );
 
-const TestRoom = ({test, current, answers, onFinishProcess, onSelectField}) => {
+  return (
+    <div className="test-room section-block">
+      {/*<div className="timer-wrapper">
+        <Timer />
+  </div>*/}
+      {content}
+    </div>
+  );
+};
 
-    
-    return (
-        <div className="test-room white-block">
-            <div className="timer-wrapper">
-            <Timer/>
-            </div>
-            <QuestionsField onSelectQuestion = {onSelectField}/>
-            <Question question={test.questions[current]} 
-            finalQuestion = {test.questions.length}
-            selectedAnswer={answers[current]}
-            current={current} 
-            onFinishProcess = {onFinishProcess}
-            mapDispatch={(dispatch) => {
-                return {
-                    onNext: () => dispatch('PROCESS_NEXT_QUESTION'),
-                    onPrev: () => dispatch('PROCESS_PREV_QUESTION'),
-                    onSelectAnswer: (idx) => dispatch(processAnswer(idx, current)),
-                    onChangeQuestionBody: () => {},
-                    onChangeAnswerBody:() => {},
-                    onAddAnswer: () => {},
-                    onDeleteAnswer: () => {},
-                }
-            }} />
-        </div>
-    )
-}
+const mapStateToProps = ({
+  testProcess: { test, current, answers, fetching, error }
+}) => {
+  return {
+    test,
+    current,
+    answers,
+    fetching,
+    error
+  };
+};
 
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      onSelectField: idx => selectInField(idx),
+      onPreSend: () => dispatch("SHOW_SEND_CONFIRM")
+    },
+    dispatch
+  );
+};
 
-
-const mapStateToProps = ({ testProcess: {test, current, answers}}) => {
-    return {
-        test,
-        current,
-        answers
-    }
-}
-
-const mapDispatchToProps = (dispatch, {history, service}) => {
-    return bindActionCreators({
-        onSelectField: (idx) => selectInField(idx),
-        //onFinishProcess: finishProcess(history)
-    }, dispatch)
-
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(TestRoom)
-
+export default connect(mapStateToProps, mapDispatchToProps)(TestRoom);

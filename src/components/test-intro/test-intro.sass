@@ -1,14 +1,39 @@
-.test-info
-    display: flex
-    flex-direction: column
-    h2
-        font-family: 'DrukBold'
-        font-size: 20px
-        text-transform: uppercase
-        letter-spacing: 1.5px
-        -webkit-text-stroke: 1.2px black
-        color: $red
+.test-intro
+    width: 50%
+    margin: auto
+    .input-error
+        z-index: 30
+        color: black
+        transform: translate(110%, 0)
+    .preloader
+        div
+            display: flex
+            align-items: center
+            justify-content: center
+    .section-row
+        display: block
+        padding: 10px 25px
+        position: relative
+        .input-wrapper
+            display: inline-block
+        span
+            font-size: 14px
+        p
+            word-wrap: break-word
+            font-style: italic
+            margin: 5px 0
+            line-height: 15px
+            font-size: 15px
+        &:after
+            content: ""
+            position: absolute
+            bottom: 0
+            height: 1px
+            width: 90%
+            display: block
+            background-color: #000
+            background-color: rgba(0,0,0,0.75)
+            box-shadow: 0 1px 0 0 rgba(255,255,255,0.0575)
+    .intro-footer
         text-align: center
-        margin-bottom: 28px
-    .time-input
-        width: 40px
+        padding: 10px 0

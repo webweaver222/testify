@@ -1,25 +1,49 @@
 .test-process
     height: 100%
-    background-color: $accent
+    width: 100%
     display: flex
-    flex-flow: column
-    align-items: center
-    justify-content: center
-    .confirm, .save-info
-        width: 30%
-        height: 30%
+    color: $red
+    position: relative
+    .success-notif
+        margin: auto
+        padding: 30px 
+        span
+            font-size: 15px
+            color: $red
+            font-weight: bold
+    .confirm
+        position: absolute
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+        margin: auto
+        z-index: 5
+        background-color: rgba(0,0,0,.74)
+        border-radius: 10px
+        border: 1px solid $red
+        width: 20%
+        height: 20%
+        animation: fadein .7s ease
         display: flex
         flex-direction: column
-        justify-content: space-between
-        align-items: center
-        p
-            color: coral
-        .myrow
-            justify-content: space-between
+        justify-content: space-around
         h2
+            text-align: center
+            color: $red
+            font-family: 'DrukBold'
+            font-size: 14px
             text-transform: uppercase
-            letter-spacing: 1px
-            margin-top: 2%
-    .save-info
-        padding-bottom: 20px
-    
+            letter-spacing: 1.5px
+            -webkit-text-stroke: 1.2px black
+            margin: 12px 0
+        p
+            font-size: 13px
+            color: $red
+            padding: 0 20px
+            line-height: 16px
+        .section-row
+            display: flex
+            justify-content: space-around
+            button
+                padding: 5px 10px

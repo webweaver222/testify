@@ -9,8 +9,17 @@ button, .test-url
         color: $red
         transition: all .4s ease
         &:hover
-            background-color: rgba(0, 0, 0, 0.4)
+            background-color: rgba(0, 0, 0, 0.1)
             color: darken($red, 20%)
+            border-color: darken($red, 20%)
+.shading
+    position: absolute
+    height: 100%
+    width: 100%
+    top: 0
+    z-index: 4
+    background-color: rgba(96,96,96,.9)
+    animation: fadein .2s ease
 .section-block
     background-color: rgba(0, 0, 0, 0.6)
     border-radius: 10px
@@ -21,7 +30,7 @@ button, .test-url
         justify-content: center
         .withError
             border-color: $red
-        label
+        label, span
             color: $red
             font-family: 'DrukBold'
             font-size: 12px
@@ -88,13 +97,13 @@ html, body
         opacity: 1
 @keyframes pulse
     0% 
-        background: transparent
+        background: $dim_red
 
     50% 
-        background: yellow
+        background: $red
 
     100% 
-        background: transparent
+        background: $dim_red
   
         
         

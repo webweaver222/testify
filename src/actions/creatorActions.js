@@ -195,13 +195,13 @@ const startTest = service => () => async (dispatch, getState) => {
       payload: exam.examId
     });
 
-    const startTimer = await service.get(
+    /* const startTimer = await service.get(
       `/test/${id}/startTimer/${exam.examId}`
     );
-    console.log(startTimer);
+
     if (startTimer.statusText === "Time Out1") {
       return dispatch(sendTest(service)());
-    }
+    }*/
   } catch (e) {
     dispatch({
       type: "FETCH_TEST_FAIL",
@@ -214,6 +214,8 @@ const sendTest = service => () => async (dispatch, getState) => {
   const {
     testProcess: { answers, examId, studentName }
   } = getState();
+
+  dispatch("FETCH_TEST_START");
 
   try {
     const res = await service.post(
@@ -237,7 +239,7 @@ const sendTest = service => () => async (dispatch, getState) => {
 
 const processAnswer = (idx, current) => {
   return {
-    type: "PROCESS_SELECT_QUESTION",
+    type: "PROCESS_SELECT_ANSWER",
     payload: idx,
     q_idx: current
   };

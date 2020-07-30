@@ -1,89 +1,97 @@
-import React from 'react'
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import './test-intro.sass'
+import "./test-intro.sass";
 
-import ErrorIndicator from '../error-indicator'
-import Preloader from '../preloader'
+import ErrorIndicator from "../error-indicator";
+import Preloader from "../preloader";
 
-import {studentNameChange} from '../../actions/creatorActions'
+import { studentNameChange } from "../../actions/creatorActions";
 
+const TestIntro = ({
+  testName,
+  testDescription,
+  fetching,
+  error,
+  onNameChange,
+  onStartTest,
+  nameError,
+  onCloseNotif
+}) => {
+  const inputError = nameError ? (
+    <div className="input-error" onClick={onCloseNotif}>
+      You have to write your name
+    </div>
+  ) : null;
 
-const TestIntro = ({testName, testDescription, fetching, error, onNameChange, onStartTest, nameError}) => {
-    
-    const inputErr = nameError? 
-    <ErrorIndicator message = 'You have to put your name here'
-    type='error' /> : null 
+  const inputClass = nameError ? "withError" : "";
 
-    const inputClass =  nameError? 'withError': ''
-
-
-    const content = fetching ? <Preloader /> : 
-    
-        error? <ErrorIndicator message={error} type='error'/> :
-
-        <React.Fragment>
-             <div className="intro-header">
-                <div className="left-pannel">
-                        <div className="myrow">
-                            <span>Test Name:</span>
-                            <p>{testName}</p>
-                        </div>
-
-                        <div className="myrow">
-                            <span>Test Description:</span>
-                            <p>{testDescription}</p>
-                        </div>
-
-                        <div className="myrow">
-                            <span>Time Limit:</span>
-                            <p>13</p>
-                        </div>
-                    </div>
-
-                    <div className="right-pannel">
-                        <div className="myrow">
-                            <span>Your Name:</span>
-                            <input type="text" className= {inputClass} 
-                            onChange={(e) => onNameChange(e.target.value)}/>
-                             <div className="notification">
-                                {inputErr}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        <button className="btn btn-info"
-                onClick={onStartTest}>Start Test</button>
-    </React.Fragment>
-        
-
-    
-
-    return (
-        <div className="test-intro white-block">
-            {content}
+  const content = fetching ? (
+    <Preloader height={221} width={221} color={"#FF4656"} />
+  ) : error ? (
+    <ErrorIndicator message={error} type="error" />
+  ) : (
+    <React.Fragment>
+      <div className="intro-header">
+        <div className="section-row">
+          <span>Test Name:</span>
+          <p>{testName}</p>
         </div>
-    )
-}
 
+        <div className="section-row">
+          <span>Test Description:</span>
+          <p>{testDescription}</p>
+        </div>
 
-const mapStateToProps = ({ testProcess: { test : {testName, testDescription}, fetching, error, nameError}}) => {
-    return {
-        testName,
-        testDescription,
-        fetching,
-        error,
-        nameError
-    }
-}
+        <div className="section-row">
+          <span>Time Limit (min):</span>
+          <p>13</p>
+        </div>
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onNameChange: (name) => dispatch(studentNameChange(name))
-    }
-}
+        <div className="section-row">
+          <span>Your Name:</span>
+          <div className="input-wrapper">
+            <input
+              type="text"
+              className={inputClass}
+              onChange={e => onNameChange(e.target.value)}
+            />
+            {inputError}
+          </div>
+        </div>
+      </div>
 
+      <div className="intro-footer">
+        <button onClick={onStartTest}>Start Test</button>
+      </div>
+    </React.Fragment>
+  );
 
+  return <div className="test-intro section-block">{content}</div>;
+};
 
+const mapStateToProps = ({
+  testProcess: {
+    test: { testName, testDescription },
+    fetching,
+    error,
+    nameError
+  }
+}) => {
+  return {
+    testName,
+    testDescription,
+    fetching,
+    error,
+    nameError
+  };
+};
 
-export default connect(mapStateToProps,  mapDispatchToProps)(TestIntro)
+const mapDispatchToProps = dispatch => {
+  return {
+    onNameChange: name => dispatch(studentNameChange(name)),
+    onCloseNotif: () => dispatch("CLOSE_NAME_ERROR")
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TestIntro);

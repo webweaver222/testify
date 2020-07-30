@@ -14,11 +14,8 @@ const Question = ({
   question,
   onNext,
   onPrev,
-  current = null,
   selectedAnswer = null,
-  finalQuestion = null,
-  mapDispatch = null,
-  onFinishProcess = null,
+  processActions = null,
   onSelectAnswer,
   onChangeQuestionBody,
   onChangeAnswerBody,
@@ -29,26 +26,26 @@ const Question = ({
     return question.answers.map((answer, i, arr) => {
       let activeAnswer = question.rightAnswer === answer.id ? "active" : null;
 
-      if (mapDispatch) {
+      if (processActions) {
         activeAnswer = i === selectedAnswer ? "active" : null;
       }
 
       const addBtn =
-        i === arr.length - 1 && arr.length - 1 < 5 && !mapDispatch ? (
+        i === arr.length - 1 && arr.length - 1 < 5 && !processActions ? (
           <i className="fa fa-plus-square" onClick={onAddAnswer}></i>
         ) : null;
 
       const deleteBtn =
-        i > 1 && !mapDispatch ? (
+        i > 1 && !processActions ? (
           <i
             className="fa fa-trash"
             onClick={() => onDeleteAnswer(answer.id)}
           ></i>
         ) : null;
 
-      const answerValue = !mapDispatch ? answer.body : answer;
+      const answerValue = !processActions ? answer.body : answer;
 
-      const selectAnswer = !mapDispatch
+      const selectAnswer = !processActions
         ? () => onSelectAnswer(answer.id)
         : () => onSelectAnswer(i);
 
@@ -64,7 +61,7 @@ const Question = ({
             id="answer-body"
             autoComplete="off"
             type="text"
-            value={answerValue} //
+            value={answerValue}
             onChange={e => onChangeAnswerBody(answer.id, e.target.value)}
           />
           {deleteBtn}
@@ -74,23 +71,11 @@ const Question = ({
     });
   };
 
-  const questionLabel = !mapDispatch ? "Question" : "";
-
-  if (mapDispatch) {
-    rightButton =
-      current < finalQuestion - 1 ? (
-        <button onClick={onNext} className="btn btn-primary">
-          Next
-        </button>
-      ) : (
-        <button onClick={onFinishProcess} className="btn btn-primary">
-          Finish
-        </button>
-      );
-  }
+  const questionLabel = !processActions ? "Question" : "";
+  const questionClass = !processActions ? "question section-block" : "question";
 
   return (
-    <div className="question section-block">
+    <div className={questionClass}>
       <div className="section-row">
         <label htmlFor="question-body">{questionLabel}</label>
         <textarea
@@ -114,8 +99,8 @@ const Question = ({
   );
 };
 
-const mapDispatchToProps = (dispatch, { mapDispatch }) => {
-  if (mapDispatch) return mapDispatch(dispatch);
+const mapDispatchToProps = (dispatch, { processActions }) => {
+  if (processActions) return processActions(dispatch);
 
   return {
     onNext: () => dispatch("SELECT_QUESTION_NEXT"),

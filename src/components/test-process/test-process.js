@@ -1,11 +1,9 @@
 import React from "react";
 
-import { withRouter } from "react-router-dom";
 import { compose } from "../../utils";
 import withService from "../hoc/withService";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Route, Switch } from "react-router-dom";
 
 import "./test-process.sass";
 
@@ -56,11 +54,9 @@ class TestProcess extends React.Component {
     if (started !== prevStarted || timePassed !== prevTime) {
       this.timer = setTimeout(() => {
         if (timePassed <= limit) {
-          setTimePassed(timePassed + 1);
-
-          setTimeLeft(limit - timePassed);
-
-          this.setCircleDasharray();
+          //setTimePassed(timePassed + 1);
+          //setTimeLeft(limit - timePassed);
+          //this.setCircleDasharray();
         }
       }, 1000);
       return () => clearTimeout(this.timer);
@@ -76,48 +72,33 @@ class TestProcess extends React.Component {
   }
 
   render() {
-    const {
-      onStart,
-      onSend,
-      started,
-      finished,
-      match: { url },
-      history
-    } = this.props;
+    const { onStart, onSend, started, finished, sendConfirm } = this.props;
+
+    const intro =
+      !started && !finished ? <TestIntro onStartTest={onStart} /> : null;
 
     const testRoom =
       started && !finished ? (
         <TestRoom onFinishProcess={() => this.finishTest()} />
       ) : null;
 
-    const intro =
-      !started && !finished ? <TestIntro onStartTest={onStart} /> : null;
+    const confirm = sendConfirm ? <Confirm onSend={onSend} /> : null;
 
-    const confirm = !finished ? (
-      <Confirm onBack={() => history.goBack()} onSend={onSend} />
-    ) : null;
-
-    const finish = finished ? (
-      <div className="save-info white-block">
-        <h2>Your answers were successfully saved!</h2>
-        <button className="btn-info">Show summury</button>
+    const final = finished ? (
+      <div className="success-notif section-block">
+        <span>The answers have been successfully sent!</span>
       </div>
     ) : null;
 
+    const shading = sendConfirm ? <div className="shading"></div> : null;
+
     return (
       <div className="test-process">
-        <Switch>
-          <Route path={`${url}`} exact>
-            {intro}
-            {testRoom}
-            {finish}
-          </Route>
-
-          <Route path={`${url}/send`}>
-            {confirm}
-            {finish}
-          </Route>
-        </Switch>
+        {intro}
+        {testRoom}
+        {confirm}
+        {final}
+        {shading}
       </div>
     );
   }
@@ -145,11 +126,10 @@ const mapDispatchToProps = (dispatch, { service }) => {
 
 export default compose(
   withService,
-  withRouter,
   connect(
     ({
       timer: { timePassed, timeLeft, strokeDasharray, limit },
-      testProcess: { started, finished }
+      testProcess: { started, finished, answers, sendConfirm }
     }) => {
       return {
         started,
@@ -157,7 +137,9 @@ export default compose(
         timePassed,
         timeLeft,
         strokeDasharray,
-        limit
+        limit,
+        answers,
+        sendConfirm
       };
     },
     mapDispatchToProps
