@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { compose } from "../../utils";
 import withService from "../hoc/withService";
+import withTimerEvents from "../hoc/withTimerEvents";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -12,113 +13,53 @@ import TestRoom from "../test-room";
 import Confirm from "./confirm";
 import { getTest, startTest, sendTest } from "../../actions/creatorActions";
 
-class TestProcess extends React.Component {
-  calculateTimeFraction() {
-    const { limit, timeLeft } = this.props;
-    const rawTimeFraction = timeLeft / limit;
-    return rawTimeFraction - (1 / limit) * (1 - rawTimeFraction);
-  }
+const TestProcess = ({
+  onStart,
+  onSend,
+  started,
+  finished,
+  sendConfirm,
+  match,
+  onMount
+}) => {
+  useEffect(() => {
+    const { id } = match.params;
 
-  setCircleDasharray() {
-    const { setSda } = this.props;
-    const circleDasharray = `${(this.calculateTimeFraction() * 283).toFixed(
-      0
-    )} 283`;
-    setSda(circleDasharray);
-  }
+    onMount(id);
+  }, []);
 
-  componentDidMount() {
-    const { id } = this.props.match.params;
-    this.props.onMount(id);
-  }
+  const intro =
+    !started && !finished ? <TestIntro onStartTest={onStart} /> : null;
 
-  componentDidUpdate = async prevProps => {
-    const {
-      started,
-      finished,
-      setTimePassed,
-      setTimeLeft,
-      limit,
-      timePassed
-    } = this.props;
-    const {
-      started: prevStarted,
-      finished: prevFinished,
-      timePassed: prevTime
-    } = prevProps;
+  const testRoom = started && !finished ? <TestRoom /> : null;
 
-    if (finished !== prevFinished) {
-      return () => clearTimeout(this.timer);
-    }
+  const confirm = sendConfirm ? <Confirm onSend={onSend} /> : null;
 
-    if (started !== prevStarted || timePassed !== prevTime) {
-      this.timer = setTimeout(() => {
-        if (timePassed <= limit) {
-          //setTimePassed(timePassed + 1);
-          //setTimeLeft(limit - timePassed);
-          //this.setCircleDasharray();
-        }
-      }, 1000);
-      return () => clearTimeout(this.timer);
-    }
-  };
+  const final = finished ? (
+    <div className="success-notif section-block">
+      <span>The answers have been successfully sent!</span>
+    </div>
+  ) : null;
 
-  finishTest() {
-    const {
-      match: { url },
-      history
-    } = this.props;
-    history.push(`${url}/send`);
-  }
+  const shading = sendConfirm ? <div className="shading"></div> : null;
 
-  render() {
-    const { onStart, onSend, started, finished, sendConfirm } = this.props;
-
-    const intro =
-      !started && !finished ? <TestIntro onStartTest={onStart} /> : null;
-
-    const testRoom =
-      started && !finished ? (
-        <TestRoom onFinishProcess={() => this.finishTest()} />
-      ) : null;
-
-    const confirm = sendConfirm ? <Confirm onSend={onSend} /> : null;
-
-    const final = finished ? (
-      <div className="success-notif section-block">
-        <span>The answers have been successfully sent!</span>
-      </div>
-    ) : null;
-
-    const shading = sendConfirm ? <div className="shading"></div> : null;
-
-    return (
-      <div className="test-process">
-        {intro}
-        {testRoom}
-        {confirm}
-        {final}
-        {shading}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="test-process">
+      {intro}
+      {testRoom}
+      {confirm}
+      {final}
+      {shading}
+    </div>
+  );
+};
 
 const mapDispatchToProps = (dispatch, { service }) => {
   return bindActionCreators(
     {
       onMount: testId => getTest(service)(testId),
       onStart: startTest(service),
-      onSend: sendTest(service),
-      setTimePassed: tp => {
-        return { type: "SET_TIME_PASSED", payload: tp };
-      },
-      setTimeLeft: tl => {
-        return { type: "SET_TIME_LEFT", payload: tl };
-      },
-      setSda: sda => {
-        return { type: "SET_SDA", payload: sda };
-      }
+      onSend: sendTest(service)
     },
     dispatch
   );
@@ -126,22 +67,13 @@ const mapDispatchToProps = (dispatch, { service }) => {
 
 export default compose(
   withService,
-  connect(
-    ({
-      timer: { timePassed, timeLeft, strokeDasharray, limit },
-      testProcess: { started, finished, answers, sendConfirm }
-    }) => {
-      return {
-        started,
-        finished,
-        timePassed,
-        timeLeft,
-        strokeDasharray,
-        limit,
-        answers,
-        sendConfirm
-      };
-    },
-    mapDispatchToProps
-  )
+  withTimerEvents,
+  connect(({ testProcess: { started, finished, answers, sendConfirm } }) => {
+    return {
+      started,
+      finished,
+      answers,
+      sendConfirm
+    };
+  }, mapDispatchToProps)
 )(TestProcess);

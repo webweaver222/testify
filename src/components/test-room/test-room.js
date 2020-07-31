@@ -52,9 +52,11 @@ const TestRoom = ({
 
   return (
     <div className="test-room section-block">
-      {/*<div className="timer-wrapper">
-        <Timer />
-  </div>*/}
+      {
+        <div className="timer-wrapper">
+          <Timer />
+        </div>
+      }
       {content}
     </div>
   );

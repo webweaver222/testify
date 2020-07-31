@@ -94,7 +94,7 @@ const finalPublish = service => () => async (dispatch, getState) => {
   }
 
   dispatch("EMPTY_EMAIL_CLOSE");
-
+  dispatch("FETCH_PREP");
   dispatch("SAVE_TEST_START");
 
   const {

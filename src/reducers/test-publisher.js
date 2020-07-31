@@ -19,8 +19,8 @@ const upadateTestPublisher = (state, action) => {
 
   const {
     testPublisher,
-    testPublisher: { testNameError, hoveredQuestion },
-    testCreator: { testName }
+    //testPublisher: { },
+    testCreator: { questions }
   } = state;
 
   switch (action.type) {
@@ -69,7 +69,7 @@ const upadateTestPublisher = (state, action) => {
 
     case "FETCH_PREP": {
       const empty = [];
-      testCreator.questions.forEach(question => {
+      questions.forEach(question => {
         if (
           question.body === "" ||
           question.answers.filter(a => a.body !== "").length < 2
