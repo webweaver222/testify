@@ -15,14 +15,17 @@ const withTimerEvents = Wrapped =>
       setTimeLeft,
       limit,
       timeLeft,
+      finished,
       ...other
     } = props;
 
     let timer;
 
     useDidMountEffect(() => {
+      if (finished) return () => clearTimeout(timer);
+
       timer = setTimeout(() => {
-        if (timePassed <= limit) {
+        if (timePassed <= limit && !finished) {
           setTimePassed(timePassed + 1);
           setTimeLeft(limit - timePassed);
           setCircleDasharray();
@@ -30,7 +33,7 @@ const withTimerEvents = Wrapped =>
       }, 1000);
 
       return () => clearTimeout(timer);
-    }, [started, timePassed]);
+    }, [started, timePassed, finished]);
 
     const calculateTimeFraction = () => {
       const rawTimeFraction = timeLeft / limit;
@@ -49,14 +52,15 @@ const withTimerEvents = Wrapped =>
 
 const mapStateToProps = ({
   timer: { timePassed, timeLeft, strokeDasharray, limit },
-  testProcess: { started }
+  testProcess: { started, finished }
 }) => {
   return {
     started,
     timePassed,
     timeLeft,
     strokeDasharray,
-    limit
+    limit,
+    finished
   };
 };
 

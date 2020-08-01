@@ -23,9 +23,7 @@ const TestProcess = ({
   onMount
 }) => {
   useEffect(() => {
-    const { id } = match.params;
-
-    onMount(id);
+    onMount(match.params.id);
   }, []);
 
   const intro =

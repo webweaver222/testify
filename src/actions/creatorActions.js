@@ -195,13 +195,13 @@ const startTest = service => () => async (dispatch, getState) => {
       payload: exam.examId
     });
 
-    /* const startTimer = await service.get(
+    const startTimer = await service.get(
       `/test/${id}/startTimer/${exam.examId}`
     );
 
     if (startTimer.statusText === "Time Out1") {
       return dispatch(sendTest(service)());
-    }*/
+    }
   } catch (e) {
     dispatch({
       type: "FETCH_TEST_FAIL",
