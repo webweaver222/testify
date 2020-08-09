@@ -18,7 +18,7 @@ const TestCreatorMain = ({
 }) => {
   const error = testNameError ? (
     <div className="input-error" onClick={onCloseNotif}>
-      You hame to name your test
+      You have to name your test
     </div>
   ) : null;
 

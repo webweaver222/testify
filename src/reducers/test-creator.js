@@ -263,4 +263,4 @@ const upadateTestCreator = (state, action) => {
   }
 };
 
-export default upadateTestCreator;
+export { upadateTestCreator, initialTest };

@@ -21,15 +21,7 @@ const QuestionList = ({ questions, onHoverQuestion }) => {
   return <div className="question-list">{renderQuestions()}</div>;
 };
 
-const mapStateToProps = state => ({
-  // blabla: state.blabla,
-});
-
-const mapDispatchToProps = dispatch => ({
-  // fnBlaBla: () => dispatch(action.name()),
-});
-
-export default connect(mapStateToProps, dispatch => {
+export default connect(null, dispatch => {
   return {
     onHoverQuestion: id => dispatch({ type: "HOVER_QUESTION", payload: id })
   };

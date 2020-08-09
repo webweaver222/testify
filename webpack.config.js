@@ -99,7 +99,7 @@ module.exports = (env = {}) => {
     plugins: getPlugins(),
 
     devServer: {
-      //host: '0.0.0.0',
+      //host: "0.0.0.0",
       //disableHostCheck: true,
       open: true,
       port: process.env.PORT || 8000,

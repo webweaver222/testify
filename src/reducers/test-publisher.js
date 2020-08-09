@@ -128,4 +128,4 @@ const upadateTestPublisher = (state, action) => {
   }
 };
 
-export default upadateTestPublisher;
+export { upadateTestPublisher, initialPublisher };

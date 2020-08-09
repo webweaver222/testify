@@ -144,4 +144,4 @@ const upadateTestProcess = (state, action) => {
   }
 };
 
-export default upadateTestProcess;
+export { upadateTestProcess, initialProcess };

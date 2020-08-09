@@ -56,9 +56,8 @@ const Question = ({
               <i className="fa fa-check" aria-hidden="true"></i>
             ) : null}
           </div>
-          <label htmlFor="answer-body">{i + 1}</label>
+
           <input
-            id="answer-body"
             autoComplete="off"
             type="text"
             value={answerValue}
