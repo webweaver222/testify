@@ -44,7 +44,9 @@ const PublisherContainer = ({
     const bttonContent = preloader ? preloader : "Publish Test";
 
     const publishButton = savedTestUrl ? (
-      <div className="test-url">{savedTestUrl}</div>
+      <div className="test-url" data-testid="link">
+        {savedTestUrl}
+      </div>
     ) : (
       <button onClick={onPublish}>{bttonContent}</button>
     );

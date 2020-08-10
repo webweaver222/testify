@@ -124,7 +124,7 @@ const finalPublish = service => () => async (dispatch, getState) => {
     }
 
     const body = await res.json();
-
+    console.log(body);
     dispatch({
       type: "SAVE_TEST_SUCCESS",
       payload: body.testUrl

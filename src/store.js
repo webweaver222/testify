@@ -14,6 +14,8 @@ const stringMdw = () => dispatch => action => {
   return dispatch(action);
 };
 
-const store = createStore(reducer, applyMiddleware(thunk, stringMdw));
+export const middlewares = [thunk, stringMdw];
+
+const store = createStore(reducer, applyMiddleware(...middlewares));
 
 export default store;
