@@ -1,3 +1,5 @@
+import io from "socket.io-client";
+
 const testNameChange = name => {
   return {
     type: "CHANGE_TEST_NAME",
@@ -124,7 +126,7 @@ const finalPublish = service => () => async (dispatch, getState) => {
     }
 
     const body = await res.json();
-    console.log(body);
+
     dispatch({
       type: "SAVE_TEST_SUCCESS",
       payload: body.testUrl
@@ -195,13 +197,14 @@ const startTest = service => () => async (dispatch, getState) => {
       payload: exam.examId
     });
 
-    const startTimer = await service.get(
-      `/test/${id}/startTimer/${exam.examId}`
-    );
+    const socket = io("http://localhost:3000");
 
-    if (startTimer.statusText === "Time Out1") {
-      return dispatch(sendTest(service)());
-    }
+    socket.emit("join", { exam_id: exam.examId });
+
+    socket.on("Test End", function() {
+      socket.disconnect();
+      return dispatch("TEST_FINISHED");
+    });
   } catch (e) {
     dispatch({
       type: "FETCH_TEST_FAIL",

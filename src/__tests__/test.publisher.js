@@ -3,14 +3,10 @@ import React from "react";
 import PublisherContainer from "../components/publisher";
 import { render } from "test-utils";
 import { initState } from "../reducers";
-import { fireEvent, wait, waitFor } from "@testing-library/dom";
-
-//jest.mock("../../actions/creatorActions");
+import { fireEvent, waitFor } from "@testing-library/dom";
 
 describe("Test publisher", () => {
   it("Makes api call", async () => {
-    //MockFinalPublish.mockResolvedValueOnce()
-
     const { getByText, getByTestId, debug } = render(<PublisherContainer />, {
       initialState: {
         ...initState,
@@ -54,6 +50,10 @@ describe("Test publisher", () => {
             }
           ]
         }
+      },
+      resolveTo: {
+        ok: true,
+        json: () => ({ testUrl: "testLink" })
       }
     });
 

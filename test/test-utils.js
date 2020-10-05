@@ -6,12 +6,13 @@ import { createStore, applyMiddleware } from "redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { middlewares } from "../src/store";
 import { initState, reducer } from "../src/reducers";
-import service from "./api-mock";
+import mockApi from "./api-mock";
 
 function render(
   ui,
   {
     initialState = initState,
+    resolveTo,
     store = createStore(reducer, initialState, applyMiddleware(...middlewares)),
     ...options
   } = {}
@@ -19,7 +20,7 @@ function render(
   function Wrapper({ children }) {
     return (
       <Provider store={store}>
-        <ServiceProvider value={service}>
+        <ServiceProvider value={mockApi(resolveTo)}>
           <Router>{children}</Router>
         </ServiceProvider>
       </Provider>

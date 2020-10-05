@@ -2,11 +2,12 @@ import TestifyApi from "../src/services/testifyApi";
 
 const service = new TestifyApi();
 
-service.post = jest.fn();
+const mockApi = resolveTo => {
+  service.post = jest.fn();
 
-service.post.mockResolvedValueOnce({
-  ok: true,
-  json: () => ({ testUrl: "testLink" })
-});
+  service.post.mockResolvedValueOnce(resolveTo);
 
-export default service;
+  return service;
+};
+
+export default mockApi;

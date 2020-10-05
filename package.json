@@ -8,7 +8,7 @@
     "node": "12.17.0"
   },
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "./node_modules/webpack/bin/webpack.js -p --progress && node server.js",
     "build": "webpack --env.mode=production",
     "test": "jest"
   },
@@ -40,10 +40,8 @@
     "@testing-library/react": "^10.4.8",
     "@testing-library/user-event": "^12.1.0",
     "core-js": "^3.6.5",
-    "enzyme": "^3.11.0",
-    "enzyme-react-16": "^1.0.0",
+    "express": "^4.17.1",
     "jest": "^26.2.2",
-    "jest-enzyme": "^7.1.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -54,6 +52,7 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "socket.io-client": "^2.3.1"
   }
 }
