@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path");
 module.exports = (env = {}) => {
   const { mode = "development" } = env;
 
@@ -9,7 +10,7 @@ module.exports = (env = {}) => {
   const getStyleLoaders = () => {
     return [
       isProd ? MiniCssExtractPlugin.loader : "style-loader",
-      "css-loader"
+      "css-loader",
     ];
   };
 
@@ -17,8 +18,8 @@ module.exports = (env = {}) => {
     const plugins = [
       new HtmlWebpackPlugin({
         title: "Testify",
-        template: "public/index.html"
-      })
+        template: "public/index.html",
+      }),
     ];
 
     if (isProd)
@@ -28,11 +29,12 @@ module.exports = (env = {}) => {
   };
 
   return {
+    entry: "./src/index.js",
     mode: isProd ? "production" : isDev && "development",
     output: {
-      path: "./build", //require("path").resolve(__dirname, "build"),
-      filename: isProd ? "main-[hash:8].js" : "main-[hash:8].js"
-      //publicPath: "/"
+      path: path.resolve(__dirname, "dist"),
+      filename: isProd ? "main-[hash:8].js" : undefined,
+      publicPath: "/",
     },
 
     module: {
@@ -44,9 +46,9 @@ module.exports = (env = {}) => {
           exclude: /node_modules/,
           use: [
             {
-              loader: "babel-loader"
-            }
-          ]
+              loader: "babel-loader",
+            },
+          ],
         },
         //loading images
         {
@@ -56,10 +58,10 @@ module.exports = (env = {}) => {
               loader: "file-loader",
               options: {
                 outputPath: "images",
-                name: "[name]-[sha1:hash:7].[ext]"
-              }
-            }
-          ]
+                name: "[name]-[sha1:hash:7].[ext]",
+              },
+            },
+          ],
         },
         // loading fonts
         {
@@ -69,15 +71,15 @@ module.exports = (env = {}) => {
               loader: "file-loader",
               options: {
                 outputPath: "fonts",
-                name: "[name].[ext]"
-              }
-            }
-          ]
+                name: "[name].[ext]",
+              },
+            },
+          ],
         },
         //loading css
         {
           test: /\.css$/,
-          use: getStyleLoaders()
+          use: getStyleLoaders(),
         },
         //loading sass
         {
@@ -88,12 +90,12 @@ module.exports = (env = {}) => {
             {
               loader: "sass-resources-loader",
               options: {
-                resources: ["./src/resources/vars.sass"]
-              }
-            }
-          ]
-        }
-      ]
+                resources: ["./src/resources/vars.sass"],
+              },
+            },
+          ],
+        },
+      ],
     },
 
     plugins: getPlugins(),
@@ -102,11 +104,11 @@ module.exports = (env = {}) => {
       //host: "0.0.0.0",
       //disableHostCheck: true,
       open: true,
-      port: process.env.PORT || 8000,
+      port: 8000,
       historyApiFallback: true,
-      contentBase: isProd ? "./build" : "./",
+      contentBase: "./",
       hot: true,
-      openPage: "test/create"
-    }
+      openPage: "test/create",
+    },
   };
 };

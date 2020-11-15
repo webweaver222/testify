@@ -3,12 +3,8 @@
   "version": "1.0.0",
   "description": "spa for creating and passing tests",
   "main": "y",
-  "engines": {
-    "npm": "6.14.4",
-    "node": "12.17.0"
-  },
   "scripts": {
-    "start": "./node_modules/webpack/bin/webpack.js -p --progress && node server.js",
+    "start": "webpack-dev-server",
     "build": "webpack --env.mode=production",
     "test": "jest"
   },
