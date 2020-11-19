@@ -1,6 +1,6 @@
 export default class TestifyApi {
-  //_base = 'http://192.168.1.16:3000'
-  _base = "http://localhost:3000";
+ 
+  _base = `${location.protocol}//${location.hostname}/api`;
 
   get = async url => {
   console.log(this._base + url);

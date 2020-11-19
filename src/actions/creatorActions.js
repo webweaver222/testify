@@ -204,9 +204,9 @@ const startTest = service => () => async (dispatch, getState) => {
       payload: exam.examId
     });
 
-    const socket = io("http://localhost:3000");
+    const socket = io(`${location.protocol}//${location.hostname}/api`);
     
-    console.log(socket);
+  
 
     socket.emit("join", { exam_id: exam.examId });
     
@@ -217,7 +217,7 @@ const startTest = service => () => async (dispatch, getState) => {
       return dispatch("TEST_FINISHED");
     });
   } catch (e) {
-     console.log(e);
+     
     dispatch({
       type: "FETCH_TEST_FAIL",
       payload: "Can't reach server"
