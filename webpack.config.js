@@ -18,6 +18,7 @@ module.exports = (env = {}) => {
     const plugins = [
       new HtmlWebpackPlugin({
         title: "Testify",
+        filename: "../index.html",
         template: "public/index.html",
       }),
     ];
@@ -32,9 +33,9 @@ module.exports = (env = {}) => {
     entry: "./src/index.js",
     mode: isProd ? "production" : isDev && "development",
     output: {
-      path: path.resolve(__dirname, "dist"),
+      path: path.resolve(__dirname, "dist/testify"),
       filename: isProd ? "main-[hash:8].js" : undefined,
-      publicPath: "/",
+      publicPath: "/testify/",
     },
 
     module: {

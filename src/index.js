@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { Router } from 'react-router-dom'
+import {createBrowserHistory} from 'history';
 
 import './resources/vars.sass'
 import './resources/reset.sass'
@@ -16,7 +17,9 @@ import App from './components/app'
 import TestifyApi from './services/testifyApi'
 import store from './store'
 
-
+const history = createBrowserHistory({
+	basename: 'testify'
+});
 
 const service = new TestifyApi()
 
@@ -24,7 +27,7 @@ ReactDom.render(
     <Provider store={store}>
         <ErrorBoundry>
             <ServiceProvider value={service}>
-                <Router>
+                <Router history={history}>
                     <App />
                 </Router>
             </ServiceProvider>

@@ -117,7 +117,7 @@ const finalPublish = service => () => async (dispatch, getState) => {
 
   try {
     const res = await service.post(test, "/test");
-
+	console.log(res);
     if (!res.ok) {
       return dispatch({
         type: "SAVE_TEST_FAIL",
@@ -132,6 +132,7 @@ const finalPublish = service => () => async (dispatch, getState) => {
       payload: body.testUrl
     });
   } catch (e) {
+  console.log(e);
     dispatch({
       type: "SAVE_TEST_FAIL",
       payload: `Can't reach server`
@@ -144,7 +145,7 @@ const getTest = service => testId => async dispatch => {
 
   try {
     const res = await service.get(`/test/${testId}`);
-
+	console.log(res);
     if (!res.ok) {
       return dispatch({
         type: "FETCH_TEST_FAIL",
@@ -153,6 +154,7 @@ const getTest = service => testId => async dispatch => {
     }
 
     const body = await res.json();
+    
 
     dispatch({
       type: "SET_TIMER",
@@ -164,6 +166,7 @@ const getTest = service => testId => async dispatch => {
       payload: body
     });
   } catch (e) {
+  	console.log(e);
     dispatch({
       type: "FETCH_TEST_FAIL",
       payload: "Can't reach server"
@@ -185,12 +188,16 @@ const startTest = service => () => async (dispatch, getState) => {
       test: { id }
     }
   } = getState();
+  
+  
 
   if (!/\S+/.test(studentName)) return dispatch("START_TEST_FAIL");
 
   try {
     const startExam = await service.get(`/test/${id}/start`);
     const exam = await startExam.json();
+    
+    
 
     dispatch({
       type: "START_TEST_PROCESS",
@@ -198,14 +205,19 @@ const startTest = service => () => async (dispatch, getState) => {
     });
 
     const socket = io("http://localhost:3000");
+    
+    console.log(socket);
 
     socket.emit("join", { exam_id: exam.examId });
+    
+    
 
     socket.on("Test End", function() {
       socket.disconnect();
       return dispatch("TEST_FINISHED");
     });
   } catch (e) {
+     console.log(e);
     dispatch({
       type: "FETCH_TEST_FAIL",
       payload: "Can't reach server"

@@ -3,6 +3,7 @@ export default class TestifyApi {
   _base = "http://localhost:3000";
 
   get = async url => {
+  console.log(this._base + url);
     return fetch(this._base + url, {
       method: "get",
       credentials: "include",

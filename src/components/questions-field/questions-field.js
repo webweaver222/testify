@@ -14,18 +14,18 @@ const QuestionsField = ({ questions, answers, current, onSelectQuestion }) => {
       if (answers[i] !== undefined) addClass = "full";
 
       return (
-        <div
+	<div
           key={i}
           className={`question-block ${addClass}`}
           onClick={() => onSelectQuestion(i)}
         >
-          {i + 1}
-        </div>
+          {i + 1};
+          </div>
       );
     });
   };
 
-  return <div className="questions-field">{renderQuestions()}</div>;
+  return <div className="questions-field">{renderQuestions()} </div>
 };
 
 const mapStateToProps = ({
