@@ -204,8 +204,8 @@ const startTest = service => () => async (dispatch, getState) => {
       payload: exam.examId
     });
 
-    const socket = io.connect(window.location.origin, {  path: '/api/socket.io'});
-    
+    const socket = io(window.location.origin, {});
+    path
   
 
     socket.emit("join", { exam_id: exam.examId });
