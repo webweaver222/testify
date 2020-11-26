@@ -32,13 +32,13 @@ const mapStateToProps = ({
   testProcess: {
     test: { questions },
     answers,
-    current
-  }
+    current,
+  },
 }) => {
   return {
     questions,
     answers,
-    current
+    current,
   };
 };
 
