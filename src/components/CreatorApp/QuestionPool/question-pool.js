@@ -1,14 +1,14 @@
 import React, { useRef } from "react";
 import { connect } from "react-redux";
-import { usePrevious, useDidMountEffect } from "../customHooks";
+import { usePrevious, useDidMountEffect } from "../../customHooks";
 
 import "./question-pool.sass";
 import {
   handleDnD,
   clickQuestion,
   deleteQuestion,
-  questionHover
-} from "../../actions/creatorActions";
+  questionHover,
+} from "../../../actions/creatorActions";
 
 import RLDD from "react-list-drag-and-drop/lib/RLDD";
 
@@ -20,7 +20,7 @@ const QuestionPool = ({
   openDetails,
   onAdd,
   detailsOn,
-  onDeleteAll
+  onDeleteAll,
 }) => {
   const pool = useRef(null);
 
@@ -32,7 +32,7 @@ const QuestionPool = ({
     }
   }, [questions.length]);
 
-  const onScroll = e => {
+  const onScroll = (e) => {
     pool.current.scrollTop += e.deltaY * 0.3;
   };
 
@@ -51,7 +51,7 @@ const QuestionPool = ({
               index !== 0 ? (
                 <div
                   className="delete"
-                  onClick={e => {
+                  onClick={(e) => {
                     onDelete(question.id);
                     e.stopPropagation();
                   }}
@@ -92,7 +92,7 @@ const QuestionPool = ({
                   <span className="text">{question.body}</span>
                   <div
                     className="deteils"
-                    onClick={e => {
+                    onClick={(e) => {
                       openDetails(question.id);
                       e.stopPropagation();
                     }}
@@ -101,7 +101,7 @@ const QuestionPool = ({
                   </div>
                   {delete_button}
                 </div>
-                {question.answers.some(a => a.body !== "") ? (
+                {question.answers.some((a) => a.body !== "") ? (
                   <div
                     className="answers"
                     style={
@@ -124,19 +124,19 @@ const QuestionPool = ({
 const mapStateToProps = ({ testCreator: { detailsOn, deleteConfirm } }) => {
   return {
     detailsOn,
-    deleteConfirm
+    deleteConfirm,
   };
 };
 
 const mapDispatchToProps = (dispatch, { onActive }) => {
   return {
-    onDnd: newItems => dispatch(handleDnD(newItems)),
-    onActive: onActive || (id => dispatch(clickQuestion(id))),
-    onDelete: id => dispatch(deleteQuestion(id)),
+    onDnd: (newItems) => dispatch(handleDnD(newItems)),
+    onActive: onActive || ((id) => dispatch(clickQuestion(id))),
+    onDelete: (id) => dispatch(deleteQuestion(id)),
     onAdd: () => dispatch("CLICK_ADD_QUESTION"),
-    onHover: id => dispatch(questionHover(id)),
-    openDetails: id => dispatch({ type: "OPEN_DETAILS", payload: id }),
-    onDeleteAll: () => dispatch("CLICK_DELETE_ALL")
+    onHover: (id) => dispatch(questionHover(id)),
+    openDetails: (id) => dispatch({ type: "OPEN_DETAILS", payload: id }),
+    onDeleteAll: () => dispatch("CLICK_DELETE_ALL"),
   };
 };
 

@@ -8,12 +8,13 @@ import "./resources/vars.sass";
 import "./resources/reset.sass";
 import "./resources/main.sass";
 
-import ErrorBoundry from "./components/error-boundry";
-import { ServiceProvider } from "./components/service-provider";
-import App from "./components/app";
+import ErrorBoundry from "components/elements/error-boundry";
+import { ServiceProvider } from "components/elements/service-provider";
 
 import TestifyApi from "./services/testifyApi";
 import store from "./store";
+
+import Routing from "components/router.js";
 
 const history = createBrowserHistory({ basename: "/" });
 
@@ -24,7 +25,7 @@ ReactDom.render(
     <ErrorBoundry>
       <ServiceProvider value={service}>
         <Router history={history}>
-          <App />
+          <Routing />
         </Router>
       </ServiceProvider>
     </ErrorBoundry>

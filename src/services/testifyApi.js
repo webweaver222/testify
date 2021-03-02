@@ -1,15 +1,14 @@
 export default class TestifyApi {
-  //_base = 'http://192.168.1.16:3000'
   _base = "http://localhost:3000";
 
-  get = async url => {
+  get = async (url) => {
     return fetch(this._base + url, {
       method: "get",
       credentials: "include",
       headers: {
         Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     });
   };
 
@@ -20,9 +19,9 @@ export default class TestifyApi {
       credentials: "include",
       headers: {
         Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
   };
 }

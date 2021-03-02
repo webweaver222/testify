@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 
 import "./test-intro.sass";
 
-import ErrorIndicator from "../error-indicator";
-import Preloader from "../preloader";
+import ErrorIndicator from "components/elements/error-indicator";
+import Preloader from "components/elements/preloader";
 
-import { studentNameChange } from "../../actions/creatorActions";
+import { studentNameChange } from "actions/creatorActions";
 
 const TestIntro = ({
   testName,
@@ -16,7 +16,7 @@ const TestIntro = ({
   onNameChange,
   onStartTest,
   nameError,
-  onCloseNotif
+  onCloseNotif,
 }) => {
   const inputError = nameError ? (
     <div className="input-error" onClick={onCloseNotif}>
@@ -54,7 +54,7 @@ const TestIntro = ({
             <input
               type="text"
               className={inputClass}
-              onChange={e => onNameChange(e.target.value)}
+              onChange={(e) => onNameChange(e.target.value)}
             />
             {inputError}
           </div>
@@ -75,22 +75,22 @@ const mapStateToProps = ({
     test: { testName, testDescription },
     fetching,
     error,
-    nameError
-  }
+    nameError,
+  },
 }) => {
   return {
     testName,
     testDescription,
     fetching,
     error,
-    nameError
+    nameError,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onNameChange: name => dispatch(studentNameChange(name)),
-    onCloseNotif: () => dispatch("CLOSE_NAME_ERROR")
+    onNameChange: (name) => dispatch(studentNameChange(name)),
+    onCloseNotif: () => dispatch("CLOSE_NAME_ERROR"),
   };
 };
 

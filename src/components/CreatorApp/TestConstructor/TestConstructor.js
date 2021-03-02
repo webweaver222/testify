@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose } from "../../utils";
+import { compose } from "utils";
 import { bindActionCreators } from "redux";
 
-import TestCreatorMain from "../test-creator-main";
-import Question from "../question";
-import QuestionPool from "../question-pool";
-import withService from "../hoc/withService";
+import TestCreatorMain from "components/CreatorApp/TestCreatorMain";
+import Question from "components/elements/question";
+import QuestionPool from "components/CreatorApp/QuestionPool";
+import withService from "components/hoc/withService";
 
 import "./testConstructor.sass";
-import { toPrePublish } from "../../actions/creatorActions";
+import { toPrePublish } from "actions/creatorActions";
 
 const TestConstructor = ({
   questions,
@@ -17,9 +17,9 @@ const TestConstructor = ({
   publishTest,
   deleteConfirm,
   onDeleteCondirm,
-  onDeleteReject
+  onDeleteReject,
 }) => {
-  const question = questions.find(q => q.id === active);
+  const question = questions.find((q) => q.id === active);
 
   const confirmBlock = deleteConfirm ? (
     <div className="delete-confirm">
@@ -49,21 +49,21 @@ const TestConstructor = ({
 };
 
 const mapStateToProps = ({
-  testCreator: { questions, active, deleteConfirm }
+  testCreator: { questions, active, deleteConfirm },
 }) => {
   return {
     questions,
     active,
-    deleteConfirm
+    deleteConfirm,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       publishTest: () => dispatch(toPrePublish),
       onDeleteCondirm: () => dispatch("DELETE_QUESTIONS_CONFIRM"),
-      onDeleteReject: () => dispatch("DELETE_QUESTIONS_REJECT")
+      onDeleteReject: () => dispatch("DELETE_QUESTIONS_REJECT"),
     },
     dispatch
   );

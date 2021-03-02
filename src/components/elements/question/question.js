@@ -5,8 +5,8 @@ import {
   questionBodyChange,
   answerBodyChange,
   deleteAnswer,
-  selectAnswer
-} from "../../actions/creatorActions";
+  selectAnswer,
+} from "actions/creatorActions";
 
 import "./question.sass";
 
@@ -20,7 +20,7 @@ const Question = ({
   onChangeQuestionBody,
   onChangeAnswerBody,
   onAddAnswer,
-  onDeleteAnswer
+  onDeleteAnswer,
 }) => {
   const renderAnswers = () => {
     return question.answers.map((answer, i, arr) => {
@@ -61,7 +61,7 @@ const Question = ({
             autoComplete="off"
             type="text"
             value={answerValue}
-            onChange={e => onChangeAnswerBody(answer.id, e.target.value)}
+            onChange={(e) => onChangeAnswerBody(answer.id, e.target.value)}
           />
           {deleteBtn}
           {addBtn}
@@ -80,7 +80,7 @@ const Question = ({
         <textarea
           value={question.body}
           id="question-body"
-          onChange={e => onChangeQuestionBody(e.target.value)}
+          onChange={(e) => onChangeQuestionBody(e.target.value)}
           type="text"
           rows="4"
         />
@@ -104,12 +104,12 @@ const mapDispatchToProps = (dispatch, { processActions }) => {
   return {
     onNext: () => dispatch("SELECT_QUESTION_NEXT"),
     onPrev: () => dispatch("SELECT_QUESTION_PREV"),
-    onChangeQuestionBody: body => dispatch(questionBodyChange(body)),
+    onChangeQuestionBody: (body) => dispatch(questionBodyChange(body)),
     onChangeAnswerBody: (answerId, body) =>
       dispatch(answerBodyChange(answerId, body)),
     onAddAnswer: () => dispatch("CLICK_ADD_ANSWER"),
-    onDeleteAnswer: id => dispatch(deleteAnswer(id)),
-    onSelectAnswer: id => dispatch(selectAnswer(id))
+    onDeleteAnswer: (id) => dispatch(deleteAnswer(id)),
+    onSelectAnswer: (id) => dispatch(selectAnswer(id)),
   };
 };
 

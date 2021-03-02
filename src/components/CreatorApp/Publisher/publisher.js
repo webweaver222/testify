@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import ErrorIndicator from "../error-indicator";
-import Preloader from "../preloader";
+import Preloader from "components/elements/preloader";
 
 const Publisher = ({ render, fetching, error }) => {
   const preloader = fetching ? (
@@ -28,6 +27,6 @@ const Publisher = ({ render, fetching, error }) => {
 export default connect(({ testPublisher: { fetching, error } }) => {
   return {
     fetching,
-    error
+    error,
   };
 }, null)(Publisher);

@@ -98,6 +98,10 @@ module.exports = (env = {}) => {
       ],
     },
 
+    resolve: {
+      modules: [path.resolve(__dirname, "src"), "node_modules"],
+    },
+
     plugins: getPlugins(),
 
     devServer: {

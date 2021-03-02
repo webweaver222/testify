@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose } from "../../utils";
+import { compose } from "utils";
 
-import QuestionList from "../QuestionList";
+import QuestionList from "components/CreatorApp/QuestionList";
 import Publisher from "./publisher";
 import TestInfo from "./test-info";
 import "./publisher.sass";
-import { finalPublish } from "../../actions/creatorActions";
-import withService from "../hoc/withService";
+import { finalPublish } from "actions/creatorActions";
+import withService from "components/hoc/withService";
 
 const PublisherContainer = ({
   questions,
@@ -15,13 +15,13 @@ const PublisherContainer = ({
   onPublish,
   savedTestUrl,
   onNewTest,
-  hoveredQuestion
+  hoveredQuestion,
 }) => {
   const render = (preloader, error) => {
     let detailsBlock = null;
 
     if (hoveredQuestion !== null) {
-      const hoveredIdx = questions.findIndex(q => q.id === hoveredQuestion);
+      const hoveredIdx = questions.findIndex((q) => q.id === hoveredQuestion);
 
       detailsBlock = (
         <div className="questionDetails section-block">
@@ -79,7 +79,7 @@ const PublisherContainer = ({
 
 const mapStateToProps = ({
   testCreator: { questions, hoveredQuestion },
-  testPublisher: { emptyQuestions, fetching, error, savedTestUrl }
+  testPublisher: { emptyQuestions, fetching, error, savedTestUrl },
 }) => {
   return {
     emptyQuestions,
@@ -87,7 +87,7 @@ const mapStateToProps = ({
     error,
     savedTestUrl,
     questions,
-    hoveredQuestion
+    hoveredQuestion,
   };
 };
 
@@ -97,7 +97,7 @@ export default compose(
     return {
       onBack: () => dispatch("BACK_TO_CONSTRUCTOR"),
       onPublish: () => dispatch(finalPublish(service)()),
-      onNewTest: () => dispatch("RESET_STORE")
+      onNewTest: () => dispatch("RESET_STORE"),
     };
   })
 )(PublisherContainer);

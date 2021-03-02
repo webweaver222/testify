@@ -2,8 +2,8 @@ import React from "react";
 
 import { connect } from "react-redux";
 
-import TestConstructor from "../TestConstructor";
-import PublisherContainer from "../publisher";
+import TestConstructor from "components/CreatorApp/TestConstructor";
+import PublisherContainer from "components/CreatorApp/Publisher";
 import "./test-creator.sass";
 
 const TestCreator = ({ onFinalPublish, onNewTest, showPublisher }) => {

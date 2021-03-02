@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 
-import { compose } from "../../utils";
-import withService from "../hoc/withService";
-import withTimerEvents from "../hoc/withTimerEvents";
+import { compose } from "utils";
+import withService from "components/hoc/withService";
+import withTimerEvents from "components/hoc/withTimerEvents";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import "./test-process.sass";
 
-import TestIntro from "../test-intro";
-import TestRoom from "../test-room";
+import TestIntro from "components/ExamApp/TestIntro";
+import TestRoom from "components/ExamApp/TestRoom";
 import Confirm from "./confirm";
-import { getTest, startTest, sendTest } from "../../actions/creatorActions";
+import { getTest, startTest, sendTest } from "actions/creatorActions";
 
 const TestProcess = ({
   onStart,
@@ -20,7 +20,7 @@ const TestProcess = ({
   finished,
   sendConfirm,
   match,
-  onMount
+  onMount,
 }) => {
   useEffect(() => {
     onMount(match.params.id);
@@ -55,9 +55,9 @@ const TestProcess = ({
 const mapDispatchToProps = (dispatch, { service }) => {
   return bindActionCreators(
     {
-      onMount: testId => getTest(service)(testId),
+      onMount: (testId) => getTest(service)(testId),
       onStart: startTest(service),
-      onSend: sendTest(service)
+      onSend: sendTest(service),
     },
     dispatch
   );
@@ -71,7 +71,7 @@ export default compose(
       started,
       finished,
       answers,
-      sendConfirm
+      sendConfirm,
     };
   }, mapDispatchToProps)
 )(TestProcess);

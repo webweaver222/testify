@@ -4,12 +4,12 @@ import { bindActionCreators } from "redux";
 
 import "./test-room.sass";
 
-import { processAnswer, selectInField } from "../../actions/creatorActions";
-import Question from "../question";
-import QuestionsField from "../questions-field";
-import Timer from "../timer";
-import Preloader from "../preloader";
-import ErrorIndicator from "../error-indicator";
+import { processAnswer, selectInField } from "actions/creatorActions";
+import Question from "components/elements/question";
+import QuestionsField from "components/ExamApp/QuestionsField";
+import Timer from "components/ExamApp/timer";
+import Preloader from "components/elements/preloader";
+import ErrorIndicator from "components/elements/error-indicator";
 
 const TestRoom = ({
   test,
@@ -18,7 +18,7 @@ const TestRoom = ({
   onSelectField,
   onPreSend,
   fetching,
-  error
+  error,
 }) => {
   const question = test.questions[current];
 
@@ -32,15 +32,15 @@ const TestRoom = ({
       <Question
         question={question}
         selectedAnswer={answers[current]}
-        processActions={dispatch => {
+        processActions={(dispatch) => {
           return {
             onNext: () => dispatch("PROCESS_NEXT_QUESTION"),
             onPrev: () => dispatch("PROCESS_PREV_QUESTION"),
-            onSelectAnswer: idx => dispatch(processAnswer(idx, current)),
+            onSelectAnswer: (idx) => dispatch(processAnswer(idx, current)),
             onChangeQuestionBody: () => {},
             onChangeAnswerBody: () => {},
             onAddAnswer: () => {},
-            onDeleteAnswer: () => {}
+            onDeleteAnswer: () => {},
           };
         }}
       />
@@ -63,22 +63,22 @@ const TestRoom = ({
 };
 
 const mapStateToProps = ({
-  testProcess: { test, current, answers, fetching, error }
+  testProcess: { test, current, answers, fetching, error },
 }) => {
   return {
     test,
     current,
     answers,
     fetching,
-    error
+    error,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
-      onSelectField: idx => selectInField(idx),
-      onPreSend: () => dispatch("SHOW_SEND_CONFIRM")
+      onSelectField: (idx) => selectInField(idx),
+      onPreSend: () => dispatch("SHOW_SEND_CONFIRM"),
     },
     dispatch
   );

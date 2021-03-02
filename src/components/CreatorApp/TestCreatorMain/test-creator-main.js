@@ -4,8 +4,8 @@ import "./test-creator-main.sass";
 
 import {
   testNameChange,
-  testDescriptionChange
-} from "../../actions/creatorActions";
+  testDescriptionChange,
+} from "../../../actions/creatorActions";
 
 const TestCreatorMain = ({
   onPublishTest,
@@ -14,7 +14,7 @@ const TestCreatorMain = ({
   testNameError,
   onNameChange,
   onDescriptionChange,
-  onCloseNotif
+  onCloseNotif,
 }) => {
   const error = testNameError ? (
     <div className="input-error" onClick={onCloseNotif}>
@@ -35,7 +35,7 @@ const TestCreatorMain = ({
             className={inputClass}
             style={testNameError ? { border: `2px solid red` } : null}
             value={testName}
-            onChange={e => onNameChange(e.target.value)}
+            onChange={(e) => onNameChange(e.target.value)}
           />
           {error}
         </div>
@@ -47,7 +47,7 @@ const TestCreatorMain = ({
           id="test-descr"
           rows="5"
           value={testDerscription}
-          onChange={e => onDescriptionChange(e.target.value)}
+          onChange={(e) => onDescriptionChange(e.target.value)}
         />
       </div>
 
@@ -62,19 +62,19 @@ const TestCreatorMain = ({
 
 const mapStateToProps = ({
   testPublisher: { testNameError },
-  testCreator: { testName, testDerscription }
+  testCreator: { testName, testDerscription },
 }) => {
   return {
     testName,
     testDerscription,
-    testNameError
+    testNameError,
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onCloseNotif: () => dispatch("CLOSE_INPUT_ERROR"),
-  onNameChange: t => dispatch(testNameChange(t)),
-  onDescriptionChange: t => dispatch(testDescriptionChange(t))
+  onNameChange: (t) => dispatch(testNameChange(t)),
+  onDescriptionChange: (t) => dispatch(testDescriptionChange(t)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TestCreatorMain);
