@@ -15,53 +15,30 @@ const initialTest = {
       answers: [
         {
           id: 0,
-          body: ""
+          body: "",
         },
         {
           id: 1,
-          body: ""
-        }
-      ]
-    }
-  ]
+          body: "",
+        },
+      ],
+    },
+  ],
 };
 
 const upadateTestCreator = (state, action) => {
-  const test = () => {
-    const arr = [];
-    for (let i = 0; i < 49; i++) {
-      arr.push({
-        id: i,
-        body: `${i}`,
-        rightAnswer: 0,
-        answers: [
-          {
-            id: 0,
-            body: "Answer #1"
-          },
-          {
-            id: 1,
-            body: "Answer #2"
-          }
-        ]
-      });
-    }
-    return arr;
-  };
-
   if (state === undefined) {
     return {
-      ...initialTest
-      //questions: test()
+      ...initialTest,
     };
   }
 
   const {
     testCreator,
-    testCreator: { active, questions, detailsOn }
+    testCreator: { active, questions, detailsOn },
   } = state;
 
-  const idx = questions.findIndex(q => q.id === active);
+  const idx = questions.findIndex((q) => q.id === active);
 
   switch (action.type) {
     case "DELETE_QUESTIONS_CONFIRM": {
@@ -71,34 +48,34 @@ const upadateTestCreator = (state, action) => {
     case "DELETE_QUESTIONS_REJECT": {
       return {
         ...testCreator,
-        deleteConfirm: false
+        deleteConfirm: false,
       };
     }
     case "CLICK_DELETE_ALL": {
       return {
         ...testCreator,
-        deleteConfirm: true
+        deleteConfirm: true,
       };
     }
 
     case "OPEN_DETAILS": {
       return {
         ...testCreator,
-        detailsOn: action.payload !== detailsOn ? action.payload : null
+        detailsOn: action.payload !== detailsOn ? action.payload : null,
       };
     }
 
     case "CHANGE_TEST_NAME": {
       return {
         ...testCreator,
-        testName: action.payload
+        testName: action.payload,
       };
     }
 
     case "CHANGE_TEST_DESCRIPTION": {
       return {
         ...testCreator,
-        testDescription: action.payload
+        testDescription: action.payload,
       };
     }
 
@@ -107,30 +84,30 @@ const upadateTestCreator = (state, action) => {
 
       return {
         ...testCreator,
-        hoveredQuestion: action.payload
+        hoveredQuestion: action.payload,
       };
     }
 
     case "CHANGE_DRAG_DROP": {
       return {
         ...testCreator,
-        questions: [...action.payload]
+        questions: [...action.payload],
       };
     }
 
     case "CLICK_ACTIVE_QUESTION": {
       return {
         ...testCreator,
-        active: questions[action.payload].id
+        active: questions[action.payload].id,
       };
     }
 
     case "CLICK_DELETE_QUESTION": {
-      const idxToRemove = questions.findIndex(q => q.id === action.payload);
+      const idxToRemove = questions.findIndex((q) => q.id === action.payload);
       return {
         ...testCreator,
         active: questions[idxToRemove - 1].id,
-        questions: updateArray(questions, "remove", idxToRemove)
+        questions: updateArray(questions, "remove", idxToRemove),
       };
     }
 
@@ -138,17 +115,17 @@ const upadateTestCreator = (state, action) => {
       if (!questions[idx + 1]) {
         if (questions.length + 1 > 50) return testCreator;
 
-        const newId = Math.max(...questions.map(q => q.id), 0) + 1;
+        const newId = Math.max(...questions.map((q) => q.id), 0) + 1;
         return {
           ...testCreator,
           questions: addQuestion(questions, newId),
-          active: newId
+          active: newId,
         };
       }
 
       return {
         ...testCreator,
-        active: questions[idx + 1].id
+        active: questions[idx + 1].id,
       };
     }
 
@@ -158,44 +135,46 @@ const upadateTestCreator = (state, action) => {
       }
       return {
         ...testCreator,
-        active: questions[idx - 1].id
+        active: questions[idx - 1].id,
       };
     }
 
     case "CHANGE_QUESTION_BODY": {
       const updatedQuestion = {
         ...questions[idx],
-        body: action.payload
+        body: action.payload,
       };
       return {
         ...testCreator,
-        questions: updateArray(questions, updatedQuestion, idx)
+        questions: updateArray(questions, updatedQuestion, idx),
       };
     }
 
     case "CHANGE_ANSWER_BODY": {
-      const ansIdx = questions[idx].answers.findIndex(a => a.id === action.id);
+      const ansIdx = questions[idx].answers.findIndex(
+        (a) => a.id === action.id
+      );
 
       const updatedAnswer = {
         ...questions[idx].answers[ansIdx],
-        body: action.payload
+        body: action.payload,
       };
 
       const updatedQuestion = {
         ...questions[idx],
-        answers: updateArray(questions[idx].answers, updatedAnswer, ansIdx)
+        answers: updateArray(questions[idx].answers, updatedAnswer, ansIdx),
       };
 
       return {
         ...testCreator,
-        questions: updateArray(questions, updatedQuestion, idx)
+        questions: updateArray(questions, updatedQuestion, idx),
       };
     }
 
     case "CLICK_ADD_ANSWER": {
       const ansIdx = questions[idx].answers.length;
       const newAnswerId =
-        Math.max(...questions[idx].answers.map(a => a.id), 0) + 1;
+        Math.max(...questions[idx].answers.map((a) => a.id), 0) + 1;
 
       const updatedQuestion = {
         ...questions[idx],
@@ -203,21 +182,21 @@ const upadateTestCreator = (state, action) => {
           questions[idx].answers,
           {
             id: newAnswerId,
-            body: ""
+            body: "",
           },
           ansIdx
-        )
+        ),
       };
 
       return {
         ...testCreator,
-        questions: updateArray(questions, updatedQuestion, idx)
+        questions: updateArray(questions, updatedQuestion, idx),
       };
     }
 
     case "CLICK_DELETE_ANSWER": {
       const ansIdx = questions[idx].answers.findIndex(
-        a => a.id === action.payload
+        (a) => a.id === action.payload
       );
 
       const selectedAns =
@@ -228,33 +207,33 @@ const upadateTestCreator = (state, action) => {
       const updatedQuestion = {
         ...questions[idx],
         rightAnswer: selectedAns,
-        answers: updateArray(questions[idx].answers, "remove", ansIdx)
+        answers: updateArray(questions[idx].answers, "remove", ansIdx),
       };
 
       return {
         ...testCreator,
-        questions: updateArray(questions, updatedQuestion, idx)
+        questions: updateArray(questions, updatedQuestion, idx),
       };
     }
 
     case "CLICK_SELECT_ANSWER": {
       const updatedQuestion = {
         ...questions[idx],
-        rightAnswer: action.payload
+        rightAnswer: action.payload,
       };
 
       return {
         ...testCreator,
-        questions: updateArray(questions, updatedQuestion, idx)
+        questions: updateArray(questions, updatedQuestion, idx),
       };
     }
 
     case "CLICK_ADD_QUESTION": {
-      const newId = Math.max(...questions.map(q => q.id), 0) + 1;
+      const newId = Math.max(...questions.map((q) => q.id), 0) + 1;
       return {
         ...testCreator,
         questions: addQuestion(questions, newId),
-        active: newId
+        active: newId,
       };
     }
 
