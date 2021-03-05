@@ -6,8 +6,8 @@ import QuestionList from "components/CreatorApp/QuestionList";
 import Publisher from "./publisher";
 import TestInfo from "./test-info";
 import "./publisher.sass";
-import { finalPublish } from "actions/creatorActions";
-import withService from "components/hoc/withService";
+import { finalPublish, createNewTest } from "actions/TestPublisher";
+import { withApi } from "components/hoc/withService";
 
 const PublisherContainer = ({
   questions,
@@ -92,12 +92,12 @@ const mapStateToProps = ({
 };
 
 export default compose(
-  withService,
+  withApi,
   connect(mapStateToProps, (dispatch, { service }) => {
     return {
       onBack: () => dispatch("BACK_TO_CONSTRUCTOR"),
       onPublish: () => dispatch(finalPublish(service)()),
-      onNewTest: () => dispatch("RESET_STORE"),
+      onNewTest: () => dispatch(createNewTest()),
     };
   })
 )(PublisherContainer);

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { compose } from "utils";
-import withService from "components/hoc/withService";
+import { withApi, withSocket } from "components/hoc/withService";
 import withTimerEvents from "components/hoc/withTimerEvents";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -11,7 +11,7 @@ import "./test-process.sass";
 import TestIntro from "components/ExamApp/TestIntro";
 import TestRoom from "components/ExamApp/TestRoom";
 import Confirm from "./confirm";
-import { getTest, startTest, sendTest } from "actions/creatorActions";
+import { getTest, startTest, sendTest } from "actions/Exam";
 
 const TestProcess = ({
   onStart,
@@ -52,11 +52,11 @@ const TestProcess = ({
   );
 };
 
-const mapDispatchToProps = (dispatch, { service }) => {
+const mapDispatchToProps = (dispatch, { service, socket }) => {
   return bindActionCreators(
     {
       onMount: (testId) => getTest(service)(testId),
-      onStart: startTest(service),
+      onStart: () => startTest(service)(socket),
       onSend: sendTest(service),
     },
     dispatch
@@ -64,7 +64,8 @@ const mapDispatchToProps = (dispatch, { service }) => {
 };
 
 export default compose(
-  withService,
+  withApi,
+  withSocket,
   withTimerEvents,
   connect(({ testProcess: { started, finished, answers, sendConfirm } }) => {
     return {

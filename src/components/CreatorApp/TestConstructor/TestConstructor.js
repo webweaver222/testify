@@ -6,10 +6,10 @@ import { bindActionCreators } from "redux";
 import TestCreatorMain from "components/CreatorApp/TestCreatorMain";
 import Question from "components/elements/question";
 import QuestionPool from "components/CreatorApp/QuestionPool";
-import withService from "components/hoc/withService";
+import { withApi } from "components/hoc/withService";
 
 import "./testConstructor.sass";
-import { toPrePublish } from "actions/creatorActions";
+import { toPrePublish } from "actions/TestPublisher";
 
 const TestConstructor = ({
   questions,
@@ -70,6 +70,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default compose(
-  withService,
+  withApi,
   connect(mapStateToProps, mapDispatchToProps)
 )(TestConstructor);

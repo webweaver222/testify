@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 
 import "./test-room.sass";
 
-import { processAnswer, selectInField } from "actions/creatorActions";
+import { processAnswer, selectInField } from "actions/Exam";
 import Question from "components/elements/question";
 import QuestionsField from "components/ExamApp/QuestionsField";
 import Timer from "components/ExamApp/timer";

@@ -8,7 +8,7 @@ import {
   clickQuestion,
   deleteQuestion,
   questionHover,
-} from "../../../actions/creatorActions";
+} from "actions/TestCreator";
 
 import RLDD from "react-list-drag-and-drop/lib/RLDD";
 

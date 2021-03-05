@@ -12,18 +12,22 @@ import ErrorBoundry from "components/elements/error-boundry";
 import { ServiceProvider } from "components/elements/service-provider";
 
 import TestifyApi from "./services/testifyApi";
+import io from "socket.io-client";
 import store from "./store";
 
 import Routing from "components/router.js";
 
 const history = createBrowserHistory({ basename: "/" });
 
-const service = new TestifyApi();
+const container = {
+  api: new TestifyApi(),
+  socket: io("http://localhost:3000"),
+};
 
 ReactDom.render(
   <Provider store={store}>
     <ErrorBoundry>
-      <ServiceProvider value={service}>
+      <ServiceProvider value={container}>
         <Router history={history}>
           <Routing />
         </Router>

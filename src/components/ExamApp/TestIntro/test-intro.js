@@ -6,7 +6,7 @@ import "./test-intro.sass";
 import ErrorIndicator from "components/elements/error-indicator";
 import Preloader from "components/elements/preloader";
 
-import { studentNameChange } from "actions/creatorActions";
+import { studentNameChange } from "actions/Exam";
 
 const TestIntro = ({
   testName,

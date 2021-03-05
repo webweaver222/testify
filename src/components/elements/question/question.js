@@ -6,7 +6,7 @@ import {
   answerBodyChange,
   deleteAnswer,
   selectAnswer,
-} from "actions/creatorActions";
+} from "actions/TestCreator";
 
 import "./question.sass";
 

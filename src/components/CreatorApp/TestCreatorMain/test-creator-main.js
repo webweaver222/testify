@@ -2,10 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import "./test-creator-main.sass";
 
-import {
-  testNameChange,
-  testDescriptionChange,
-} from "../../../actions/creatorActions";
+import { testNameChange, testDescriptionChange } from "actions/TestCreator";
 
 const TestCreatorMain = ({
   onPublishTest,
