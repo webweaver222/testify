@@ -9,7 +9,7 @@ const initialProcess = {
   sendConfirm: false,
   fetching: false,
   error: null,
-  nameError: false
+  nameError: false,
 };
 
 const upadateTestProcess = (state, action) => {
@@ -19,7 +19,7 @@ const upadateTestProcess = (state, action) => {
 
   const {
     testProcess,
-    testProcess: { current, answers, test }
+    testProcess: { current, answers, test },
   } = state;
 
   switch (action.type) {
@@ -27,7 +27,7 @@ const upadateTestProcess = (state, action) => {
       return {
         ...testProcess,
         fetching: true,
-        sendConfirm: false
+        sendConfirm: false,
       };
     }
 
@@ -36,7 +36,7 @@ const upadateTestProcess = (state, action) => {
         ...testProcess,
         test: action.payload,
         answers: new Array(action.payload.questions.length),
-        fetching: false
+        fetching: false,
       };
     }
 
@@ -44,14 +44,14 @@ const upadateTestProcess = (state, action) => {
       return {
         ...testProcess,
         error: action.payload,
-        fetching: false
+        fetching: false,
       };
     }
 
     case "CHANGE_STUDENT_NAME": {
       return {
         ...testProcess,
-        studentName: action.payload
+        studentName: action.payload,
       };
     }
 
@@ -60,21 +60,21 @@ const upadateTestProcess = (state, action) => {
         ...testProcess,
         examId: action.payload,
         started: true,
-        nameError: false
+        nameError: false,
       };
     }
 
     case "START_TEST_FAIL": {
       return {
         ...testProcess,
-        nameError: true
+        nameError: true,
       };
     }
 
     case "CLOSE_NAME_ERROR": {
       return {
         ...testProcess,
-        nameError: false
+        nameError: false,
       };
     }
 
@@ -87,14 +87,14 @@ const upadateTestProcess = (state, action) => {
 
       return {
         ...testProcess,
-        current: next
+        current: next,
       };
     }
 
     case "PROCESS_PREV_QUESTION": {
       return {
         ...testProcess,
-        current: current === 0 ? current : current - 1
+        current: current === 0 ? current : current - 1,
       };
     }
 
@@ -102,31 +102,31 @@ const upadateTestProcess = (state, action) => {
       return {
         ...testProcess,
         answers: [
-          ...answers.slice(0, action.q_idx),
+          ...answers.slice(0, current),
           action.payload,
-          ...answers.slice(action.q_idx + 1)
-        ]
+          ...answers.slice(current + 1),
+        ],
       };
     }
 
     case "PROCESS_SELECT_FIELD": {
       return {
         ...testProcess,
-        current: action.payload
+        current: action.payload,
       };
     }
 
     case "SHOW_SEND_CONFIRM": {
       return {
         ...testProcess,
-        sendConfirm: true
+        sendConfirm: true,
       };
     }
 
     case "CLOSE_SEND_CONFIRM": {
       return {
         ...testProcess,
-        sendConfirm: false
+        sendConfirm: false,
       };
     }
 
@@ -135,7 +135,7 @@ const upadateTestProcess = (state, action) => {
         ...testProcess,
         sendConfirm: false,
         finished: true,
-        fetching: false
+        fetching: false,
       };
     }
 

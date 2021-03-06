@@ -20,8 +20,8 @@ import Routing from "components/router.js";
 const history = createBrowserHistory({ basename: "/" });
 
 const container = {
-  api: new TestifyApi(),
-  socket: io("http://localhost:3000"),
+  api: new TestifyApi("http://localhost:3000"),
+  socket: io.connect("http://localhost:3000"),
 };
 
 ReactDom.render(

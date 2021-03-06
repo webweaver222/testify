@@ -1,5 +1,9 @@
 export default class TestifyApi {
-  _base = "http://localhost:3000";
+  _base;
+
+  constructor(url) {
+    this._base = url;
+  }
 
   get = async (url) => {
     return fetch(this._base + url, {
