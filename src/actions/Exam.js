@@ -1,3 +1,18 @@
+const processAnswer = (idx, current) => {
+  return {
+    type: "PROCESS_SELECT_ANSWER",
+    payload: idx,
+    q_idx: current,
+  };
+};
+
+const selectInField = (idx) => {
+  return {
+    type: "PROCESS_SELECT_FIELD",
+    payload: idx,
+  };
+};
+
 const getTest = (service) => (testId) => async (dispatch) => {
   dispatch("FETCH_TEST_START");
 
@@ -37,7 +52,7 @@ const studentNameChange = (name) => {
   };
 };
 
-const startTest = (service) => (socket) => async (dispatch, getState) => {
+const startTest = (webSocket) => async (dispatch, getState) => {
   const {
     testProcess: {
       studentName,
@@ -48,17 +63,24 @@ const startTest = (service) => (socket) => async (dispatch, getState) => {
   if (!/\S+/.test(studentName)) return dispatch("START_TEST_FAIL");
 
   try {
-    const startExam = await service.get(`/test/${id}/start`);
-    const exam = await startExam.json();
+    webSocket.init();
+    const { socket } = webSocket;
 
-    dispatch({
-      type: "START_TEST_PROCESS",
-      payload: exam.examId,
+    socket.emit("start_exam", { test_id: id });
+
+    socket.on("exam_started", ({ exam_id }) => {
+      dispatch({
+        type: "START_TEST_PROCESS",
+        payload: exam_id,
+      });
     });
 
-    socket.emit("join", { exam_id: exam.examId });
+    socket.on("exam_timeout", () => {
+      const {
+        testProcess: { answers, examId, studentName },
+      } = getState();
+      socket.emit("finish_exam", { studentName, answers, exam_id: examId });
 
-    socket.on("Test End", function () {
       socket.disconnect();
       return dispatch("TEST_FINISHED");
     });
@@ -70,7 +92,7 @@ const startTest = (service) => (socket) => async (dispatch, getState) => {
   }
 };
 
-const sendTest = (service) => () => async (dispatch, getState) => {
+const sendTest = ({ socket }) => async (dispatch, getState) => {
   const {
     testProcess: { answers, examId, studentName },
   } = getState();
@@ -78,38 +100,17 @@ const sendTest = (service) => () => async (dispatch, getState) => {
   dispatch("FETCH_TEST_START");
 
   try {
-    const res = await service.post(
-      {
-        studentName,
-        answers,
-      },
-      `/test/${examId}/finish`
-    );
-
-    if (res.ok) {
+    socket.emit("finish_exam", { studentName, answers, exam_id: examId });
+    socket.on("exam_finished", () => {
+      socket.disconnect();
       return dispatch("TEST_FINISHED");
-    }
+    });
   } catch (e) {
     dispatch({
       type: "FETCH_TEST_FAIL",
       payload: "Can't reach server",
     });
   }
-};
-
-const processAnswer = (idx, current) => {
-  return {
-    type: "PROCESS_SELECT_ANSWER",
-    payload: idx,
-    q_idx: current,
-  };
-};
-
-const selectInField = (idx) => {
-  return {
-    type: "PROCESS_SELECT_FIELD",
-    payload: idx,
-  };
 };
 
 export {

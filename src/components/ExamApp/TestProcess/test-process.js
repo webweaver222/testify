@@ -16,28 +16,32 @@ import { getTest, startTest, sendTest } from "actions/Exam";
 const TestProcess = ({
   onStart,
   onSend,
-  started,
-  finished,
+  started = false,
+  finished = true,
   sendConfirm,
   match,
+  history,
   onMount,
+  examId,
 }) => {
   useEffect(() => {
     onMount(match.params.id);
   }, []);
 
-  const intro =
-    !started && !finished ? <TestIntro onStartTest={onStart} /> : null;
+  const intro = !started && !finished && <TestIntro onStartTest={onStart} />;
 
-  const testRoom = started && !finished ? <TestRoom /> : null;
+  const testRoom = started && !finished && <TestRoom />;
 
-  const confirm = sendConfirm ? <Confirm onSend={onSend} /> : null;
+  const confirm = sendConfirm && <Confirm onSend={onSend} />;
 
-  const final = finished ? (
+  const final = finished && (
     <div className="success-notif section-block">
       <span>The answers have been successfully sent!</span>
+      <button onClick={() => history.push(`/results/${examId}`)}>
+        Show Results
+      </button>
     </div>
-  ) : null;
+  );
 
   const shading = sendConfirm ? <div className="shading"></div> : null;
 
@@ -56,8 +60,8 @@ const mapDispatchToProps = (dispatch, { service, socket }) => {
   return bindActionCreators(
     {
       onMount: (testId) => getTest(service)(testId),
-      onStart: () => startTest(service)(socket),
-      onSend: sendTest(service),
+      onStart: () => startTest(socket),
+      onSend: () => sendTest(socket),
     },
     dispatch
   );
@@ -67,12 +71,16 @@ export default compose(
   withApi,
   withSocket,
   withTimerEvents,
-  connect(({ testProcess: { started, finished, answers, sendConfirm } }) => {
-    return {
-      started,
-      finished,
-      answers,
-      sendConfirm,
-    };
-  }, mapDispatchToProps)
+  connect(
+    ({ testProcess: { started, finished, answers, sendConfirm, examId } }) => {
+      return {
+        started,
+        finished,
+        answers,
+        sendConfirm,
+        examId,
+      };
+    },
+    mapDispatchToProps
+  )
 )(TestProcess);

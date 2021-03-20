@@ -7,15 +7,20 @@ const TestInfo = ({
   emailChange,
   limitChange,
   emailError,
-  onCloseNotif
+  onCloseNotif,
 }) => {
   const error = emailError ? (
     <div className="input-error" onClick={onCloseNotif}>
-      You have to right your email
+      You have to write your email
     </div>
   ) : null;
 
   const inputClass = emailError ? "withError" : "";
+
+  const onTimeChange = (limit) => {
+    if (limit < 0) return;
+    limitChange(limit);
+  };
 
   return (
     <div className="test-info">
@@ -26,7 +31,7 @@ const TestInfo = ({
           <input
             type="text"
             className={inputClass}
-            onChange={e => emailChange(e.target.value)}
+            onChange={(e) => emailChange(e.target.value)}
             value={publisherEmail}
             id="creator-email"
           />
@@ -38,7 +43,7 @@ const TestInfo = ({
         <input
           className="time-input"
           type="number"
-          onChange={e => limitChange(e.target.value)}
+          onChange={(e) => onTimeChange(e.target.value)}
           value={timeLimit}
           id="time-input"
         />
@@ -47,12 +52,13 @@ const TestInfo = ({
   );
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    emailChange: email =>
+    emailChange: (email) =>
       dispatch({ type: "CHANGE_PUBLISHER_EMAIL", payload: email }),
-    limitChange: time => dispatch({ type: "CHANGE_TIME_LIMIT", payload: time }),
-    onCloseNotif: () => dispatch("EMPTY_EMAIL_CLOSE")
+    limitChange: (time) =>
+      dispatch({ type: "CHANGE_TIME_LIMIT", payload: time }),
+    onCloseNotif: () => dispatch("EMPTY_EMAIL_CLOSE"),
   };
 };
 
@@ -61,7 +67,7 @@ export default connect(
     return {
       publisherEmail,
       timeLimit,
-      emailError
+      emailError,
     };
   },
   mapDispatchToProps

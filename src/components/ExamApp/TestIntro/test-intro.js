@@ -9,6 +9,7 @@ import Preloader from "components/elements/preloader";
 import { studentNameChange } from "actions/Exam";
 
 const TestIntro = ({
+  timeLimit,
   testName,
   testDescription,
   fetching,
@@ -31,7 +32,7 @@ const TestIntro = ({
   ) : error ? (
     <ErrorIndicator message={error} type="error" />
   ) : (
-    <React.Fragment>
+    <>
       <div className="intro-header">
         <div className="section-row">
           <span>Test Name:</span>
@@ -45,7 +46,7 @@ const TestIntro = ({
 
         <div className="section-row">
           <span>Time Limit (min):</span>
-          <p>13</p>
+          <p>{timeLimit && timeLimit / 60}</p>
         </div>
 
         <div className="section-row">
@@ -64,7 +65,7 @@ const TestIntro = ({
       <div className="intro-footer">
         <button onClick={onStartTest}>Start Test</button>
       </div>
-    </React.Fragment>
+    </>
   );
 
   return <div className="test-intro section-block">{content}</div>;
@@ -72,13 +73,14 @@ const TestIntro = ({
 
 const mapStateToProps = ({
   testProcess: {
-    test: { testName, testDescription },
+    test: { testName, testDescription, timeLimit },
     fetching,
     error,
     nameError,
   },
 }) => {
   return {
+    timeLimit,
     testName,
     testDescription,
     fetching,

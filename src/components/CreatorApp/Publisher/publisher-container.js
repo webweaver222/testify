@@ -58,7 +58,7 @@ const PublisherContainer = ({
     ) : null;
 
     return (
-      <React.Fragment>
+      <>
         <TestInfo />
 
         <QuestionList questions={questions} />
@@ -70,7 +70,7 @@ const PublisherContainer = ({
         </div>
 
         {detailsBlock}
-      </React.Fragment>
+      </>
     );
   };
 
