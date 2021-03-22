@@ -17,11 +17,6 @@ const finalPublish = (service) => () => async (dispatch, getState) => {
     testPublisher: { publisherEmail },
   } = getState();
 
-  if (publisherEmail === "") {
-    return dispatch("EMPTY_EMAIL_SHOW");
-  }
-
-  dispatch("EMPTY_EMAIL_CLOSE");
   dispatch("FETCH_PREP");
   dispatch("SAVE_TEST_START");
 

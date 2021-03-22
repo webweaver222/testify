@@ -14,4 +14,3 @@ const Routing = () => (
 );
 
 export default Routing;
-/**<div className="background" dangerouslySetInnerHTML={{ __html: bgc }} /> */

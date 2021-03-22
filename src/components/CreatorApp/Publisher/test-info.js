@@ -26,7 +26,7 @@ const TestInfo = ({
     <div className="test-info">
       <h2>Publish page</h2>
       <div className="section-row">
-        <label htmlFor="creator-email">Creator Email</label>
+        <label htmlFor="creator-email">Creator Email (optional)</label>
         <div className="input-wrapper">
           <input
             type="text"
