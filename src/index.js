@@ -17,7 +17,7 @@ import store from "./store";
 
 import Routing from "components/router.js";
 
-const history = createBrowserHistory({ basename: "/" });
+const history = createBrowserHistory({ basename: "testify" });
 
 const container = {
   api: new TestifyApi("http://localhost:3000"),

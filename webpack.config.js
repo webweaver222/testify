@@ -34,7 +34,7 @@ module.exports = (env = {}) => {
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: isProd ? "main-[hash:8].js" : undefined,
-      publicPath: "/",
+      publicPath: "/testify/",
     },
 
     module: {
