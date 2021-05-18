@@ -50,7 +50,7 @@ const finalPublish = (service) => () => async (dispatch, getState) => {
 
     dispatch({
       type: "SAVE_TEST_SUCCESS",
-      payload: body.testUrl,
+      payload: `${location.protocol}//${location.hostname}/testify/test/${body.testId}`,
     });
   } catch (e) {
     dispatch({
