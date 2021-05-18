@@ -21,9 +21,9 @@ const history = createBrowserHistory({ basename: "testify" });
 
 const container = {
   api: new TestifyApi(`${location.protocol}//${location.hostname}/testifyapi`),
-  socket: new WebSocket(
-    `${location.protocol}//${location.hostname}/testifyapi`
-  ),
+  socket: new WebSocket(`${location.protocol}//${location.hostname}`, {
+    path: "/testifyapi/socket.io",
+  }),
 };
 
 ReactDom.render(

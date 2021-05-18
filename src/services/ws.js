@@ -1,12 +1,13 @@
 import io from "socket.io-client";
 
 class WebSocket {
-  constructor(url) {
-    this.url = url;
+  constructor(origin, options) {
+    this.origin = origin;
+    this.options = options;
   }
 
   init() {
-    this.socket = io(this.url);
+    this.socket = io(this.origin, this.options);
   }
 }
 
