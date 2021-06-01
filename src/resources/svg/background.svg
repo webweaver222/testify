@@ -1,10 +1,10 @@
-<svg width="100%" height="100%" viewBox="0 0 4315 4315" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" height="100%" viewBox="0 0 4315 4315"  xmlns="http://www.w3.org/2000/svg">
 
 
-    <!--<ellipse cx="722.5" cy="397" rx="1107.5" ry="1108" fill="#FF4656">
+   <ellipse cx="422.5" cy="397" rx="1107.5" ry="1108" fill="#FF4656">
             <animate attributeName="rx" values="500;807.5;500" dur="10s" repeatCount="indefinite" />
             <animate attributeName="ry" values="500;808;500" dur="10s" repeatCount="indefinite" />
-    </ellipse>-->
+    </ellipse>
    
     <ellipse cx="3850" cy="2000" rx="70" ry="70" fill="#EFEFEF">
     
@@ -14,7 +14,7 @@
             <animate attributeName="cy" values="2000; 1800; 2000; 2200; 2000" dur="7s" repeatCount="indefinite" />
     </circle>
     <circle cx="4050" cy="2000" r="22" fill="blue">
-            <animate attributeName="cx" values="4050;3850;3650;3850;4050" dur="7s" repeatCount="indefinite" />
+            <animate attributeName="cx" values="4050;3850;3650;3850; 4050" dur="7s" repeatCount="indefinite" />
             <animate attributeName="cy" values="2000; 2200; 2000; 1800; 2000" dur="7s" repeatCount="indefinite" />
     </circle>
    
