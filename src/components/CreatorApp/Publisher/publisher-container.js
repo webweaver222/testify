@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { connect } from "react-redux";
 import { compose } from "utils";
 
@@ -17,6 +17,8 @@ const PublisherContainer = ({
   onNewTest,
   hoveredQuestion,
 }) => {
+  const urlInput = useRef(null);
+
   const render = (preloader, error) => {
     let detailsBlock = null;
 
@@ -44,7 +46,18 @@ const PublisherContainer = ({
     const bttonContent = preloader ? preloader : "Publish Test";
 
     const publishButton = savedTestUrl ? (
-      <div className="test-url" data-testid="link">
+      <div
+        className="test-url"
+        data-testid="link"
+        ref={urlInput}
+        onTouchStart={(e) =>
+          navigator.clipboard
+            .writeText(urlInput.current.innerText)
+            .then(function () {
+              alert("link copied to clipboard");
+            })
+        }
+      >
         {savedTestUrl}
       </div>
     ) : (

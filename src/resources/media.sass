@@ -15,6 +15,11 @@
 
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px)
+    .input-error
+        transform: translate(10%, 80%)  
+        padding: 7px
+        &::before
+            display: none
     button
         padding: 5px 10px
     .section-block
@@ -40,10 +45,17 @@
                 height: 100vh
                 iframe
                     width: 95%
-                    height: 80%
+                    height: 90%
             .test-process
                 min-height: 100vh
                 height: initial
+                .success-notif
+                    padding: 20px
+                    button
+                        margin: 20px auto 0 auto
+                .confirm
+                    width: 70%
+                    height: 30%
                 .test-room
                     width: 92%
                     .timer
@@ -76,6 +88,11 @@
 
                 .test-intro
                     width: 90%
+                    .input-error
+                        transform: translate(10%, 80%)  
+                        padding: 7px
+                        &::before
+                            display: none 
                     .intro-header
                         .input-wrapper
                             width: initial
@@ -89,10 +106,17 @@
                     min-height: 60%
                     input.time-input
                         margin-top: 7px
+                    button
+                        position: static
+                        margin: 5px 0
                 .test-constructor
                     margin: auto 0
                     height: 100%
                     flex-direction: column
+                    .delete-confirm
+                        position: fixed
+                        width: 60%
+                        height: 100px
                     .question-pool
                         .question
                             height: 22px
